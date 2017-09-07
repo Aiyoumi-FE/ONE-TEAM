@@ -5,10 +5,10 @@ const User = require('../models/user.js')
 const index = async(ctx, next) => {
   ctx.response.type = 'html'
   console.log(__dirname + '==============')
-  ctx.response.body = fs.createReadStream(path.join(__dirname, '..', '..', '/client/index.html'));
+  ctx.response.body = fs.createReadStream(path.join(__dirname, '..', '..', '/client/dist/index.html'));
 }
 
-const signin = async(ctx, next) => {
+const login = async(ctx, next) => {
   let name = ctx.request.body.name
   let password = ctx.request.body.password
   let user = await User.findOne({
@@ -59,6 +59,6 @@ const register = async(ctx, next) => {
 
 module.exports = {
   'GET /': index,
-  'POST /signin': signin,
+  'POST /login': login,
   'POST /register': register
 }

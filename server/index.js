@@ -18,6 +18,9 @@ app.use(async(ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 app.use(bodyParser());
+// 静态文件的路径
+app.use(serve('./client/dist'));
+// 接口操作
 app.use(controller());
 // response
 // app.use(ctx => {
