@@ -2,16 +2,16 @@
   <div class="page">
     <r-header :online="online"></r-header>
     <div class="page-bd">
-      <home-login></home-login>
+      <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script>
 import rHeader from '../header/index'
-import homeLogin from './login'
+import weekList from './list'
 export default {
-  name: 'hello',
+  name: 'weekly',
   data() {
     return {
       online: true
@@ -19,16 +19,22 @@ export default {
   },
   components: {
     rHeader,
-    homeLogin
+    weekList
+  },
+  mounted() {
+  },
+  methods: {
   }
 }
 </script>
 <style scoped>
 .page-bd{
-  width: 100%;
-  height: 800px;
-  background: url(./image/bg.jpeg) center no-repeat;
-  background-size: cover;
-  padding-top: 100px;
+  position: relative;
+  margin: 100px auto;
+  width: 80%;
+  min-height: 800px;
+  padding: 50px 0;
+  background-color: #fff;
+  box-shadow: 0 0 15px 0 #999; 
 }
 </style>

@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    mcdkls
     <router-view></router-view>
   </div>
 </template>

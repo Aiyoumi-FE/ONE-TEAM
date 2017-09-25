@@ -1,12 +1,20 @@
 <template>
-  <div class="content"></div>
+  <div class="content">
+    <r-nav v-if="online"></r-nav>
+  </div>
 </template>
-
 <script>
+import rNav from './nav'
 export default {
   name: 'header',
+  props: {
+    online: Boolean
+  },
   data() {
     return {}
+  },
+  components: {
+    rNav
   }
 }
 </script>
@@ -16,6 +24,6 @@ export default {
 .content{
   width: 100%;
   height: 80px;
-  background-color: #000;
+  background-color: #c18795;
 }
 </style>
