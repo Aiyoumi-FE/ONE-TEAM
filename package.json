@@ -1,8 +1,8 @@
 {
   "name": "blog",
   "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "dongyusi <dongyusi@aixuedai.com>",
+  "description": "A office collaboration system",
+  "author": "dongyusi <dongyusi@aixuedai.com> (https://github.com/Doris-ys/blog.git)",
   "private": true,
   "scripts": {
     "dev": "node client/build/dev-server.js",
@@ -12,7 +12,7 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
-    "server": "node server/start.js"
+    "server": "supervisor server/start.js"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",

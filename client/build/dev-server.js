@@ -43,13 +43,16 @@ compiler.plugin('compilation', function(compilation) {
 })
 
 // proxy api requests
-Object.keys(proxyTable).forEach(function(context) {
-  var options = proxyTable[context]
+proxyTable.forEach(function(context) {
+  var options = 'http://localhost:8081'
   if (typeof options === 'string') {
     options = { target: options }
   }
-  app.use(proxyMiddleware(options.filter || context, options))
+  app.use(context, proxyMiddleware(options.filter || context, options))
 })
+// const apiProxy = proxyMiddleware('/!(page)/**', { target: 'http://localhost:8081', changeOrigin: true }); //将服务器代理到localhost:8080端口上[本地服务器为localhost:3000]
+// app.use('/!(page)/**', apiProxy);
+
 
 // handle fallback for HTML5 history API
 app.use(require('connect-history-api-fallback')())
@@ -65,7 +68,7 @@ app.use(hotMiddleware)
 var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
 app.use(staticPath, express.static('./static'))
 
-var uri = 'http://localhost:' + port
+var uri = 'http://localhost:' + port + '/page/home'
 
 var _resolve
 var readyPromise = new Promise(resolve => {

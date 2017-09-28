@@ -85,8 +85,7 @@ const signout = async(ctx, next) => {
 }
 
 module.exports = {
-  'GET /': index,
-  // 'POST /init': init,
+  'GET /page/**': index,
   'POST /login': login,
   'POST /register': register,
   'POST /signout': signout

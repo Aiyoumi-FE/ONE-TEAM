@@ -8,9 +8,9 @@
 export default {
   name: 'app',
   mounted() {
-    this.$router.push({
-      name: 'home'
-    })
+    // this.$router.push({
+    //   name: 'home'
+    // })
   }
 }
 </script>
