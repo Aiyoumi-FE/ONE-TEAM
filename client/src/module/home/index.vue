@@ -1,34 +1,29 @@
 <template>
-  <div class="page">
-    <r-header :online="online"></r-header>
-    <div class="page-bd">
-      <home-login></home-login>
+    <div class="page-content home">
+        <home-login></home-login>
     </div>
-  </div>
 </template>
-
 <script>
-import rHeader from '../header/index'
 import homeLogin from './login'
 export default {
-  name: 'hello',
-  data() {
-    return {
-      online: true
+    name: 'hello',
+    data() {
+        return {
+            online: true
+        }
+    },
+    components: {
+        homeLogin
     }
-  },
-  components: {
-    rHeader,
-    homeLogin
-  }
 }
+
 </script>
 <style scoped>
-.page-bd{
-  width: 100%;
-  height: 800px;
-  background: url(./image/bg.jpeg) center no-repeat;
-  background-size: cover;
-  padding-top: 100px;
+.home {
+    width: 100%;
+    height: 800px;
+    background: url(./image/bg.jpeg) center no-repeat;
+    background-size: cover;
 }
+
 </style>

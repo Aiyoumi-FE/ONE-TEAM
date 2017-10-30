@@ -50,6 +50,8 @@ proxyTable.forEach(function(context) {
   }
   app.use(context, proxyMiddleware(options.filter || context, options))
 })
+
+// to do 这边最好处理为除了/page/开头的文件其余的都使用代理
 // const apiProxy = proxyMiddleware('/!(page)/**', { target: 'http://localhost:8081', changeOrigin: true }); //将服务器代理到localhost:8080端口上[本地服务器为localhost:3000]
 // app.use('/!(page)/**', apiProxy);
 

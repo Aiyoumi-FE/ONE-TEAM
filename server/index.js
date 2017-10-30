@@ -13,10 +13,10 @@ const controller = require('./controller');
 var User = require("./models/user.js");
 
 app.use(async(ctx, next) => {
-  const start = new Date();
-  await next();
-  const ms = new Date() - start;
-  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
+    const start = new Date();
+    await next();
+    const ms = new Date() - start;
+    console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 // app.keys = ['1'];
 // const CONFIG = {
@@ -41,7 +41,7 @@ app.use(bodyParser());
 app.use(serve('./client/dist'));
 // app.use(session(CONFIG, app));
 // 接口操作
-app.use(controller());
+app.use(controller('api'));
 // response
 // app.use(ctx => {
 //   ctx.response.type = 'html';
@@ -50,9 +50,9 @@ app.use(controller());
 // });
 
 app.on('error', function(err, ctx) {
-  console.log(err);
+    console.log(err);
 });
 
 app.listen(config.dev.port, () => {
-  console.log('The server is running at http://localhost:' + config.dev.port)
+    console.log('The server is running at http://localhost:' + config.dev.port)
 });

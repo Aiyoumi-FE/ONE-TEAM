@@ -1,10 +1,15 @@
+const teamModel = require('../models/team.js')
 const mongoose = require('./db.js'),
-  Schema = mongoose.Schema;
+    Schema = mongoose.Schema
+
 const userSchema = new Schema({
-  username: { type: String }, //用户账号
-  userpwd: { type: String }, //密码
-  photo: { type: String }, // 头像
-  userage: { type: String }, // 年龄
-  logindate: { type: Date } //最近登录时间
-});
-module.exports = mongoose.model('user', userSchema);
+    eMail: { type: String }, // 邮箱
+    nickName: { type: String }, // 用户昵称
+    userPassword: { type: String }, // 密码
+    headPortrait: { type: String }, // 头像
+    phoneNumber: { type: String }, // 电话号码
+    loginTime: { type: Date }, // 注册时间
+    teamId: { type: Schema.Types.ObjectId, ref: 'team' }, // 团队id
+    creatTime: { type: Date, default: Date.now } // 创建时间
+})
+module.exports = mongoose.model('user', userSchema)
