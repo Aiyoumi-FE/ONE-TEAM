@@ -44,6 +44,10 @@
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(0, 0, 0, .6);
 }
 
+.textarea:focus {
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(0, 0, 0, .6);
+}
+
 // 导航
 .ul {
     display: flex;
@@ -65,14 +69,14 @@
 }
 
 // 列表
-.rain-cells {
+.cells {
     position: relative;
     width: 100%;
     padding: 10px;
     justify-content: space-between;
 }
 
-.rain-cells::before {
+.cells::before {
     content: " ";
     position: absolute;
     width: 100%;
@@ -81,7 +85,7 @@
     background-color: $colorLine;
 }
 
-.rain-cell {
+.cell {
     position: relative;
     min-height: 100px;
     padding: 10px;
@@ -92,7 +96,7 @@
     justify-content: space-between;
 }
 
-.rain-cell::after {
+.cell::after {
     content: " ";
     position: absolute;
     width: 100%;

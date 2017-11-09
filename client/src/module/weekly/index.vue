@@ -23,12 +23,14 @@ export default {
 
 </script>
 <style scoped>
+.content {
+    padding: 0 10%;
+}
 .weekly {
     position: relative;
     margin: 100px auto;
-    width: 80%;
     min-height: 800px;
-    padding: 50px 0;
+    padding: 50px 15%;
     background-color: #fff;
     box-shadow: 0 0 15px 0 #999;
 }

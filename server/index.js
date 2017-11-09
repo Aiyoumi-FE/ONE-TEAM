@@ -10,14 +10,28 @@ const fs = require('fs');
 const path = require('path');
 const controller = require('./controller');
 
-var User = require("./models/user.js");
+const { businessUtil } = require('./util')
 
 app.use(async(ctx, next) => {
-    const start = new Date();
-    await next();
-    const ms = new Date() - start;
-    console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
-});
+	// 用户登录拦截
+	let reg = /login|register/
+	// console.log(ctx.request.url)
+	// console.log(reg.test(ctx.request.url))
+	if (reg.test(ctx.request.url) || businessUtil.getStatus(ctx)) {
+		const start = new Date()
+		await next()
+		const ms = new Date() - start
+    	console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
+	} else {
+		let result = {
+        	code: '-1999',
+        	resultRes: '用户未登录',
+            success: false
+        }
+        ctx.response.body = result
+	}
+})
+
 // app.keys = ['1'];
 // const CONFIG = {
 //   key: 'SESSIONID',

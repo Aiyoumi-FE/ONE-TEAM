@@ -17,7 +17,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    document.title = to.meta.title || 'axd app'
+    document.title = to.meta.title || 'one team'
     next()
 })
 

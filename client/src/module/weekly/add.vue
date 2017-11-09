@@ -1,25 +1,24 @@
 <template>
-    <div class="content">
+    <div>
         <div class="bd-date">
             <div>
-                {{obj.year}}年 第{{obj.weeknum}}周
-                <br>
-                <span class="bd-date__sub">本周周报</span>
+                {{dateForm.year}}年 第{{dateForm.weekNum}}周
+                <p class="bd-date__sub">本周周报</p>
             </div>
         </div>
-        <router-link class="bd-back" :to="{name: 'weeklyList'}">
-            <<返回列表</router-link>
-                <div class="bd-content" v-if="isEmpty">
-                    <textarea class="rain-textarea rain-form" v-model="obj.content"></textarea>
-                    <div @click="saveWeekly()" class="rain-btn__primary add-btn">保存</div>
-                </div>
-                <div class="bd-content" v-else>
-                    {{obj.content}}
-                </div>
+        <router-link class="bd-back" :to="{name: 'weeklyList'}">返回列表</router-link>
+        <div class="bd-content" v-if="isEmpty">
+            <textarea class="textarea" v-model="obj.content"></textarea>
+            <div @click="saveWeekly()" class="btn">保存</div>
+        </div>
+        <div class="bd-content" v-else>
+            {{obj.content}}
+        </div>
     </div>
 </template>
 <script>
 import rHeader from '../header/index'
+import dateFormate from './common/index'
 import {
     getWeekDetail,
     saveWeekDetail
@@ -29,11 +28,13 @@ export default {
     data() {
         return {
             online: true,
-            obj: {
-                id: this.$route.query.id || '',
+            dateForm: {
                 year: '',
-                weeknum: '',
-                weekdata: '',
+                weekNum: '',
+                begin: '',
+                end: ''
+            },
+            obj: {
                 content: ''
             },
             isEmpty: true
@@ -42,13 +43,20 @@ export default {
     components: {
         rHeader
     },
+    computed: {
+        beginDate() {
+            return this.$router.query ? (this.$router.query.beginDate || dateFormate.getDayOfWeek(new Date(), 1)) : dateFormate.getDayOfWeek(new Date(), 1)
+        }
+    },
     mounted() {
         this.initData()
     },
     methods: {
         initData() {
-            getWeekDetail(this.obj, (result) => {
-                let res = JSON.parse(result)
+            this.setDate()
+            getWeekDetail({
+                beginDate: this.beginDate
+            }, (res) => {
                 if (res.success) {
                     this.obj = res.result
                 } else {
@@ -56,9 +64,14 @@ export default {
                 }
             })
         },
+        setDate() {
+            this.dateForm.year = dateFormate.getYear(this.beginDate)
+            this.dateForm.weekNum = dateFormate.getYearWeek(this.beginDate)
+            this.dateForm.begin = this.beginDate
+            this.dateForm.end = dateFormate.getDayOfWeek(this.beginDate, 5)
+        },
         saveWeekly() {
-            saveWeekDetail(this.obj, (result) => {
-                let res = JSON.parse(result)
+            saveWeekDetail(this.obj, (res) => {
                 if (res.success) {
                     this.isEmpty = false
                 } else {
@@ -70,7 +83,7 @@ export default {
 }
 
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .page-bd {
     position: relative;
     margin: 100px auto;
@@ -95,18 +108,20 @@ export default {
     color: #c18795;
 }
 
-.add-btn {
+.btn_save {
     display: block;
     margin: 45px auto 0;
 }
 
 .bd-date__sub {
+    margin-top: 25px;
     font-size: 18px;
 }
-
-.bd-content {
-    margin: 50px auto;
-    width: 65%;
+.bd-content{
+    margin-top: 50px;
+    .btn{
+        margin: 10px auto 0;
+    }
 }
 
 </style>

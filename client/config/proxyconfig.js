@@ -5,5 +5,6 @@ module.exports = [
   '/signout',
   '/getWeekList',
   '/getWeekDetail',
-  '/saveWeekDetail'
+  '/saveWeekDetail',
+  '/teamInfo'
 ]

@@ -12,4 +12,5 @@ const userSchema = new Schema({
     teamId: { type: Schema.Types.ObjectId, ref: 'team' }, // 团队id
     creatTime: { type: Date, default: Date.now } // 创建时间
 })
+
 module.exports = mongoose.model('user', userSchema)

@@ -84,70 +84,65 @@ class User {
         let teamId = formData.teamId
         // let userId = serviceUtil.getCookie(ctx, 'id')
 
-        try {
-            // 校验数据格式
-            let check = checkFormData(formData)
-            if (check) {
-                serviceUtil.sendErrMsg(ctx, check)
-                return
+        // 校验数据格式
+        let check = checkFormData(formData)
+        if (check) {
+            serviceUtil.sendErrMsg(ctx, check)
+            return
+        }
+        // 用户是否已存在
+        let user = await userModel.findOne({
+            'eMail': formData.eMail
+        }).exec()
+
+        if (!user) {
+            // 团队
+            if (formData.teamName) {
+                let team = new teamModel({
+                    teamName: formData.teamName,
+                    createTime: new Date()
+                })
+                let teamSave = await team.save()
+                teamId = teamSave.id
             }
-            // 用户是否已存在
-            let user = await userModel.findOne({
-                'eMail': formData.eMail
-            }).exec()
-
-            if (!user) {
-                // 团队
-                if (formData.teamName) {
-                    let team = new teamModel({
-                        teamName: formData.teamName,
-                        createTime: new Date()
-                    })
-                    let teamSave = await team.save()
-                    teamId = teamSave.id
+            if (formData.teamId) {
+                let team = await teamModel.findOne({
+                    '_id': formData.teamId
+                }).exec()
+                if (!team) {
+                    serviceUtil.sendErrMsg(ctx, '团队邀请码错误')
+                    return
                 }
-                if (formData.teamId) {
-                    let team = await teamModel.findOne({
-                        '_id': formData.teamId
-                    }).exec()
-                    if (!team) {
-                        serviceUtil.sendErrMsg(ctx, '团队邀请码错误')
-                        return
-                    }
-                }
-                // 新增用户
-                let userReg = new userModel({
-                    eMail: formData.eMail,
-                    nickName: formData.nickName,
-                    userPassword: serviceUtil.encrypt(formData.userPassword),
-                    teamId: teamId, // 团队id
-                    creatTime: new Date() // 创建时间
-                })
-                let userRegRes = await userReg.save((err, res) => {
-                    if (err) {
-                        console.log("Error:" + err)
-                    } else {
-                        ctx.cookies.set('name', new Buffer(res.nickName).toString('base64'), { httpOnly: false })
-                        ctx.cookies.set('id', res._id)
-                        ctx.cookies.set('team', user.teamId)
-                    }
-                })
-                let teamUpdate = await teamModel.update({ _id: teamId }, {
-                    $push: {
-                        memberList: userRegRes.id
-                    }
-                })
-                result.success = true
-                ctx.response.body = result
-
-            } else {
-                result.resultDes = '该邮箱已被注册'
-                result.success = false
-                ctx.response.body = result
             }
+            // 新增用户
+            let userReg = new userModel({
+                eMail: formData.eMail,
+                nickName: formData.nickName,
+                userPassword: serviceUtil.encrypt(formData.userPassword),
+                teamId: teamId, // 团队id
+                creatTime: new Date() // 创建时间
+            })
+            let userRegRes = await userReg.save((err, res) => {
+                if (err) {
+                    console.log("Error:" + err)
+                } else {
+                    ctx.cookies.set('name', new Buffer(res.nickName).toString('base64'), { httpOnly: false })
+                    ctx.cookies.set('id', res._id)
+                    ctx.cookies.set('team', res.teamId)
+                }
+            })
+            let teamUpdate = await teamModel.update({ _id: teamId }, {
+                $push: {
+                    memberList: userRegRes.id
+                }
+            })
+            result.success = true
+            ctx.response.body = result
 
-        } catch (err) {
-            serviceUtil.sendErrMsg(ctx, err.message)
+        } else {
+            result.resultDes = '该邮箱已被注册'
+            result.success = false
+            ctx.response.body = result
         }
     }
 

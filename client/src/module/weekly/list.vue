@@ -1,20 +1,18 @@
 <template>
-    <div class="content">
+    <div>
         <div class="bd-date">
-            <img src="./img/back.png" alt=""><span>{{obj.year}}年  第{{obj.weeknum}}周</span><img v-if="notEnd" src="./img/back.png" alt="">
+            <img src="./img/back.png" alt="" @click="changeList(-7)"><span>{{obj.year}}年  第{{obj.weekNum}}周</span><img v-if="notEnd" src="./img/back.png" alt="" @click="changeList(7)">
         </div>
         <div @click="creatWeekly()" class="btn week-btn">写周报</div>
         <div class="bd-content">
-            <ul class="rain-cells">
-                <li v-for="item in obj.list" class="rain-cell">
+            <ul class="cells">
+                <li v-for="item in list" class="cell">
                     <div class="cell-hd">
-                        <div class="cell-hd-pic">
-                            <img src="" alt="">
-                        </div>
-                        <p class="cell-hd-name">{{item.username}}</p>
+                        <img class="cell-hd-pic" :src="item.phote | photoFilter" alt="">
+                        <p class="cell-hd-name">{{item.userId.nickName}}</p>
                     </div>
                     <div class="cell-bd">{{item.content}}</div>
-                    <div class="rain-btn__primary" v-if="item.isUser" @click="creatWeekly(item._id)">编辑</div>
+                    <div class="btn__primary" v-if="item.isUser" @click="creatWeekly(item._id)">编辑</div>
                 </li>
             </ul>
         </div>
@@ -22,6 +20,7 @@
 </template>
 <script>
 import rHeader from '../header/index'
+import dateFormate from './common/index'
 import {
     getWeekList
 } from '@/store/weekly'
@@ -29,43 +28,72 @@ export default {
     name: 'weeklyList',
     data() {
         return {
+            list: [],
             obj: {
-                notEnd: true,
                 year: '',
-                weeknum: '',
-                weekdata: '',
-                list: [{
-                    username: 'Doris',
-                    content: 'cnjanckjscnkjc'
-                }, {
-                    username: 'sunny',
-                    content: 'cnjanckkjc'
-                }]
+                weekNum: '',
+                begin: '',
+                end: ''
             }
         }
     },
     components: {
         rHeader
     },
+    filters: {
+        photoFilter(val) {
+            return val || require('../user/image/cat.png')
+        }
+    },
+    computed: {
+        beginDate() {
+            return this.$route.query.beginDate ? new Date(parseInt(this.$route.query.beginDate)) : dateFormate.getDayOfWeek(new Date(), 1)
+        },
+        notEnd() {
+            return this.beginDate < dateFormate.getDayOfWeek(new Date(), 1)
+        }
+    },
+    watch: {
+        '$route'(to, from) {
+            this.initData()
+        }
+    },
     mounted() {
         this.initData()
     },
     methods: {
         initData() {
-            getWeekList(this.obj, (result) => {
-                let res = JSON.parse(result)
+            this.setDate()
+            console.log(this.beginDate)
+            getWeekList({
+                beginDate: this.beginDate
+            }, (res) => {
                 if (res.success) {
-                    this.obj = res.result
+                    this.list = res.result.list
                 } else {
                     alert(res.resultDes)
                 }
             })
         },
+        setDate() {
+            this.obj.year = dateFormate.getYear(this.beginDate)
+            this.obj.weekNum = dateFormate.getYearWeek(this.beginDate)
+            this.obj.begin = this.beginDate
+            this.obj.end = dateFormate.getDayOfWeek(this.beginDate, 5)
+        },
         creatWeekly(id) {
             this.$router.push({
                 name: 'weeklyDetail',
                 query: {
-                    id: id
+                    beginDate: this.beginDate
+                }
+            })
+        },
+        changeList(action) {
+            this.$router.push({
+                name: 'weeklyList',
+                query: {
+                    beginDate: Date.parse(this.beginDate) + 24 * 60 * 60 * 1000 * action
                 }
             })
         }
@@ -101,7 +129,6 @@ export default {
 
 .bd-content {
     margin: 50px auto;
-    width: 65%;
 }
 
 .cell-hd {
@@ -113,7 +140,6 @@ export default {
     width: 50px;
     height: 50px;
     border-radius: 25px;
-    background-color: #999;
     line-height: 50px;
 }
 

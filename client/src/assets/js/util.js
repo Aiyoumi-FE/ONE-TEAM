@@ -9,5 +9,12 @@ module.exports = {
     decodeBase64: (str) => {
         console.log(Base64.decode(str))
         return Base64.decode(str)
+    },
+    login: (param) => {
+        let url = window.location.pathname + window.location.search
+        if (param) {
+            url = param
+        }
+        window.location.href = '/page/login?backUrl=' + encodeURIComponent(url)
     }
 }

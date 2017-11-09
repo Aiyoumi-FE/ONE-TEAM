@@ -1,3 +1,4 @@
+import util from '@/assets/js/util'
 const _ajax = (obj) => {
     obj = obj || {}
     obj.type = (obj.type || 'GET').toUpperCase()
@@ -14,7 +15,10 @@ const _ajax = (obj) => {
     xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
             if (xhr.status >= 200 && xhr.status < 300) {
-                obj.success && obj.success(xhr.responseText, xhr.responseXML)
+                if (obj.success) {
+                    let response = JSON.parse(xhr.responseText)
+                    response.code === '-1999' ? util.login() : obj.success(response, xhr.responseXML)
+                }
             } else {
                 obj.error && obj.error(xhr.status)
             }

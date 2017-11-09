@@ -2,7 +2,7 @@
     <div class="nav">
         <ul class="ul">
             <li v-for="item in navList" class="li">
-                <router-link :to="{name: item.link}">{{item.name}}</router-link>
+                <router-link :to="{name: item.link, params: item.params}">{{item.name}}</router-link>
             </li>
         </ul>
     </div>
