@@ -85,7 +85,7 @@ export default {
             this.$router.push({
                 name: 'weeklyDetail',
                 query: {
-                    beginDate: this.beginDate
+                    beginDate: Date.parse(this.beginDate)
                 }
             })
         },

@@ -6,7 +6,7 @@
                 <p class="bd-date__sub">本周周报</p>
             </div>
         </div>
-        <router-link class="bd-back" :to="{name: 'weeklyList'}">返回列表</router-link>
+        <a href="javascript:;" class="bd-back" @click="back()">返回列表</a>
         <div class="bd-content" v-if="isEmpty">
             <textarea class="textarea" v-model="obj.content"></textarea>
             <div @click="saveWeekly()" class="btn">保存</div>
@@ -45,7 +45,7 @@ export default {
     },
     computed: {
         beginDate() {
-            return this.$router.query ? (this.$router.query.beginDate || dateFormate.getDayOfWeek(new Date(), 1)) : dateFormate.getDayOfWeek(new Date(), 1)
+            return this.$route.query.beginDate ? new Date(parseInt(this.$route.query.beginDate)) : dateFormate.getDayOfWeek(new Date(), 1)
         }
     },
     mounted() {
@@ -71,6 +71,9 @@ export default {
             this.dateForm.end = dateFormate.getDayOfWeek(this.beginDate, 5)
         },
         saveWeekly() {
+            Object.assign(this.obj, {
+                beginDate: this.beginDate
+            })
             saveWeekDetail(this.obj, (res) => {
                 if (res.success) {
                     this.isEmpty = false
@@ -78,6 +81,9 @@ export default {
                     alert(res.resultDes)
                 }
             })
+        },
+        back() {
+            this.$router.go(-1)
         }
     }
 }
@@ -117,9 +123,10 @@ export default {
     margin-top: 25px;
     font-size: 18px;
 }
-.bd-content{
+
+.bd-content {
     margin-top: 50px;
-    .btn{
+    .btn {
         margin: 10px auto 0;
     }
 }

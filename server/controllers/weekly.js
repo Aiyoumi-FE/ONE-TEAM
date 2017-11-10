@@ -47,6 +47,11 @@ class Weekly {
 
         let weeklyDetail = await weeklyModel.findOne({ "creatTime": { $gte: beginDate, $lte: endDate }, 'teamId': teamId, 'userId': userId }).exec()
 
+        if (!weeklyDetail) {
+            weeklyDetail = {
+                content: ''
+            }
+        }
         // 返回数据
         let result = {
             result: weeklyDetail,
@@ -81,7 +86,7 @@ class Weekly {
             userId: userId,
             teamId: teamId,
             content: requestData.content,
-            creatTime: new Date() // 创建时间
+            creatTime: requestData.beginDate // 创建时间
         })
         let createWeeklyRes = await createWeekly.save((err, res) => {
             err ? serviceUtil.sendErrMsg(ctx, err) : result.success = true
