@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="!loading">
         <div class="bd-date">
             <img src="./img/back.png" alt="" @click="changeList(-7)"><span>{{obj.year}}年  第{{obj.weekNum}}周</span><img v-if="notEnd" src="./img/back.png" alt="" @click="changeList(7)">
         </div>
@@ -11,7 +11,8 @@
                         <img class="cell-hd-pic" :src="item.phote | photoFilter" alt="">
                         <p class="cell-hd-name">{{item.userId.nickName}}</p>
                     </div>
-                    <div class="cell-bd">{{item.content}}</div>
+                    <vue-markdown v-highlight :source="item.content" class="cell-bd markdown"></vue-markdown>
+                    <!-- <div class="cell-bd">{{item.content}}</div> -->
                     <div class="btn__primary" v-if="item.isUser" @click="creatWeekly(item._id)">编辑</div>
                 </li>
             </ul>
@@ -24,6 +25,7 @@ import dateFormate from './common/index'
 import {
     getWeekList
 } from '@/store/weekly'
+import VueMarkdown from 'vue-markdown'
 export default {
     name: 'weeklyList',
     data() {
@@ -34,11 +36,13 @@ export default {
                 weekNum: '',
                 begin: '',
                 end: ''
-            }
+            },
+            loading: true
         }
     },
     components: {
-        rHeader
+        rHeader,
+        VueMarkdown
     },
     filters: {
         photoFilter(val) {
@@ -71,8 +75,11 @@ export default {
                 if (res.success) {
                     this.list = res.result.list
                 } else {
-                    alert(res.resultDes)
+                    this.$router.replace({
+                        name: 'refuse'
+                    })
                 }
+                this.loading = false
             })
         },
         setDate() {
@@ -134,6 +141,7 @@ export default {
 .cell-hd {
     width: 50px;
     text-align: center;
+    margin-top: 10px;
 }
 
 .cell-hd-pic {
@@ -149,7 +157,6 @@ export default {
 }
 
 .cell-bd {
-    margin-left: 30px;
     flex-grow: 1;
 }
 

@@ -1,8 +1,9 @@
 // 工具库
-const { serviceUtil } = require('../util')
+const { serviceUtil, businessUtil } = require('../util')
 // 数据库
 const userModel = require('../models/user.js')
 const weeklyModel = require('../models/weekly.js')
+// const markdown = require( "markdown" ).markdown;
 
 class Weekly {
     constructor() {
@@ -16,6 +17,11 @@ class Weekly {
         let requestData = ctx.request.body
         let teamId = serviceUtil.getCookie(ctx, 'team')
 
+        if (!teamId) {
+            serviceUtil.sendErrMsg(ctx, '未加入团队')
+            return
+        }
+
         let beginDate = new Date(requestData.beginDate) || serviceUtil.getDayOfWeek(new Date(), 1),
             endDate = serviceUtil.getDayOfWeek(beginDate, 7)
 
@@ -24,6 +30,9 @@ class Weekly {
             .populate('userId', 'nickName')
             .exec()
 
+        // weeklyList.forEach((item) => {
+        //     item.content = markdown.toHTML(item.content )
+        // })
         // 返回数据
         let result = {
             result: {
@@ -39,7 +48,7 @@ class Weekly {
     // 返回参数: content(周报内容)
     async getWeeklyDetail(ctx, next) {
         let requestData = ctx.request.body
-        let userId = serviceUtil.getCookie(ctx, 'id')
+        let userId = businessUtil.getStatus(ctx)
         let teamId = serviceUtil.getCookie(ctx, 'team')
 
         let beginDate = new Date(requestData.beginDate) || serviceUtil.getDayOfWeek(new Date(), 1),
@@ -79,7 +88,7 @@ class Weekly {
         }
 
         // 创建
-        let userId = serviceUtil.getCookie(ctx, 'id')
+        let userId = businessUtil.getStatus(ctx)
         let teamId = serviceUtil.getCookie(ctx, 'team')
 
         let createWeekly = new weeklyModel({

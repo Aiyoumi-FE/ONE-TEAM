@@ -10,7 +10,7 @@ export default [{
         name: 'login',
         component: login,
         meta: {
-            title: '开车了'
+            title: 'welcome'
         }
     }]
 }]

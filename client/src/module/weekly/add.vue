@@ -12,7 +12,8 @@
             <div @click="saveWeekly()" class="btn">保存</div>
         </div>
         <div class="bd-content" v-else>
-            {{obj.content}}
+            <vue-markdown :source="obj.content" v-highlight></vue-markdown>
+            <div @click="edit()" class="btn">编辑</div>
         </div>
     </div>
 </template>
@@ -23,6 +24,7 @@ import {
     getWeekDetail,
     saveWeekDetail
 } from '@/store/weekly'
+import VueMarkdown from 'vue-markdown'
 export default {
     name: 'weekly',
     data() {
@@ -41,7 +43,8 @@ export default {
         }
     },
     components: {
-        rHeader
+        rHeader,
+        VueMarkdown
     },
     computed: {
         beginDate() {
@@ -84,6 +87,9 @@ export default {
         },
         back() {
             this.$router.go(-1)
+        },
+        edit() {
+            this.isEmpty = true
         }
     }
 }

@@ -27,17 +27,22 @@
     border-radius: 5px;
     padding: 0 10px;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    color: $colorTextGeneral;
+    caret-color: $colorTextGeneral;
 }
 
 .textarea {
     width: 100%;
     padding: 10px;
-    height: 200px;
+    min-height: 200px;
     border: 1px solid #ccc;
     border-radius: 5px;
     resize: none;
     font-size: 14px;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    color: $colorTextGeneral;
+    caret-color: $colorTextGeneral;
+    overflow-y:visible;
 }
 
 .input:focus {
@@ -91,8 +96,8 @@
     padding: 10px;
     display: flex;
     -webkit-box-align: center;
-    -webkit-align-items: center;
-    align-items: center;
+    // -webkit-align-items: center;
+    // align-items: center;
     justify-content: space-between;
 }
 
@@ -103,4 +108,16 @@
     bottom: 0;
     height: 1px;
     background-color: $colorLine;
+}
+// markdown 样式
+.markdown{
+    width: 100%;
+    padding: 0 30px;
+    ol li{
+        list-style-position:inside;
+    }
+    // pre {
+    //     background-color: #eee;
+    //     padding: 5px;
+    // }
 }

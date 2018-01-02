@@ -1,8 +1,14 @@
 const serviceUtil = require('./service')
+const jwt = require('jsonwebtoken')
 
 module.exports = {
 	// 获取用户状态
     getStatus: function(ctx) {
-    	return serviceUtil.getCookie(ctx, 'id')
+    	try {
+    		let jwtData = jwt.verify(serviceUtil.getCookie(ctx, 'tocken'), 'jwt one')
+    		return jwtData.id
+    	} catch(error) {
+    		return false
+    	}
     }
 }

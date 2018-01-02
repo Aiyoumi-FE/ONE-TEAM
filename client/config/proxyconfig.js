@@ -6,5 +6,7 @@ module.exports = [
   '/getWeekList',
   '/getWeekDetail',
   '/saveWeekDetail',
-  '/teamInfo'
+  '/teamInfo',
+  '/teamMemStatus',
+  '/teamOpera'
 ]

@@ -5,9 +5,13 @@ import VueRouter from 'vue-router'
 import App from './App'
 import configRouter from './routes'
 import './assets/js/ajax'
+import hljs from 'highlight.js'
+import 'highlight.js/styles/googlecode.css'
+// import Highlight from './assets/js/highlight.js'
 Vue.config.productionTip = false
 
 Vue.use(VueRouter)
+// Vue.use(Highlight)
 
 const router = new VueRouter({
     mode: 'history',
@@ -19,6 +23,13 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     document.title = to.meta.title || 'one team'
     next()
+})
+
+Vue.directive('highlight', (el) => {
+    let blocks = el.querySelectorAll('pre code')
+    blocks.forEach((block) => {
+        hljs.highlightBlock(block)
+    })
 })
 
 /* eslint-disable no-new */

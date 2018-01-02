@@ -8,3 +8,15 @@ export const getTeamInfo = (callback) => {
         callback(data)
     })
 }
+
+export const changeTeamMemStatus = (param, callback) => {
+    return _post('/teamMemStatus', param, (data) => {
+        callback(data)
+    })
+}
+
+export const teamOpera = (param, callback) => {
+    return _post('/teamOpera', param, (data) => {
+        callback(data)
+    })
+}

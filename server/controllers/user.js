@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken')
+const secret = 'jwt one'
 // 工具库
 const { validatorUtil, serviceUtil } = require('../util')
 // 数据库
@@ -35,7 +37,6 @@ class User {
     async loginAction(ctx, next) {
         let formData = ctx.request.body
         let result = {}
-
         try {
             // 校验
             let errMsg = ''
@@ -53,17 +54,19 @@ class User {
             let user = await userModel.findOne({
                 'eMail': formData.eMail
             }).exec()
+            result.result = user
 
             if (user) {
                 let password = serviceUtil.encrypt(formData.userPassword)
                 if (user.userPassword == password) {
                     result.success = true
+                    let userToken = {
+                        id: user._id
+                    }
+                    let tocken = jwt.sign(userToken, secret, {expiresIn: '1h'})
                     ctx.cookies.set('name', new Buffer(user.nickName).toString('base64'), { httpOnly: false })
-                    ctx.cookies.set('id', user._id)
+                    ctx.cookies.set('tocken', tocken)
                     ctx.cookies.set('team', user.teamId)
-                    // ctx.set(
-                    //     'Set-Cookie', ['id=' + user._id, 'name=' + user.nickName]
-                    // )
                 } else {
                     result.resultDes = '用户密码错误'
                 }
@@ -126,16 +129,24 @@ class User {
                 if (err) {
                     console.log("Error:" + err)
                 } else {
+                    let userToken = {
+                        id: res._id
+                    }
+                    let tocken = jwt.sign(userToken, secret, {expiresIn: '1h'})
                     ctx.cookies.set('name', new Buffer(res.nickName).toString('base64'), { httpOnly: false })
-                    ctx.cookies.set('id', res._id)
+                    ctx.cookies.set('tocken', tocken)
                     ctx.cookies.set('team', res.teamId)
                 }
             })
-            let teamUpdate = await teamModel.update({ _id: teamId }, {
-                $push: {
-                    memberList: userRegRes.id
-                }
-            })
+            // 加入团队
+            let oldTeamValue = { _id: teamId }
+            let newTeamData = { $push: { memberList: userRegRes.id } }
+            if (formData.teamName) {
+                Object.assign(newTeamData, {
+                    $set: { administrator: userRegRes.id }
+                })
+            }
+            let teamUpdate = await teamModel.update(oldTeamValue, newTeamData)
             result.success = true
             ctx.response.body = result
 

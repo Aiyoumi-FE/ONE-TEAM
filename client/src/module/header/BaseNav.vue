@@ -17,7 +17,7 @@ export default {
                 link: 'About'
             }, {
                 name: 'Team',
-                link: 'team'
+                link: 'teamList'
             }, {
                 name: 'Weekly',
                 link: 'weeklyList'
