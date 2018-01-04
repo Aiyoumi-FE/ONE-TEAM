@@ -43,7 +43,9 @@ export default {
             })
         },
         goRegsiter() {
-            this.$emit('back', 'register')
+            this.$router.replace({
+                name: 'register'
+            })
         },
         check(form) {
             if (!form.eMail) {

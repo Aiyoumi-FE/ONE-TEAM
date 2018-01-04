@@ -138,6 +138,17 @@ class Team {
         }
         ctx.response.body = result
     }
+
+    async joinUrl(ctx, next) {
+        let teamId = serviceUtil.getCookie(ctx, 'team')
+        let result = {
+            success: true,
+            result: {
+                url: `http://${ctx.request.header.host}/page/user/register?id=${teamId}`
+            }
+        }
+        ctx.response.body = result
+    }
 }
 /**
  * @Author   dongyusi

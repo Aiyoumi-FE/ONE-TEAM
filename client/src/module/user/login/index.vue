@@ -2,28 +2,15 @@
     <div class="page-content">
         <img :src="logo" alt="" class="logo">
         <h1>ONE TEAM</h1>
-        <user-login v-if="status == 'login'" @back="back"></user-login>
-        <user-register v-if="status == 'register'" @back="back"></user-register>
+        <router-view></router-view>
     </div>
 </template>
 <script>
-import UserRegister from './register'
-import UserLogin from './login'
 export default {
-    name: 'login',
+    name: 'user',
     data() {
         return {
-            logo: require('../image/logo.jpg'),
-            status: 'login'
-        }
-    },
-    components: {
-        UserRegister,
-        UserLogin
-    },
-    methods: {
-        back(msg) {
-            this.status = msg
+            logo: require('../image/logo.jpg')
         }
     }
 }

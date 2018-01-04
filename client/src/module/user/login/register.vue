@@ -4,14 +4,16 @@
         <input class="form-input" type="text" placeholder="用户昵称" v-model.trim="form.nickName">
         <input class="form-input" type="password" placeholder="6-12位字母数字密码" v-model.trim="form.userPassword">
         <input class="form-input" type="password" placeholder="密码确认" v-model.trim="form.confirmPassword">
-        <div class="mt25">
-            <input type="radio" id="create" value="create" v-model="teamPick">
-            <label for="create">创建团队</label>
-            <input type="radio" id="join" value="join" v-model="teamPick">
-            <label for="join">加入团队</label>
+        <div v-if="teamShow">
+            <div class="mt25">
+                <input type="radio" id="create" value="create" v-model="teamPick">
+                <label for="create">创建团队</label>
+                <input type="radio" id="join" value="join" v-model="teamPick">
+                <label for="join">加入团队</label>
+            </div>
+            <input v-if="teamStatus" class="form-input mt25" type="text" placeholder="团队名称" v-model.trim="form.teamName">
+            <input v-else class="form-input mt25" type="text" placeholder="团队邀请码" v-model.trim="form.teamId">
         </div>
-        <input v-if="teamStatus" class="form-input mt25" type="text" placeholder="团队名称" v-model.trim="form.teamName">
-        <input v-else class="form-input mt25" type="text" placeholder="团队邀请码" v-model.trim="form.teamId">
         <div class="mt25">
             <button class="btn" @click="goLogin">《 登录</button>
             <button class="btn" @click="submitRegsiter">注册</button>
@@ -27,6 +29,7 @@ export default {
     data() {
         return {
             teamPick: 'create',
+            teamShow: !this.$route.query.id,
             form: {
                 eMail: '',
                 nickName: '',
@@ -44,7 +47,16 @@ export default {
         }
     },
     components: {},
+    mounted() {
+        this.init()
+    },
     methods: {
+        init() {
+            if (!this.teamShow) {
+                this.teamPick = 'join'
+                this.form.teamId = this.$route.query.id
+            }
+        },
         submitRegsiter() {
             if (!this.check(this.form)) {
                 return
@@ -61,7 +73,9 @@ export default {
             })
         },
         goLogin() {
-            this.$emit('back', 'login')
+            this.$router.replace({
+                name: 'login'
+            })
         },
         check(form) {
             if (!form.eMail) {

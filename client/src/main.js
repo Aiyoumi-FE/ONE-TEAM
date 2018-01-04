@@ -7,11 +7,9 @@ import configRouter from './routes'
 import './assets/js/ajax'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/googlecode.css'
-// import Highlight from './assets/js/highlight.js'
 Vue.config.productionTip = false
 
 Vue.use(VueRouter)
-// Vue.use(Highlight)
 
 const router = new VueRouter({
     mode: 'history',

@@ -15,6 +15,6 @@ module.exports = {
         if (param) {
             url = param
         }
-        window.location.href = '/page/login?backUrl=' + encodeURIComponent(url)
+        window.location.href = '/page/user/login?backUrl=' + encodeURIComponent(url)
     }
 }

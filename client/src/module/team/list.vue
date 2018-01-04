@@ -2,11 +2,12 @@
     <div v-if="!loading">
         <h1>{{obj.teamName}}</h1>
         <div class="team-sub">
-            <div class="team-sub_invate">
-                <p class="invate">邀请码：{{obj._id}}</p>
+            <span class="invate">邀请码：{{obj._id}}</span>
+            <div>
+                <button v-if="obj.isAdmin" class="btn" @click="manageAction">{{manageText}}</button>
+                <button v-if="obj.isAdmin" class="btn" @click="invate">邀请新成员</button>
+                <button class="btn" @click="teamOpera('out')">退出团队</button>
             </div>
-            <button v-if="obj.isAdmin" class="btn" @click="manageAction">{{manageText}}</button>
-            <button class="btn" @click="teamOpera('out')">退出团队</button>
         </div>
         <ul class="cells">
             <li v-for="item in obj.memberList" class="cell">
@@ -30,7 +31,6 @@ import {
     getTeamInfo,
     changeTeamMemStatus
 } from '@/store/team'
-// import base64 from '@/assets/js/base64'
 import TeamJoin from './join'
 export default {
     name: 'home',
@@ -70,6 +70,9 @@ export default {
                 this.loading = false
             })
         },
+        invate() {
+            this.$router.push('teamJoin')
+        },
         manageAction() {
             this.managing = !this.managing
         },
@@ -95,15 +98,8 @@ export default {
 <style lang="scss" scoped>
 @import '../../var.scss';
 .team-sub{
-    display: flex;
-    justify-content: space-between;
-}
-.team-sub_invate{
-    flex-grow: 1;
-}
-.btn{
-    margin: 0 5px;
-    padding: 0 10px;
+    display:flex;
+    justify-content:space-between;
 }
 .invate{
     margin-top: 10px;

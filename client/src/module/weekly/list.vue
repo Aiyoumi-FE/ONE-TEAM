@@ -127,7 +127,9 @@ export default {
         }
     }
 }
-
+.cell{
+    padding: 10px 10px 20px;
+}
 .week-btn {
     position: absolute;
     right: 130px;

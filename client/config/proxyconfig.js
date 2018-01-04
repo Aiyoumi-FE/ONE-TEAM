@@ -8,5 +8,7 @@ module.exports = [
   '/saveWeekDetail',
   '/teamInfo',
   '/teamMemStatus',
-  '/teamOpera'
+  '/teamOpera',
+  '/joinUrl',
+  '/sendEmail'
 ]

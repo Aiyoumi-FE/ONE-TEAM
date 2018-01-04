@@ -20,3 +20,15 @@ export const teamOpera = (param, callback) => {
         callback(data)
     })
 }
+
+export const joinUrl = (callback) => {
+    return _post('/joinUrl', null, (data) => {
+        callback(data)
+    })
+}
+
+export const sendEmail = (param, callback) => {
+    return _post('/sendEmail', param, (data) => {
+        callback(data)
+    })
+}

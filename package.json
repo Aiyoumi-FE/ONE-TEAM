@@ -24,12 +24,13 @@
         "koa-router": "^7.2.1",
         "koa-session": "^5.5.0",
         "koa-static": "^4.0.1",
-        "markdown": "^0.5.0",
         "mongoose": "^4.11.10",
         "node-sass": "^4.5.3",
+        "nodemailer": "^4.4.1",
         "sass-loader": "^6.0.6",
         "vue": "^2.4.2",
         "vue-markdown": "^2.2.4",
+        "vue-qart": "^2.1.1",
         "vue-router": "^2.7.0"
     },
     "devDependencies": {

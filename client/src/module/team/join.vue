@@ -2,27 +2,80 @@
     <div>
         <div class="methods-link">
             <h4>链接邀请，发送下发链接至邀请人</h4>
-            <p>https://tower.im/join?t=9ad942b5cf95fa6867efd3d7b64a59f7</p>
+            <p>{{url}}</p>
         </div>
         <div class="methods-email">
             <h4>邮件邀请</h4>
-            <p>https://tower.im/join?t=9ad942b5cf95fa6867efd3d7b64a59f7</p>
+            <!-- <input type="text" class="input" placeholder="请输入新成员的邮箱" v-model="email"> -->
+            <div class="email-input">
+                <p v-for="item in email">
+                    <input type="text" class="input" placeholder="请输入新成员的邮箱" v-model="item.value">
+                </p>
+                <img src="./image/add.png" alt="" @click="add" class="add">
+            </div>
+            <button class="btn" @click="send">发送</button>
         </div>
         <div class="methods-orcode">
-            待开放。
+            <h4>通过微信扫码邀请好友</h4>
+            <vue-q-art :config="config"></vue-q-art>
         </div>
     </div>
 </template>
 <script>
+import {
+    joinUrl,
+    sendEmail
+} from '@/store/team'
+import VueQArt from 'vue-qart'
 export default {
     name: 'home',
     data() {
         return {
-            nullPic: require('src/assets/null.png')
+            url: '',
+            loading: true,
+            config: {
+                value: '',
+                imagePath: require('@/assets/logo.png')
+            },
+            email: [{value: ''}]
         }
     },
-    mounted() {},
+    components: {
+        VueQArt
+    },
+    mounted() {
+        this.init()
+    },
     methods: {
+        init() {
+            joinUrl((res) => {
+                if (res.success) {
+                    this.url = res.result.url
+                    this.config.value = res.result.url
+                } else {
+                    this.$router.replace({
+                        name: 'home'
+                    })
+                }
+                this.loading = false
+            })
+        },
+        send() {
+            let toEmail = []
+            for (var key of Object.keys(this.email)) {
+                toEmail.push(this.email[key].value)
+            }
+            sendEmail({
+                email: toEmail.join(',')
+            }, (res) => {
+                if (res.success) {
+                    alert('邀请已发出')
+                }
+            })
+        },
+        add() {
+            this.email.push({value: ''})
+        }
     }
 }
 </script>
@@ -34,4 +87,17 @@ export default {
 .team-pic_no{
     width: 80px;
 }
+.email-input{
+    position: relative;
+    p{
+        position: relative;
+    }
+    .add{
+        position: absolute;
+        left: 230px;
+        bottom: 5px;
+        width: 20px;
+    }
+}
+
 </style>
