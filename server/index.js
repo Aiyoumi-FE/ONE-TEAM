@@ -13,42 +13,24 @@ const controller = require('./controller');
 const { businessUtil } = require('./util')
 
 app.use(async(ctx, next) => {
-	// 用户登录拦截
-	let reg = /login|register/
-	// console.log(ctx.request.url)
-	// console.log(reg.test(ctx.request.url))
-	if (reg.test(ctx.request.url) || businessUtil.getStatus(ctx)) {
-		const start = new Date()
-		await next()
-		const ms = new Date() - start
-    	console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
-	} else {
-		let result = {
-        	code: '-1999',
-        	resultRes: '用户未登录',
+    // 用户登录拦截
+    let reg = /login|register/
+    // console.log(ctx.request.url)
+    // console.log(reg.test(ctx.request.url))
+    if (reg.test(ctx.request.url) || businessUtil.getStatus(ctx)) {
+        const start = new Date()
+        await next()
+        const ms = new Date() - start
+        console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
+    } else {
+        let result = {
+            code: '-1999',
+            resultRes: '用户未登录',
             success: false
         }
         ctx.response.body = result
-	}
+    }
 })
-
-// app.keys = ['1'];
-// const CONFIG = {
-//   key: 'SESSIONID',
-//   /** (string) cookie key (default is koa:sess) */
-//   /** (number || 'session') maxAge in ms (default is 1 days) */
-//   /** 'session' will result in a cookie that expires when session/browser is closed */
-//   /** Warning: If a session cookie is stolen, this cookie will never expire */
-//   maxAge: 86400000,
-//   overwrite: true,
-//   * (boolean) can overwrite or not (default true) 
-//   httpOnly: true,
-//   /** (boolean) httpOnly or not (default true) */
-//   signed: true,
-//   /** (boolean) signed or not (default true) */
-//   rolling: false,
-//   /** (boolean) Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown. default is false **/
-// };
 
 app.use(bodyParser());
 // 静态文件的路径
