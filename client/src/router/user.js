@@ -2,6 +2,7 @@
 const user = resolve => require(['../module/user/login/index'], resolve)
 const login = resolve => require(['../module/user/login/login'], resolve)
 const register = resolve => require(['../module/user/login/register'], resolve)
+const settings = resolve => require(['../module/user/settings/index'], resolve)
 const App = resolve => require(['../App'], resolve)
 
 export default [{
@@ -25,5 +26,12 @@ export default [{
                 title: '注册'
             }
         }]
+    }, {
+        path: 'user/settings',
+        name: 'settings',
+        component: settings,
+        meta: {
+            title: '个人设置'
+        }
     }]
 }]
