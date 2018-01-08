@@ -1,0 +1,188 @@
+{
+    "title": "2017 年第 52 周",
+    "membeRecords": [
+    {
+        "name": "caihuaguang ",
+        "id": "5cc9d31b623c4843b83b9209255ee33f",
+        "content": [
+        {
+            "title": "本周工作成果总结，列举完成的任务以及进度，包括工作和学习。",
+            "content": "<p>vue + koa 后台系统：权限管理<br></p>"
+        },
+        {
+            "title": "下周的工作目标是什么？",
+            "content": "<p>清结算：商户结算明细<br><br></p>"
+        },
+        {
+            "title": "本周OKR进度说明！",
+            "content": "<p>vue + koa 后台系统：权限管理（5%）<br></p>"
+        }]
+    },
+    {
+        "name": "董雨思 ",
+        "id": "7bc28d3722c149c4a4a17a0647c92581",
+        "content": [
+        {
+            "title": "本周工作成果总结，列举完成的任务以及进度，包括工作和学习。",
+            "content": "<ol><li>\n<a href=\"http://192.168.4.100:8082/browse/AXD-14468\" rel=\"nofollow\">AXD-14468 刷卡绑卡后置-收银台</a>%uA0（本周四提测）</li></ol>"
+        },
+        {
+            "title": "本周OKR进度说明！",
+            "content": "<p>周报功能增加markdown显示编辑</p>"
+        }]
+    },
+    {
+        "name": "贺婷 ",
+        "id": "5c6baf645055448ba8eee2720804513f",
+        "content": [
+        {
+            "title": "本周工作成果总结，列举完成的任务以及进度，包括工作和学习。",
+            "content": "<p>1、热门推荐数据统计、接口变更等［测试中］</p>"
+        },
+        {
+            "title": "下周的工作目标是什么？",
+            "content": "<p>react项目</p>"
+        },
+        {
+            "title": "本周OKR进度说明！",
+            "content": "<p>react 客户端框架搭建中</p>"
+        }]
+    },
+    {
+        "name": "老杨 ",
+        "id": "a13ca593210d4d07ae0689d4aa07fc2d",
+        "content": [
+        {
+            "title": "本周工作成果总结，列举完成的任务以及进度，包括工作和学习。",
+            "content": "<ol>\n<li>嗨花mock数据联调 70%</li>\n<li>嗨花H5外放 10%<br>\n</li>\n</ol>"
+        },
+        {
+            "title": "下周的工作目标是什么？",
+            "content": "<ol>\n<li>完成嗨花mock数据联调</li>\n<li>嗨花正式开发环境联调</li>\n</ol>"
+        },
+        {
+            "title": "小组总结",
+            "content": "<ol>\n<li>开发中<br>a.嗨花H5项目<br>b.我的订单退款订单优化<br>c.%uA0账单部分接入米庄合同内容，前端开发完成</li>\n<li>提测<br>a.%uA0刷卡绑卡后置-收银台<br>\n</li>\n<li>已上线<br>a.%uA0app我的合同下掉“爱又米消费分期服务合同通用条款”</li>\n</ol>"
+        }]
+    },
+    {
+        "name": "李蒙 ",
+        "id": "df99d56ca3894956b6d2042525c1ee28",
+        "content": [
+        {
+            "title": "本周工作成果总结，列举完成的任务以及进度，包括工作和学习。",
+            "content": "<ol>\n<li>AXD-14260%uA0 CMS红包和商品列表优化（已验收 等待发布）<br>\n</li>\n<li>线上老的 cms 数据测试兼容性问题（红包模块和商品列表优化后的）；</li>\n</ol>"
+        },
+        {
+            "title": "下周的工作目标是什么？",
+            "content": "<ol>\n<li>整理爱又米大前端网站；</li>\n<li>前端笔试题；</li>\n</ol>"
+        },
+        {
+            "title": "小组总结",
+            "content": "<ol>\n<li>AXD-14260%uA0 CMS红包和商品列表优化（已提测）<br>\n</li>\n<li>AXD-14707%uA0爱财集团官网 静态图片更新及增加手机端适配（已上线）<br>\n</li>\n</ol>"
+        }]
+    },
+    {
+        "name": "马慧 ",
+        "id": "c6ba921564ea44a5a7b662209f9032b0",
+        "content": [
+        {
+            "title": "本周工作成果总结，列举完成的任务以及进度，包括工作和学习。",
+            "content": "<p>AXD-14707爱财集团官网 静态图片更新及增加手机端适配 完成，并已上线。<br></p><p>继续整理canvas分享。</p>"
+        }]
+    },
+    {
+        "name": "sunxuejing ",
+        "id": "62be72851f8b404ca6527d7f13d57e14",
+        "content": [
+        {
+            "title": "本周工作成果总结，列举完成的任务以及进度，包括工作和学习。",
+            "content": "<p>1.我的订单退款订单优化 开发并提测（测试中）</p>"
+        },
+        {
+            "title": "下周的工作目标是什么？",
+            "content": "<p>1.我的订单退款订单优化%uA0<br>2.房屋租赁新增商户修改</p>"
+        },
+        {
+            "title": "分享一篇本周有用的或有趣的文章",
+            "content": "<p><a href=\"http://jinlong.github.io/2016/04/24/Debouncing-and-Throttling-Explained-Through-Examples/\" target=\"_blank\" rel=\"nofollow\">实例解析防抖动（Debouncing）和节流阀（Throttling）</a><br></p>"
+        }]
+    },
+    {
+        "name": "汪万宝 ",
+        "id": "424105a474ea4235bb51e5b1c434cc5c",
+        "content": [
+        {
+            "title": "本周工作成果总结，列举完成的任务以及进度，包括工作和学习。",
+            "content": "<p>1、清结算 - 明细查询商城端4个模块提测修改（已上线）；</p><p>2、清结算 -%uA0明细查询商城端二期导出功能开发（待联调）；</p>"
+        },
+        {
+            "title": "下周的工作目标是什么？",
+            "content": "<p>JIRA %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 项目名称 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0完成度 %uA0 提测/上线时间 %uA0 负责人 %uA0 %uA0 备注<br></p><p>------------------------------------------------------------------------------------------------------------------------</p><p><a href=\"http://192.168.4.100:8082/browse/AXD-14263\" target=\"_blank\" rel=\"nofollow\">AXD-14263</a>%uA0 商户结算明细界面需求 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 0%%uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0蔡华光</p><p><a href=\"http://183.134.104.228:8082/browse/AXD-13112\" target=\"_blank\" rel=\"nofollow\">AXD-13112</a>%uA0%uA0%uA0运营中心管理新增支付路由规则管理%uA0 %uA0联调80%%uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0王震英%uA0</p><p><a href=\"http://183.134.104.228:8082/browse/AXD-14253\" target=\"_blank\" rel=\"nofollow\">AXD-14253</a>%uA0%uA0 清结算明细查询商城端二期导出功能%uA0 %uA0待联调%uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0汪万宝%uA0 %uA0%uA0<br></p><p><a href=\"http://183.134.104.228:8082/browse/AXD-13876\" target=\"_blank\" rel=\"nofollow\">AXD-13876</a>%uA0 清结算系统 - 对账界面优化 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 　待联调%uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0汪万宝%uA0 %uA0 %uA0%uA0<br></p><p>待排期：------------------------------------------------------------------------------------------------------------</p><p><a href=\"http://183.134.104.228:8082/browse/AXD-13881\" rel=\"nofollow\">AXD-13881</a>%uA0 结算提现界面需求 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 0% %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 汪万宝%uA0%uA0 %uA0 %uA0待排期</p><p><a href=\"http://183.134.104.228:8082/browse/AXD-14249\" target=\"_blank\" rel=\"nofollow\">AXD-14249</a>%uA0 催收还款明细界面需求%uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 0%%uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0王震英%uA0 %uA0 %uA0 待排期<br></p><p><a href=\"http://192.168.4.100:8082/browse/AXD-14607\" rel=\"nofollow\">AXD-14607</a>%uA0 交易中心订单查询需求%uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0%uA00%%uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0王震英%uA0%uA0 %uA0 %uA0待排期<br></p><p><a href=\"http://183.134.104.228:8082/browse/YYHD-1871\" target=\"_blank\" rel=\"nofollow\">YYHD-1871</a>%uA0%uA0红包金融监管 - 后台配置界面 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0%uA00%%uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0 %uA0蔡华光%uA0 %uA0 %uA0 待排期</p>"
+        },
+        {
+            "title": "小组总结",
+            "content": "<p>1、清结算 - 明细查询商城端4个模块提测修改（已上线）；</p><p>2、cps-bk - cps红包及商品模块优化测试bug修复（测试中）；</p><p>3、清结算 -%uA0明细查询商城端二期导出功能开发（待联调）；<br></p><p>4、aicai-bk - 支付路由规则配置（对接进度80%）；</p>"
+        }]
+    },
+    {
+        "name": "王小翔 ",
+        "id": "8f96af1f77d149788a72358e5efb0b14",
+        "content": [
+        {
+            "title": "本周工作成果总结，列举完成的任务以及进度，包括工作和学习。",
+            "content": "<p>大数据取数平台，前端部分完成度70%。</p>"
+        },
+        {
+            "title": "下周的工作目标是什么？",
+            "content": "<p>大数据取数平台接口调通，能跑通基本流程<br></p><p>如果有时间可以适当做些交互上面的优化</p>"
+        }]
+    },
+    {
+        "name": "王震英 ",
+        "id": "9e1552dc9bc947359ae940ebc5edbca4",
+        "content": [
+        {
+            "title": "本周工作成果总结，列举完成的任务以及进度，包括工作和学习。",
+            "content": "<p>1、AXD-14244%uA0 cps-bk%uA0 cps红包及商品模块优化测试bug修复（测试中）</p><p>2、aicai-bk%uA0 支付路由规则配置（对接完成80%）</p>"
+        },
+        {
+            "title": "下周的工作目标是什么？",
+            "content": "<p>1、完成支付路由配置对接。</p><p>2、完成年终总结。<br></p>"
+        }]
+    },
+    {
+        "name": "吴松 ",
+        "id": "ae421f85607c48bc92bac00e9c8c16df",
+        "content": [
+        {
+            "title": "本周工作成果总结，列举完成的任务以及进度，包括工作和学习。",
+            "content": "<p>mui完成picker开发；</p><p>input组件修改</p>"
+        },
+        {
+            "title": "下周的工作目标是什么？",
+            "content": "<p>mui检查自测，查漏补缺；</p><p>promise原理学习</p>"
+        }]
+    },
+    {
+        "name": "赵志胜 ",
+        "id": "9c1ef50470454138bd87b8f0b469eee0",
+        "content": [
+        {
+            "title": "本周工作成果总结，列举完成的任务以及进度，包括工作和学习。",
+            "content": "<p><a href=\"http://192.168.4.100:8082/browse/AXD-14752?filter=-1\" rel=\"nofollow\">http://192.168.4.100:8082/browse/AXD-14752?filter=-1</a> 账单部分接入米庄合同内容，前端开发完成，等待联调<br></p><p><a href=\"http://192.168.4.100:8082/browse/AXD-14725\" rel=\"nofollow\">http://192.168.4.100:8082/browse/AXD-14725</a> app我的合同下掉“爱又米消费分期服务合同通用条款” 已上线<br></p>"
+        },
+        {
+            "title": "下周的工作目标是什么？",
+            "content": "<p>下周二米庄合同接入提测</p>"
+        },
+        {
+            "title": "其他问题",
+            "content": "<p>办公室味道有点大，头晕。。。</p>"
+        },
+        {
+            "title": "本周OKR进度说明！",
+            "content": "<p>node rap</p><p>1、完善接口直导功能</p><p>2、添加邮件发送模块与密码重置模块</p>"
+        }]
+    }]
+}

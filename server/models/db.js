@@ -6,7 +6,7 @@ const DB_URL = config.DB_URL
 /**
  * 连接
  */
-mongoose.connect(DB_URL)
+mongoose.connect(DB_URL, { useMongoClient: true })
 
 /**
  * 连接成功
