@@ -11,5 +11,6 @@ module.exports = [
     '/teamOpera',
     '/joinUrl',
     '/sendEmail',
-    '/uploadFile'
+    '/uploadFile',
+    '/getTeamList'
 ]

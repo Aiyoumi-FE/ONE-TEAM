@@ -3,8 +3,8 @@ import {
 } from '../assets/js/ajax'
 
 /* ================登陆================= */
-export const getTeamInfo = (callback) => {
-    return _post('/teamInfo', null, (data) => {
+export const getTeamInfo = (param, callback) => {
+    return _post('/teamInfo', param, (data) => {
         callback(data)
     })
 }
@@ -32,3 +32,10 @@ export const sendEmail = (param, callback) => {
         callback(data)
     })
 }
+
+export const getTeamList = (param, callback) => {
+    return _post('/getTeamList', param, (data) => {
+        callback(data)
+    })
+}
+

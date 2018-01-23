@@ -35,14 +35,15 @@ class Team {
     // 获取周报列表，
     // 请求参数：beginDate（开始日期）
     // 返回参数：list(周报列表)
+    // ？获取team信息
     async getTeamInfo(ctx, next) {
         let userId = businessUtil.getStatus(ctx)
-        let teamId = serviceUtil.getCookie(ctx, 'team')
+        let teamId = ctx.request.body.teamId || serviceUtil.getCookie(ctx, 'team')
         let result = {
             result: {},
             success: true
         }
-        
+
         if (teamId) {
             let teamInfo = await teamModel
                 .findOne({ '_id': teamId })
@@ -55,7 +56,7 @@ class Team {
             result.success = false
             result.resultDes = '未加入团队'
         }
-        
+
         ctx.response.body = result
     }
 
@@ -89,7 +90,7 @@ class Team {
         }
 
         let teamUpdate = await teamModel.update(oldTeamValue, newTeamValue)
-        
+
 
         let result = {
             success: true
@@ -124,7 +125,7 @@ class Team {
         }
         if (formData.teamId) {
             let oldTeamValue = { _id: teamId }
-            
+
             let newTeamData = { $push: { memberList: userId } }
             let newUserValue = {$set: { teamId: teamId }}
 
@@ -147,6 +148,24 @@ class Team {
                 url: `http://${ctx.request.header.host}/page/user/register?id=${teamId}`
             }
         }
+        ctx.response.body = result
+    }
+
+    async getTeamList(ctx, next) {
+        let teamId = serviceUtil.getCookie(ctx, 'team')
+        let userId = businessUtil.getStatus(ctx)
+        let result = {
+            success: true
+        }
+
+        // if (teamId) {
+        let teamInfo = await teamModel
+            .find({})
+            .exec()
+
+        let res = Object.assign(JSON.parse(JSON.stringify(teamInfo)), {isAdmin: userId == teamInfo.administrator})
+        result.result = res
+
         ctx.response.body = result
     }
 }
