@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!loading">
+    <div v-if="!loading" class="content">
         <h1>{{obj.teamName}}</h1>
         <div class="team-sub">
             <span class="invate">邀请码：{{obj._id}}</span>
@@ -59,7 +59,7 @@ export default {
     },
     methods: {
         initData() {
-            getTeamInfo((res) => {
+            getTeamInfo(null, (res) => {
                 if (res.success) {
                     this.obj = res.result
                 } else {
@@ -106,14 +106,14 @@ export default {
     padding: 5px 15px;
     border-radius: 20px;
     background-color: #eee;
-    display: inline-block; 
+    display: inline-block;
 }
 .admin{
     margin-left: 10px;
     padding: 2px 15px;
     border-radius: 20px;
     background-color: #fcf1a5;
-    display: inline-block; 
+    display: inline-block;
 }
 .cell-hd {
     width: 50px;
@@ -127,13 +127,13 @@ export default {
     line-height: 50px;
 }
 .cells {
-    margin-top: 30px; 
+    margin-top: 30px;
 }
 .cell {
     min-height: 60px;
 }
 .cell-bd {
-    margin-left: 15px; 
+    margin-left: 15px;
     flex-grow: 1;
     p {
         margin: 5px 0;
