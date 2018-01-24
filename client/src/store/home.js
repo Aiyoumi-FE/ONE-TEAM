@@ -10,19 +10,19 @@ export const init = (callback) => {
 }
 
 export const login = (param, callback) => {
-    return _post('/login', param, (data) => {
+    return _post('/user/login', param, (data) => {
         callback(data)
     })
 }
 
 export const register = (param, callback) => {
-    return _post('/register', param, (data) => {
+    return _post('/user/register', param, (data) => {
         callback(data)
     })
 }
 
 export const signout = (callback) => {
-    return _post('/signout', null, (data) => {
+    return _post('/user/signout', null, (data) => {
         callback(data)
     })
 }

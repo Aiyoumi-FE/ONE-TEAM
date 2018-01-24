@@ -1,7 +1,7 @@
 const User = require('../controllers/user')
 module.exports = {
-	'GET /login': User.loginAction,
-    'POST /login': User.loginAction,
-    'POST /register': User.regAction,
-    'POST /signout': User.signOutAction
+	'GET /user/login': User.loginAction,
+    'POST /user/login': User.loginAction,
+    'POST /user/register': User.regAction,
+    'POST /user/signout': User.signOutAction
 }
