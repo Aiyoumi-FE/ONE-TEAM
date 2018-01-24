@@ -1,4 +1,4 @@
 const Util = require('../controllers/util')
 module.exports = {
-    'POST /sendEmail': Util.sendEmail
+    'POST /common/sendEmail': Util.sendEmail
 }

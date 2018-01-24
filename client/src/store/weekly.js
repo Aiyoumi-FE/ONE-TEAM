@@ -4,19 +4,19 @@ import {
 
 /* ================登陆================= */
 export const getWeekList = (param, callback) => {
-    return _post('/getWeekList', param, (data) => {
+    return _post('/week/getWeekList', param, (data) => {
         callback(data)
     })
 }
 
 export const getWeekDetail = (param, callback) => {
-    return _post('/getWeekDetail', param, (data) => {
+    return _post('/week/getWeekDetail', param, (data) => {
         callback(data)
     })
 }
 
 export const saveWeekDetail = (param, callback) => {
-    return _post('/saveWeekDetail', param, (data) => {
+    return _post('/week/saveWeekDetail', param, (data) => {
         callback(data)
     })
 }
