@@ -26,7 +26,7 @@ class Weekly {
             endDate = serviceUtil.getDayOfWeek(beginDate, 7)
 
         let weeklyList = await weeklyModel
-            .find({ 'creatTime': { $gte: beginDate, $lte: endDate }, 'teamId': teamId}, 'content userId')
+            .find({ 'creatTime': { $gte: beginDate, $lte: endDate }, 'teamId': teamId }, 'content userId')
             .populate('userId', 'nickName')
             .exec()
 
@@ -58,7 +58,7 @@ class Weekly {
 
         if (!weeklyDetail) {
             weeklyDetail = {
-                content: ''
+                content: '### 本周工作成果总结，列举完成的任务以及进度，包括工作和学习。\n\n### 遇到挑战或者困难么？希望团队怎么帮助你？\n\n### 下周的工作目标是什么？\n\n### 你觉得采取哪些措施，会对你提升工作效率有帮助？\n\n### 其他问题\n\n### 分享一篇本周有用的或有趣的文章\n\n### 本周OKR进度说明！'
             }
         }
         // 返回数据

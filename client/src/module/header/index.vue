@@ -21,9 +21,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 .header {
+    z-index: 8;
     position: absolute;
     width: 100%;
-    height: 80px;
     background-color: rgba(255, 255, 255, 0.7);
 }
 
