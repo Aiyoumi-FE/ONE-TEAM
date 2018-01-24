@@ -26,6 +26,7 @@ body {
     height: 100%;
     background-color: #fff;
     text-align: center;
+    padding-top: 100px;
     h1 {
         margin: 10px auto;
     }
@@ -38,6 +39,7 @@ body {
 .form-input {
     width: 230px;
     height: 40px;
+    border: 0;
     border-bottom: 1px solid #222222;
     display: block;
     margin: 20px auto 5px;
@@ -47,4 +49,5 @@ body {
 .mt25 {
     margin-top: 25px;
 }
+
 </style>

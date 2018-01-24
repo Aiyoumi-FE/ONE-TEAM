@@ -1,14 +1,12 @@
 <template>
     <div>
         <div class="bd-date">
-            <div>
-                {{dateForm.year}}年 第{{dateForm.weekNum}}周
-                <p class="bd-date__sub">本周周报</p>
-            </div>
+            {{dateForm.year}}年 第{{dateForm.weekNum}}周
+            <p class="bd-date__sub">本周周报</p>
         </div>
         <a href="javascript:;" class="bd-back" @click="back()">返回列表</a>
         <div class="bd-content" v-if="isEmpty">
-            <textarea class="textarea" v-model="obj.content"></textarea>
+            <markdown-editor v-model="obj.content" ref="markdownEditor" :configs="configs"></markdown-editor>
             <div @click="saveWeekly()" class="btn">保存</div>
         </div>
         <div class="bd-content" v-else>
@@ -18,23 +16,26 @@
     </div>
 </template>
 <script>
-import rHeader from '../header/index'
 import dateFormate from './common/index'
 import {
     getWeekDetail,
     saveWeekDetail
 } from '@/store/weekly'
 import VueMarkdown from 'vue-markdown'
+import markdownEditor from 'vue-simplemde/src/markdown-editor'
 export default {
     name: 'weekly',
     data() {
         return {
-            online: true,
             dateForm: {
                 year: '',
                 weekNum: '',
                 begin: '',
                 end: ''
+            },
+            configs: {
+                status: false, // 禁用底部状态栏
+                spellChecker: false // 禁用拼写检查
             },
             obj: {
                 content: ''
@@ -43,8 +44,8 @@ export default {
         }
     },
     components: {
-        rHeader,
-        VueMarkdown
+        VueMarkdown,
+        markdownEditor
     },
     computed: {
         beginDate() {
@@ -62,6 +63,7 @@ export default {
             }, (res) => {
                 if (res.success) {
                     this.obj = res.result
+                    // this.initEdit()
                 } else {
                     alert(res.resultDes)
                 }
@@ -96,6 +98,7 @@ export default {
 
 </script>
 <style lang="scss" scoped>
+@import '~simplemde/dist/simplemde.min.css';
 .page-bd {
     position: relative;
     margin: 100px auto;
@@ -108,7 +111,7 @@ export default {
 
 .bd-date {
     text-align: center;
-    font-size: 30px;
+    font-size: 26px;
     color: #333;
 }
 

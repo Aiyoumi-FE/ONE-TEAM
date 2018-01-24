@@ -15,7 +15,7 @@
             <input v-else class="form-input mt25" type="text" placeholder="团队邀请码" v-model.trim="form.teamId">
         </div>
         <div class="mt25">
-            <button class="btn" @click="goLogin">《 登录</button>
+            <button class="btn" @click="goLogin">登录</button>
             <button class="btn" @click="submitRegsiter">注册</button>
         </div>
     </div>

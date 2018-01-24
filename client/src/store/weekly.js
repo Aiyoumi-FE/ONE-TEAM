@@ -20,3 +20,8 @@ export const saveWeekDetail = (param, callback) => {
         callback(data)
     })
 }
+export const getWeeklyConfig = (callback) => {
+    return _post('/getWeeklyConfig', null, (data) => {
+        callback(data)
+    })
+}

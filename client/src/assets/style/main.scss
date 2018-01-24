@@ -6,18 +6,24 @@
 }
 
 .page-content {
-    padding-top: 80px;
+    background-color: $colorBackground;
+}
+
+.content {
+    background-color: $colorBackground;
 }
 
 // 按钮
 .btn {
     display: inline-block;
     padding: 0 30px;
+    border: 0;
     border-radius: 3px;
     background-color: $colorPrimary;
     color: $colorTextBtn;
     line-height: 35px;
     text-align: center;
+    cursor: pointer;
 }
 
 // 输入框
@@ -57,23 +63,28 @@
 }
 
 // 导航
-.ul {
+.nav {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     -webkit-box-align: center;
     -webkit-align-items: center;
     align-items: center;
     font-size: 20px;
-    height: 100%;
+    height: 60px;
+    padding: 10px 20px;
 }
 
-.li {
-    color: $colorPrimary;
+.nav-ul {
+    display: flex;
+}
+
+.nav-li {
+    color: $colorTextPrimary;
     padding: 0 20px;
 }
 
-.li>a {
-    color: $colorPrimary;
+.nav-li>a {
+    color: $colorTextPrimary;
 }
 
 // 列表
@@ -110,6 +121,12 @@
     bottom: 0;
     height: 1px;
     background-color: $colorLine;
+}
+
+// 链接
+.link {
+    color: $colorPrimary;
+    cursor: pointer;
 }
 
 // markdown 样式

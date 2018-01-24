@@ -13,14 +13,14 @@ export default [{
             component: weeklyList,
             name: 'weeklyList',
             meta: {
-                title: 'weeklyList'
+                title: '周报'
             }
         }, {
             path: 'detail',
             component: weeklyDetail,
             name: 'weeklyDetail',
             meta: {
-                title: 'weeklyDetail'
+                title: '周报详情'
             }
         }]
     }]

@@ -5,8 +5,7 @@ const teamModel = require('../models/team.js')
 const userModel = require('../models/user.js')
 
 class Team {
-    constructor() {
-    }
+    constructor() {}
     // 创建团队
     // 请求参数：teamName（团队名称）
     // 返回参数：操作后的数据库返回
@@ -42,20 +41,20 @@ class Team {
             result: {},
             success: true
         }
-        
+
         if (teamId) {
             let teamInfo = await teamModel
                 .findOne({ '_id': teamId })
                 .populate('memberList')
                 .exec()
 
-            let res = Object.assign(JSON.parse(JSON.stringify(teamInfo)), {isAdmin: userId == teamInfo.administrator})
+            let res = Object.assign(JSON.parse(JSON.stringify(teamInfo)), { isAdmin: userId == teamInfo.administrator })
             result.result = res
         } else {
             result.success = false
             result.resultDes = '未加入团队'
         }
-        
+
         ctx.response.body = result
     }
 
@@ -72,24 +71,24 @@ class Team {
         let newUserValue
         let oldTeam = await teamModel.findOne({ '_id': teamId })
         if (formData.opera == 'out') { // 退出
-            newTeamValue = {$pull: { memberList: userId }}
-            newUserValue = {$set: { teamId: null }}
+            newTeamValue = { $pull: { memberList: userId } }
+            newUserValue = { $set: { teamId: null } }
             let userUpdate = await userModel.update(oldUserValue, newUserValue)
             ctx.set(
                 'Set-Cookie', ['team=']
             )
         }
         if (formData.opera == 'del') { // 删除
-            newTeamValue = {$pull: { memberList: formData.userId }}
-            newUserValue = {$set: { teamId: null }}
+            newTeamValue = { $pull: { memberList: formData.userId } }
+            newUserValue = { $set: { teamId: null } }
             let userUpdate = await userModel.update(oldUserValue, newUserValue)
         }
         if (formData.opera == 'admin') { // 任职
-            newTeamValue = {$set: { administrator: formData.userId }}
+            newTeamValue = { $set: { administrator: formData.userId } }
         }
 
         let teamUpdate = await teamModel.update(oldTeamValue, newTeamValue)
-        
+
 
         let result = {
             success: true
@@ -117,16 +116,16 @@ class Team {
 
             let oldTeamValue = { _id: teamId }
             let newTeamData = { $push: { memberList: userId }, $set: { administrator: userId } }
-            let newUserValue = {$set: { teamId: teamId }}
+            let newUserValue = { $set: { teamId: teamId } }
 
             let teamUpdate = await teamModel.update(oldTeamValue, newTeamData)
             let userUpdate = await userModel.update(oldUserValue, newUserValue)
         }
         if (formData.teamId) {
             let oldTeamValue = { _id: teamId }
-            
+
             let newTeamData = { $push: { memberList: userId } }
-            let newUserValue = {$set: { teamId: teamId }}
+            let newUserValue = { $set: { teamId: teamId } }
 
             let teamUpdate = await teamModel.update(oldTeamValue, newTeamData)
             let userUpdate = await userModel.update(oldUserValue, newUserValue)

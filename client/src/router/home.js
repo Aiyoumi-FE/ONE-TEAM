@@ -17,7 +17,7 @@ export default [{
         name: 'refuse',
         component: refuse,
         meta: {
-            title: '没团队'
+            title: '未加入团队'
         }
     }]
 }]
