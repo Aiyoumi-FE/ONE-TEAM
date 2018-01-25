@@ -1,5 +1,6 @@
 <template>
     <div class="page_TM">
+        <!-- basic show part -->
         <div class="part_left">
             <p class="search_unit">
                 <el-input class="txt__search" placeholder="输入关键字进行过滤" v-model="filterText">
@@ -7,14 +8,14 @@
                 <span class="btn btn__search" @click="search"></span>
             </p>
             <el-tree highlight-current ref="teamTree" :data="teamList" :props="defaultProps" @node-click="getInfo" :filter-node-method="filterNode"></el-tree>
-            <p class="btn_tm" @click="dialogTeamManage.show = true">
+            <p class="btn_tm" @click="dgTMShow = true">
                 小组管理
             </p>
         </div>
         <div class="part_right">
             <h3>{{currentTeam.name}}</h3>
-            <p class="btn_addmem" @click="dialogMemManage.show = true">添加成员</p>
-            <el-table ref="multipleTable" :data="teamDetail" tooltip-effect="blue" style="width: 100%" @selection-change="handleSelectionChange">
+            <p class="btn_addmem" @click="dgMMShow = true" v-if="teamList.length">添加成员</p>
+            <el-table ref="multipleTable" :data="teamDetail" tooltip-effect="blue" style="width: 100%" >
                 <el-table-column type="selection" width="55">
                 </el-table-column>
                 <el-table-column prop="nickName" label="姓名">
@@ -25,61 +26,120 @@
                 </el-table-column>
             </el-table>
         </div>
-        <div class="part_other">
-            <div class="dialog__container" v-show="dialogTeamManage.show">
-                <div class="dialog__content">
-                    <h3>小组管理</h3>
-                    <div class="block_btns">
-                        <span class="btns">新增</span>
-                        <span class="btns">删除</span>
-                        <span class="btns">编辑</span>
-                    </div>
-                    <el-tree highlight-current ref="teamTree" :data="teamList" :props="defaultProps" @node-click="getInfo" :filter-node-method="filterNode"></el-tree>
+        <!-- floating dialog -->
+        <!-- <div class="part_other"> -->
+        <!-- Team Management -->
+        <div class="dialog__container" v-show="dgTMShow">
+            <div class="dialog__content dialog_tm">
+                <div class="block_btns">
+                    <span class="btns btn_add__team" :class="{'active': activeBtn === 'add'}" @click="teamEditClick('add')">Add
+                    </span>
+                    <span class="btns btn_del__team" :class="{'active': activeBtn === 'del'}" @click="teamEditClick('del')">Del</span>
+                    <span class="btns btn_edit__team" :class="{'active': activeBtn === 'edit'}" @click="teamEditClick('edit')">Edit</span>
+                </div>
+                <h3>小组管理</h3>
+                <span class="btn_dg__close" @click="dgTMShow = false">X</span>
+                <div class="block_content">
+                    <section class="section_add" v-show="activeBtn === 'add'">
+                        <p class="block_input">
+                            <p class="line_input">
+                                <label for="name">所属：</label>
+                                <span> {{rootTeam.teamName}} </span>
+                                <input name="name" type="hidden" v-model="rootTeam._id">
+                            </p>
+                            <p class="line_input">
+                                <label for="email">名称：</label>
+                                <input name="email" type="text" v-model="teamInfo.teamName">
+                            </p>
+                            <p class="line_input">
+                                <label for="teamId">管理员：</label>
+                                <input name="teamId" type="text" v-model="teamInfo.administrator">
+                            </p>
+                        </p>
+                        <p class="btn_addmem_submit" @click="addTeamSubmit('add')">
+                            保存
+                        </p>
+                    </section>
+                    <section class="section_edit" v-show="activeBtn === 'edit'">
+                        <p class="block_input">
+                            <p class="line_input">
+                                <label for="name">team： </label>
+                                <el-select v-model="teamInfo._id" placeholder="请选择Team">
+                                    <el-option v-for="item in childrenList" :key="item._id" :label="item.teamName" :value="item._id">
+                                    </el-option>
+                                </el-select>
+                            </p>
+                            <p class="line_input">
+                                <label for="email">名称：</label>
+                                <input name="email" type="text" v-model="teamInfo.teamName">
+                            </p>
+                        </p>
+                        <p class="btn_addmem_submit" @click="addTeamSubmit('edit')">
+                            更新
+                        </p>
+                    </section>
+                    <section class="section_delete" v-show="activeBtn === 'del'">
+                        <el-select v-model="teamInfo._id" placeholder="请选择Team">
+                            <el-option v-for="item in childrenList" :key="item._id" :label="item.teamName" :value="item._id">
+                            </el-option>
+                        </el-select>
+                        <p class="btn_addmem_submit" @click="deleteTeamSubmit">
+                            确认删除
+                        </p>
+                    </section>
                 </div>
             </div>
-            <div class="dialog__container" v-show="dialogMemManage.show">
-                <div class="dialog__content">
-                    <h3>添加成员</h3>
-                    <div class="tab_head">
-                        <span class="tab_quick" :class="{'active': invite_quick}" @click="invite_quick = true">快速添加</span>
-                        <span class="tab_email" :class="{'active': !invite_quick}" @click="invite_quick = false">邮件邀请</span>
+        </div>
+        <!-- Member Management -->
+        <div class="dialog__container" v-show="dgMMShow">
+            <div class="dialog__content">
+                <h3>添加成员</h3> <!-- ({{currentTeam.name}}) -->
+                <span class="btn_dg__close" @click="dgMMShow = false">X</span>
+                <div class="tab_head">
+                    <span class="tab_quick" :class="{'active': invite_quick}" @click="invite_quick = true">快速添加</span>
+                    <span class="tab_email" :class="{'active': !invite_quick}" @click="invite_quick = false">邮件邀请</span>
+                </div>
+                <div class="tab_content">
+                    <div v-if="invite_quick" class="content_quick">
+                        <p class="block_input">
+                            <p class="line_input">
+                                <label for="name">姓名：</label>
+                                <input name="name" type="text" v-model="memInfo.name">
+                            </p>
+                            <p class="line_input">
+                                <label for="email">邮箱：</label>
+                                <input name="email" type="text" v-model="memInfo.eMail">
+                            </p>
+                            <p class="line_input">
+                                <label for="teamId">所属Team：</label>
+                                <el-select v-model="memInfo.teamId" placeholder="请选择Team">
+                                    <el-option v-for="item in childrenList" :key="item._id" :label="item.teamName" :value="item._id">
+                                    </el-option>
+                                </el-select>
+                            </p>
+                            <p class="tips">*登录账号与默认密码均为邮箱地址</p>
+                        </p>
+                        <p class="btn_addmem_submit" @click="addMemberSubmit">
+                            添加成员
+                        </p>
                     </div>
-                    <div class="tab_content">
-                        <div v-if="invite_quick" class="content_quick">
-                            <p class="block_input">
-                                <p class="line_input">
-                                    <label for="name">姓名：</label>
-                                    <input name="name" type="text" v-model="form.name">
-                                </p>
-                                <p class="line_input">
-                                    <label for="email">邮箱：</label>
-                                    <input name="email" type="text" v-model="form.eMail">
-                                </p>
-                                <p class="line_input">
-                                    <label for="teamId">所属Team：</label>
-                                    <input name="teamId" type="text" v-model="form.team">
-                                </p>
-                                <p class="tips">*登录账号与默认密码均为邮箱地址</p>
+                    <div v-else class="content_email">
+                        <p class="block_input">
+                            <p class="line_input" v-for="n in emailList.length">
+                                <label for="email">邮箱：</label>
+                                <input name="email" type="text" v-model="emailList[n-1]">
+                                <span class="btn_delete" v-show="emailList.length > 1" @click="deleteEmail(n-1)"></span>
                             </p>
-                            <p class="btn_addmem_submit" @click="addMember">
-                                添加成员
-                            </p>
-                        </div>
-                        <div v-else class="content_email">
-                            <p class="block_input">
-                                <p class="line_input">
-                                    <label for="email">邮箱：</label>
-                                    <input name="email" type="text" v-model="form.eMail">
-                                </p>
-                            </p>
-                            <p class="btn_addmem_submit">
-                                发送邀请
-                            </p>
-                        </div>
+                            <p class="tip_addemail" @click="addOneEmail">添加一个邮箱</p>
+                        </p>
+                        <p class="btn_addmem_submit" @click="sendInvite">
+                            发送邀请
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- </div> addOneEmail-->
     </div>
 </template>
 <script>
@@ -87,38 +147,59 @@ import {
     Tree,
     Table,
     TableColumn,
-    Input
+    Input,
+    Select,
+    Option
 } from 'element-ui'
 import {
     getTeamList,
-    getTeamInfo
+    getTeamInfo,
+    createTeam,
+    updateTeam,
+    deleteTeam,
+    addMem2Team,
+    sendEmail
 } from '@/store/team'
 export default {
     name: 'teamManage',
     data() {
         return {
-            teamList: [],
+            teamListOrigin: [],
+            childrenList: [],
+            rootTeam: {},
             defaultProps: {
                 label: 'teamName'
             },
             teamDetail: [],
             filterText: '',
-            dialogTeamManage: {
-                show: false
-            },
-            dialogMemManage: {
-                show: false
-            },
+            dgTMShow: false, // dialogTeamManage
+            dgMMShow: false, // dialogMemManage
             currentTeam: {
                 name: ''
             },
             invite_quick: true,
-            // curTeamId: '',
             curAdminId: '',
-            form: {
+            memInfo: {
                 name: '',
                 eMail: '',
                 team: ''
+            },
+            editFlag: false,
+            activeBtn: 'add',
+            teamInfo: {
+                id: '',
+                name: '',
+                pid: ''
+            },
+            emailList: ['']
+        }
+    },
+    computed: {
+        teamList() {
+            if (this.teamListOrigin.length) {
+                return this.reformate(this.teamListOrigin)
+            } else {
+                return []
             }
         }
     },
@@ -126,18 +207,18 @@ export default {
         'el-tree': Tree,
         'el-table': Table,
         'el-table-column': TableColumn,
-        'el-input': Input
+        'el-input': Input,
+        'el-select': Select,
+        'el-option': Option
     },
     created() {
-        this.init()
+        this.loadTeamList()
     },
     methods: {
-        init() {
+        loadTeamList() {
             let params = ''
             getTeamList(params, (data) => {
-                let temp = this.reformate(data.result)
-                // console.log(temp)
-                this.teamList = temp
+                this.teamListOrigin = data.result
             })
         },
         reformate(dataList) {
@@ -151,7 +232,9 @@ export default {
                     childArr.push(item)
                 }
             })
-            this.getInfo(pidArr[0])
+            this.rootTeam = pidArr[0]
+            this.getInfo(pidArr[0] || childArr[0])
+            this.childrenList = childArr
             childArr.forEach((citem) => {
                 pidArr.forEach((pitem) => {
                     if (citem.pid === pitem._id) {
@@ -162,12 +245,16 @@ export default {
 
             return pidArr
         },
+        /* tree node filter */
         search() {
             this.$refs.teamTree.filter(this.filterText)
         },
+        filterNode(value, data) {
+            if (!value) return true
+            return data.teamName.indexOf(value) !== -1
+        },
         getInfo(team) {
             let teamId = team._id
-            // this.curTeamId = team._id
             this.curAdminId = team.administrator
             getTeamInfo({ teamId }, (data) => {
                 if (data.success && data.result) {
@@ -184,15 +271,105 @@ export default {
 
             return data
         },
-        handleSelectionChange() {
+        /* Member Management */
+        addMemberSubmit() {
+            let {
+                name,
+                eMail,
+                teamId
+            } = this.memInfo
 
-        },
-        filterNode(value, data) {
-            if (!value) return true
-            return data.teamName.indexOf(value) !== -1
-        },
-        addMember() {
+            if (!name) {
+                alert('name can\'t be null')
+                return
+            }
+            if (!eMail) {
+                alert('eMail can\'t be null')
+                return
+            }
+            if (!teamId) {
+                alert('team can\'t be null')
+                return
+            }
 
+            addMem2Team(this.memInfo, (data) => {
+                if (data.success) {
+
+                } else {
+                    alert(data.resultDesc || '系统异常，请稍后再试')
+                }
+            })
+        },
+        addOneEmail() {
+            this.emailList.push('')
+            console.log('enter click')
+        },
+        deleteEmail(i) {
+            if (i === 0) {
+                this.emailList.shift()
+            } else {
+                this.emailList.splice(i)
+            }
+        },
+        sendInvite() {
+            sendEmail({
+                email: this.emailList.join(',')
+            }, (res) => {
+                if (res.success) {
+                    alert('邀请已发出')
+                }
+            })
+        },
+        /* Team Management */
+        teamEditClick(btn) {
+            this.activeBtn = btn
+        },
+        addTeamSubmit(type) {
+            if (!this.teamInfo.teamName) {
+                alert('teamName can\'t be null')
+                return
+            }
+
+            if (type === 'add') {
+                this.teamInfo.pid = this.rootTeam._id
+
+                createTeam(this.teamInfo, (data) => {
+                    this.dgTMShow = false
+                    if (data.success) {
+                        this.loadTeamList()
+                    } else {
+                        alert(data.result.message || '系统异常，请稍后再试')
+                    }
+                })
+            } else {
+                updateTeam(this.teamInfo, (data) => {
+                    this.dgTMShow = false
+                    if (data.success) {
+                        this.loadTeamList()
+                    } else {
+                        alert(data.result.message || '系统异常，请稍后再试')
+                    }
+                })
+            }
+        },
+        deleteTeamSubmit() {
+            if (!this.teamInfo._id) {
+                alert('please pick one firstly')
+                return
+            }
+
+            if (window.confirm('确定删除么？')) {
+                deleteTeam({
+                    _id: this.teamInfo._id
+                }, (data) => {
+                    this.dgTMShow = false
+                    if (data.success) {
+                        this.loadTeamList()
+                    } else {
+                        alert(data.result.message || '系统异常，请稍后再试')
+                    }
+                })
+            }
         }
     }
 }
@@ -203,6 +380,43 @@ export default {
 
 * {
     box-sizing: border-box;
+}
+
+.dialog__container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .5);
+    z-index: 99;
+
+    .dialog__content {
+        position: absolute;
+        left: 50%;
+        top: 28%;
+        width: auto;
+        height: auto;
+        -webkit-transform: translate(-50%);
+        transform: translate(-50%);
+        background: #fff;
+        z-index: 30;
+        padding: 20px;
+        border-radius: 10px;
+        font-size: 15px;
+    }
+    .btn_dg__close {
+        position: absolute;
+        right: 8px;
+        top: 6px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: #00BCD4;
+        line-height: 20px;
+        text-align: center;
+        color: #fff;
+    }
 }
 
 .page_TM {
@@ -261,45 +475,19 @@ export default {
             line-height: 40px;
             text-indent: 10px;
         }
-    }
-}
-
-.btn_addmem {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    width: 160px;
-    height: 30px;
-    font-size: 16px;
-    color: #fff;
-    text-align: center;
-    line-height: 30px;
-    background: #00BCD4;
-    border-radius: 13px;
-}
-
-.dialog__container {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, .5);
-    z-index: 99;
-
-    .dialog__content {
-        position: absolute;
-        left: 50%;
-        top: 28%;
-        width: auto;
-        height: auto;
-        -webkit-transform: translate(-50%);
-        transform: translate(-50%);
-        background: #fff;
-        z-index: 30;
-        padding: 20px;
-        border-radius: 10px;
-        font-size: 15px;
+        .btn_addmem {
+            position: absolute;
+            right: 10px;
+            top: 5px;
+            width: 160px;
+            height: 30px;
+            font-size: 16px;
+            color: #fff;
+            text-align: center;
+            line-height: 30px;
+            background: #00BCD4;
+            border-radius: 13px;
+        }
     }
     .tab_head {
         width: 400px;
@@ -335,6 +523,7 @@ export default {
         font-size: 16px;
         margin: 5px;
         padding-right: 20px;
+        align-items: center;
         label {
             flex-basis: 100px;
             text-align: center;
@@ -346,6 +535,7 @@ export default {
             border-style: none;
             border: 1px solid #ccc;
             border-radius: 5px;
+            height: 30px;
         }
         input:focus {
             box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(0, 0, 0, .6);
@@ -365,22 +555,92 @@ export default {
         background: #00BCD4;
         border-radius: 13px;
     }
-    .block_btns {
-        width: 400px;
+
+    .block_content {
         display: flex;
-        justify-content: space-evenly;
-        span {
-            width: 30%;
-            display: inline-block;
-            padding: 0 15px;
-            line-height: 35px;
+        .el-tree {
+            flex: 1;
+        }
+        .area_edit {
+            flex: 1;
             border: 1px solid #ccc;
-            text-align: center;
-            margin-top: 5px;
-            border-radius: 10px;
-            background: #00BCD4;
-            color: #fff;
+            height: 200px;
+            border-radius: 12px;
         }
     }
+    /*  */
+
+    .dialog_tm {
+        padding: 14px 0 0 20px;;
+        height: 300px;
+        width: 400px;
+        z-index: 999;
+        .block_btns {
+            position: absolute;
+            width: 60px;
+            height: 100%;
+            top: 0;
+            left: -50px;
+            z-index: -1;
+            display: flex;
+            flex-direction: column;
+            span {
+                display: inline-block;
+                flex: 1;
+                line-height: 100px;
+                font-weight: bold;
+                text-align: center;
+                background: #ccc;
+                border-top-left-radius: 20px;
+                border-bottom-left-radius: 20px;
+            }
+            .btn_add__team {
+
+            }
+            .btn_del__team {
+
+            }
+            .btn_edit__team {
+
+            }
+            .active {
+                background: #00BCD4;
+                color: #fff;
+            }
+        }
+        section {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+        }
+    }
+    .section_delete {
+        .el-select {
+            margin: 0 auto;
+        }
+        .btn_addmem_submit {
+            margin-top: 20px;
+            background: #f30303;
+            color: #ffffff;
+            font-weight: bold;
+        }
+    }
+    .tip_addemail {
+        font-size: 14px;
+        text-align: center;
+        color: #a56666;
+    }
+    .btn_delete {
+        width: 32px;
+        height: 24px;
+        background: url('./image/del.png') center center no-repeat;
+        background-size: contain;
+    }
 }
+
 </style>
