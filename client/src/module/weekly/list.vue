@@ -5,8 +5,8 @@
         </div>
         <div @click="creatWeekly()" class="btn week-btn">写周报</div>
         <div class="bd-content">
-            <ul class="cells">
-                <li v-for="item in list" class="cell">
+            <ul class="ot-cells">
+                <li v-for="item in list" class="ot-cell">
                     <div class="cell-hd">
                         <img class="cell-hd-pic" :src="item.phote | photoFilter" alt="">
                         <p class="cell-hd-name">{{item.userId.nickName}}</p>
@@ -127,7 +127,7 @@ export default {
         }
     }
 }
-.cell{
+.ot-cell{
     padding: 10px 10px 20px;
 }
 .week-btn {

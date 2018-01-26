@@ -1,5 +1,5 @@
 <template>
-    <div class="page_TM">
+    <div class="page_TM content">
         <!-- basic show part -->
         <div class="part_left">
             <p class="search_unit">

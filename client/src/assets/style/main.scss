@@ -77,14 +77,14 @@
 }
 
 // 列表
-.cells {
+.ot-cells {
     position: relative;
     width: 100%;
     padding: 10px;
     justify-content: space-between;
 }
 
-.cells::before {
+.ot-cells::before {
     content: " ";
     position: absolute;
     width: 100%;
@@ -93,7 +93,7 @@
     background-color: $colorLine;
 }
 
-.cell {
+.ot-cell {
     position: relative;
     min-height: 100px;
     padding: 10px;
@@ -103,7 +103,7 @@
     justify-content: space-between;
 }
 
-.cell::after {
+.ot-cell::after {
     content: " ";
     position: absolute;
     width: 100%;

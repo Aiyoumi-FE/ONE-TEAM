@@ -15,6 +15,6 @@ export default {
 
 </script>
 <style lang="scss">
-// @import './var.scss';
+@import './var.scss';
 
 </style>

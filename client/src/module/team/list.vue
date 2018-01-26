@@ -9,8 +9,8 @@
                 <button class="btn" @click="teamOpera('out')">退出团队</button>
             </div>
         </div>
-        <ul class="cells">
-            <li v-for="item in obj.memberList" class="cell">
+        <ul class="ot-cells">
+            <li v-for="item in obj.memberList" class="ot-cell">
                 <div class="cell-hd">
                     <img class="cell-hd-pic" :src="item.phote | photoFilter" alt="">
                 </div>
@@ -126,10 +126,10 @@ export default {
     border-radius: 25px;
     line-height: 50px;
 }
-.cells {
+.ot-cells {
     margin-top: 30px;
 }
-.cell {
+.ot-cell {
     min-height: 60px;
 }
 .cell-bd {
