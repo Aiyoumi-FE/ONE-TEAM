@@ -66,7 +66,7 @@ class Team {
     async chengeMemberStatus(ctx, next) {
         let formData = ctx.request.body
         let userId = businessUtil.getStatus(ctx)
-        let teamId = serviceUtil.getCookie(ctx, 'team')
+        let teamId = ctx.request.body.teamId || serviceUtil.getCookie(ctx, 'team')
         let oldTeamValue = { _id: teamId }
         let oldUserValue = { _id: userId }
         let newTeamValue

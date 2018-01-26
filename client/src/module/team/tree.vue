@@ -15,7 +15,7 @@
         <div class="part_right">
             <h3>{{currentTeam.name}}</h3>
             <p class="btn_addmem" @click="dgMMShow = true" v-if="teamList.length">添加成员</p>
-            <el-table ref="multipleTable" :data="teamDetail" tooltip-effect="blue" style="width: 100%" >
+            <el-table height="500" ref="multipleTable" :data="teamDetail" tooltip-effect="blue" style="width: 100%" >
                 <el-table-column type="selection" width="55">
                 </el-table-column>
                 <el-table-column prop="nickName" label="姓名">
@@ -24,10 +24,22 @@
                 </el-table-column>
                 <el-table-column prop="type" label="成员类别">
                 </el-table-column>
+                <el-table-column label="操作">
+                  <template slot-scope="scope">
+                    <el-button
+                        v-if="scope.row.type !== '管理员'"
+                        size="middle"
+                        @click="memOperate('admin', scope.row)">升级</el-button>
+                    <el-button
+                        v-if="scope.row.type !== '管理员'"
+                        size="middle"
+                        type="danger"
+                        @click="memOperate('del', scope.row)">删除</el-button>
+                  </template>
+                </el-table-column>
             </el-table>
         </div>
         <!-- floating dialog -->
-        <!-- <div class="part_other"> -->
         <!-- Team Management -->
         <div class="dialog__container" v-show="dgTMShow">
             <div class="dialog__content dialog_tm">
@@ -37,7 +49,7 @@
                     <span class="btns btn_del__team" :class="{'active': activeBtn === 'del'}" @click="teamEditClick('del')">Del</span>
                     <span class="btns btn_edit__team" :class="{'active': activeBtn === 'edit'}" @click="teamEditClick('edit')">Edit</span>
                 </div>
-                <h3>小组管理</h3>
+                <h3>小组管理{{tmTipTxt}}</h3>
                 <span class="btn_dg__close" @click="dgTMShow = false">X</span>
                 <div class="block_content">
                     <section class="section_add" v-show="activeBtn === 'add'">
@@ -51,10 +63,10 @@
                                 <label for="email">名称：</label>
                                 <input name="email" type="text" v-model="teamInfo.teamName">
                             </p>
-                            <p class="line_input">
+                            <!-- <p class="line_input">
                                 <label for="teamId">管理员：</label>
                                 <input name="teamId" type="text" v-model="teamInfo.administrator">
-                            </p>
+                            </p> -->
                         </p>
                         <p class="btn_addmem_submit" @click="addTeamSubmit('add')">
                             保存
@@ -139,7 +151,6 @@
                 </div>
             </div>
         </div>
-        <!-- </div> addOneEmail-->
     </div>
 </template>
 <script>
@@ -149,7 +160,8 @@ import {
     TableColumn,
     Input,
     Select,
-    Option
+    Option,
+    Button
 } from 'element-ui'
 import {
     getTeamList,
@@ -158,7 +170,8 @@ import {
     updateTeam,
     deleteTeam,
     addMem2Team,
-    sendEmail
+    sendEmail,
+    changeTeamMemStatus
 } from '@/store/team'
 export default {
     name: 'teamManage',
@@ -201,6 +214,19 @@ export default {
             } else {
                 return []
             }
+        },
+        tmTipTxt() {
+            let txt = {
+                'add': '添加子部门',
+                'del': '删除子部门',
+                'edit': '重命名'
+            }[this.activeBtn]
+
+            if (txt) {
+                txt = '--' + txt
+            }
+
+            return txt
         }
     },
     components: {
@@ -209,7 +235,8 @@ export default {
         'el-table-column': TableColumn,
         'el-input': Input,
         'el-select': Select,
-        'el-option': Option
+        'el-option': Option,
+        'el-button': Button
     },
     created() {
         this.loadTeamList()
@@ -270,6 +297,20 @@ export default {
             })
 
             return data
+        },
+        memOperate(str, row) {
+            console.log(str, row)
+            changeTeamMemStatus({
+                opera: str,
+                userId: row._id,
+                teamId: row.teamId
+            }, (data) => {
+                if (data.success) {
+                    window.location.reload()
+                } else {
+                    alert(data.resultDesc || '系统异常，请稍后再试')
+                }
+            })
         },
         /* Member Management */
         addMemberSubmit() {

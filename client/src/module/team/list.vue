@@ -74,7 +74,10 @@ export default {
             this.$router.push('teamJoin')
         },
         manageAction() {
-            this.managing = !this.managing
+            // this.managing = !this.managing
+            this.$router.push({
+                path: 'teamManage'
+            })
         },
         teamOpera(str, id) {
             if (str === 'out' && this.obj.isAdmin) {
