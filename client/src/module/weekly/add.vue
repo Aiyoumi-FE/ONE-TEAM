@@ -4,8 +4,8 @@
             {{dateForm.year}}年 第{{dateForm.weekNum}}周
             <p class="bd-date__sub">本周周报</p>
         </div>
-        <a href="javascript:;" class="bd-back" @click="back()">返回列表</a>
-        <div class="bd-content" v-if="isEmpty">
+        <a href="javascript:;" class="bd-back link" @click="back()">返回列表</a>
+        <div class="bd-content" v-if="isEdit">
             <markdown-editor v-model="obj.content" ref="markdownEditor" :configs="configs"></markdown-editor>
             <div @click="saveWeekly()" class="btn">保存</div>
         </div>
@@ -40,7 +40,7 @@ export default {
             obj: {
                 content: ''
             },
-            isEmpty: true
+            isEdit: true
         }
     },
     components: {
@@ -81,7 +81,7 @@ export default {
             })
             saveWeekDetail(this.obj, (res) => {
                 if (res.success) {
-                    this.isEmpty = false
+                    this.isEdit = false
                 } else {
                     alert(res.resultDes)
                 }
@@ -91,7 +91,7 @@ export default {
             this.$router.go(-1)
         },
         edit() {
-            this.isEmpty = true
+            this.isEdit = true
         }
     }
 }
@@ -118,9 +118,8 @@ export default {
 .bd-back {
     width: 80px;
     position: absolute;
-    left: 80px;
-    top: 50px;
-    color: #c18795;
+    left: 3%;
+    top: 3%;
 }
 
 .btn_save {
