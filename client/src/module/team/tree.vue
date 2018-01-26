@@ -1,5 +1,5 @@
 <template>
-    <div class="page_TM content">
+    <div class="page_TM">
         <!-- basic show part -->
         <div class="part_left">
             <p class="search_unit">
@@ -15,7 +15,7 @@
         <div class="part_right">
             <h3>{{currentTeam.name}}</h3>
             <p class="btn_addmem" @click="dgMMShow = true" v-if="teamList.length">添加成员</p>
-            <el-table height="500" ref="multipleTable" :data="teamDetail" tooltip-effect="blue" style="width: 100%" >
+            <el-table height="500" ref="multipleTable" :data="teamDetail" tooltip-effect="blue" style="width: 100%">
                 <el-table-column type="selection" width="55">
                 </el-table-column>
                 <el-table-column prop="nickName" label="姓名">
@@ -25,17 +25,10 @@
                 <el-table-column prop="type" label="成员类别">
                 </el-table-column>
                 <el-table-column label="操作">
-                  <template slot-scope="scope">
-                    <el-button
-                        v-if="scope.row.type !== '管理员'"
-                        size="middle"
-                        @click="memOperate('admin', scope.row)">升级</el-button>
-                    <el-button
-                        v-if="scope.row.type !== '管理员'"
-                        size="middle"
-                        type="danger"
-                        @click="memOperate('del', scope.row)">删除</el-button>
-                  </template>
+                    <template slot-scope="scope">
+                        <el-button v-if="scope.row.type !== '管理员'" size="middle" @click="memOperate('admin', scope.row)">升级</el-button>
+                        <el-button v-if="scope.row.type !== '管理员'" size="middle" type="danger" @click="memOperate('del', scope.row)">删除</el-button>
+                    </template>
                 </el-table-column>
             </el-table>
         </div>
@@ -45,7 +38,7 @@
             <div class="dialog__content dialog_tm">
                 <div class="block_btns">
                     <span class="btns btn_add__team" :class="{'active': activeBtn === 'add'}" @click="teamEditClick('add')">Add
-                    </span>
+                        </span>
                     <span class="btns btn_del__team" :class="{'active': activeBtn === 'del'}" @click="teamEditClick('del')">Del</span>
                     <span class="btns btn_edit__team" :class="{'active': activeBtn === 'edit'}" @click="teamEditClick('edit')">Edit</span>
                 </div>
@@ -64,9 +57,9 @@
                                 <input name="email" type="text" v-model="teamInfo.teamName">
                             </p>
                             <!-- <p class="line_input">
-                                <label for="teamId">管理员：</label>
-                                <input name="teamId" type="text" v-model="teamInfo.administrator">
-                            </p> -->
+                                    <label for="teamId">管理员：</label>
+                                    <input name="teamId" type="text" v-model="teamInfo.administrator">
+                                </p> -->
                         </p>
                         <p class="btn_addmem_submit" @click="addTeamSubmit('add')">
                             保存
@@ -105,7 +98,8 @@
         <!-- Member Management -->
         <div class="dialog__container" v-show="dgMMShow">
             <div class="dialog__content">
-                <h3>添加成员</h3> <!-- ({{currentTeam.name}}) -->
+                <h3>添加成员</h3>
+                <!-- ({{currentTeam.name}}) -->
                 <span class="btn_dg__close" @click="dgMMShow = false">X</span>
                 <div class="tab_head">
                     <span class="tab_quick" :class="{'active': invite_quick}" @click="invite_quick = true">快速添加</span>
@@ -461,12 +455,12 @@ export default {
 }
 
 .page_TM {
-    position: relative;
-    width: 1000px;
-    min-height: 400px;
-    margin: 100px auto;
+    position: relative; // width: 1000px;
+    min-height: 400px; // margin: 100px auto;
+    margin: 0 10%;
     border: 1px solid #ccc;
     background: #fff;
+    box-shadow: 0 0 15px 0 #999; // background: #f9f9f9;
     .part_left {
         display: inline-block;
         position: absolute;
@@ -610,9 +604,9 @@ export default {
         }
     }
     /*  */
-
     .dialog_tm {
-        padding: 14px 0 0 20px;;
+        padding: 14px 0 0 20px;
+        ;
         height: 300px;
         width: 400px;
         z-index: 999;
@@ -635,15 +629,9 @@ export default {
                 border-top-left-radius: 20px;
                 border-bottom-left-radius: 20px;
             }
-            .btn_add__team {
-
-            }
-            .btn_del__team {
-
-            }
-            .btn_edit__team {
-
-            }
+            .btn_add__team {}
+            .btn_del__team {}
+            .btn_edit__team {}
             .active {
                 background: #00BCD4;
                 color: #fff;
@@ -683,5 +671,4 @@ export default {
         background-size: contain;
     }
 }
-
 </style>

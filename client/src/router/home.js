@@ -12,7 +12,8 @@ export default [{
         name: 'home',
         component: home,
         meta: {
-            title: '首页'
+            title: '首页',
+            throwContent: true
         }
     }, {
         path: 'refuse',

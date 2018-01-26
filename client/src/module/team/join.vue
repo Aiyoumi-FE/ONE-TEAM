@@ -80,7 +80,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import '../../var.scss';
 .mid{
     text-align: center;
 }
