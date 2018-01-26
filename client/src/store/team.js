@@ -3,8 +3,8 @@ import {
 } from '../assets/js/ajax'
 
 /* ================登陆================= */
-export const getTeamInfo = (callback) => {
-    return _post('/team/teamInfo', null, (data) => {
+export const getTeamInfo = (param, callback) => {
+    return _post('/team/teamInfo', param, (data) => {
         callback(data)
     })
 }
@@ -29,6 +29,37 @@ export const joinUrl = (callback) => {
 
 export const sendEmail = (param, callback) => {
     return _post('/common/sendEmail', param, (data) => {
+        callback(data)
+    })
+}
+
+/* new */
+export const getTeamList = (param, callback) => {
+    return _post('/team/getTeamList', param, (data) => {
+        callback(data)
+    })
+}
+
+export const createTeam = (param, callback) => {
+    return _post('/team/createTeam', param, (data) => {
+        callback(data)
+    })
+}
+
+export const deleteTeam = (param, callback) => {
+    return _post('/team/deleteTeam', param, (data) => {
+        callback(data)
+    })
+}
+
+export const updateTeam = (param, callback) => {
+    return _post('/team/updateTeam', param, (data) => {
+        callback(data)
+    })
+}
+
+export const addMem2Team = (param, callback) => {
+    return _post('/team/addMem2Team', param, (data) => {
         callback(data)
     })
 }

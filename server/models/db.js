@@ -2,7 +2,9 @@ const config = require('../configs')
 const mongoose = require('mongoose')
 
 const DB_URL = config.DB_URL
-
+/*
+ */
+mongoose.Promise = global.Promise;
 /**
  * 连接
  */

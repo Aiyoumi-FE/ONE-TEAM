@@ -7,6 +7,7 @@ import configRouter from './routes'
 import './assets/js/ajax'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/googlecode.css'
+
 Vue.config.productionTip = false
 
 Vue.use(VueRouter)

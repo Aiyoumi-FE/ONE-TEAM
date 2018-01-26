@@ -11,8 +11,8 @@
             <span class="btn" @click="creatWeekly()">写周报</span>
         </div>
         <div class="bd-content">
-            <ul class="cells">
-                <li v-for="item in list" class="cell">
+            <ul class="ot-cells">
+                <li v-for="item in list" class="ot-cell">
                     <div class="cell-hd">
                         <img class="cell-hd-pic" :src="item.phote | photoFilter" alt="">
                         <p class="cell-hd-name">{{item.userId.nickName}}</p>
@@ -145,7 +145,7 @@ export default {
     color: #999;
 }
 
-.cell {
+.ot-cell{
     padding: 10px 10px 20px;
 }
 

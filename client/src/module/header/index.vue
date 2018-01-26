@@ -1,12 +1,12 @@
 <template>
-    <div class="header">
+    <div class="headerbar">
         <base-nav></base-nav>
     </div>
 </template>
 <script>
 import BaseNav from './BaseNav'
 export default {
-    name: 'header',
+    name: 'headerbar',
     props: {
         online: Boolean
     },
@@ -20,10 +20,10 @@ export default {
 
 </script>
 <style lang="scss" scoped>
-.header {
-    z-index: 8;
+.headerbar {
     position: absolute;
     width: 100%;
+    z-index: 8;
     background-color: rgba(255, 255, 255, 0.7);
 }
 
