@@ -2,6 +2,7 @@
 const { serviceUtil, businessUtil } = require('../util')
 // 数据库
 const userModel = require('../models/user.js')
+const teamModel = require('../models/team.js')
 const weeklyModel = require('../models/weekly.js')
 // const markdown = require( "markdown" ).markdown;
 
@@ -15,6 +16,7 @@ class Weekly {
     // 返回参数：list(周报列表)
     async getWeeklyList(ctx, next) {
         let requestData = ctx.request.body
+        let userId = businessUtil.getStatus(ctx)
         let teamId = serviceUtil.getCookie(ctx, 'team')
 
         if (!teamId) {
@@ -30,12 +32,15 @@ class Weekly {
             .populate('userId', 'nickName')
             .exec()
 
-        // weeklyList.forEach((item) => {
-        //     item.content = markdown.toHTML(item.content )
-        // })
+        let teamInfo = await teamModel
+            .findOne({ '_id': teamId })
+        console.log(teamInfo)
+        let isAdmin = userId == teamInfo.administrator
+
         // 返回数据
         let result = {
             result: {
+                isAdmin: isAdmin,
                 list: weeklyList
             },
             success: true
@@ -54,13 +59,17 @@ class Weekly {
         let beginDate = new Date(requestData.beginDate) || serviceUtil.getDayOfWeek(new Date(), 1),
             endDate = serviceUtil.getDayOfWeek(beginDate, 7)
 
-        let weeklyDetail = await weeklyModel.findOne({ "creatTime": { $gte: beginDate, $lte: endDate }, 'teamId': teamId, 'userId': userId }).exec()
+        let weeklyDetail = await weeklyModel.findOne({ 'creatTime': { $gte: beginDate, $lte: endDate }, 'teamId': teamId, 'userId': userId }).exec()
 
         if (!weeklyDetail) {
+            let res = await teamModel
+                .findOne({'_id': teamId }, 'template')
+                .populate('template')
             weeklyDetail = {
-                content: '### 本周工作成果总结，列举完成的任务以及进度，包括工作和学习。\n\n### 遇到挑战或者困难么？希望团队怎么帮助你？\n\n### 下周的工作目标是什么？\n\n### 你觉得采取哪些措施，会对你提升工作效率有帮助？\n\n### 其他问题\n\n### 分享一篇本周有用的或有趣的文章\n\n### 本周OKR进度说明！'
+                content: res.template.template
             }
         }
+
         // 返回数据
         let result = {
             result: weeklyDetail,

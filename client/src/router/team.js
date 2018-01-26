@@ -5,7 +5,7 @@ const teamJoin = resolve => require(['../module/team/join'], resolve)
 const teamTree = resolve => require(['../module/team/tree'], resolve)
 
 export default [{
-    path: '/page/team',
+    path: '/team',
     component: page,
     children: [{
         path: 'list',

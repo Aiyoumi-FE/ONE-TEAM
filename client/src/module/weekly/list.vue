@@ -7,7 +7,7 @@
             <p class="bd-date_detail">{{obj.begin}} - {{obj.end}}</p>
         </div>
         <div class="bd-config">
-            <span class="link" @click="goWeeklyConfig()">设置</span>
+            <span class="link" @click="goWeeklyConfig()" v-if="isAdmin">设置</span>
             <span class="btn" @click="creatWeekly()">写周报</span>
         </div>
         <div class="bd-content">
@@ -36,6 +36,7 @@ export default {
     data() {
         return {
             list: [],
+            isAdmin: false,
             obj: {
                 year: '',
                 weekNum: '',
@@ -77,6 +78,7 @@ export default {
                 beginDate: this.beginDate
             }, (res) => {
                 if (res.success) {
+                    this.isAdmin = res.result.isAdmin
                     this.list = res.result.list
                 } else {
                     this.$router.replace({

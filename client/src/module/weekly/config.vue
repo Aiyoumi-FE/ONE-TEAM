@@ -1,19 +1,24 @@
 <template>
     <div>
-        设置周报模版
-        <markdown-editor v-model="weeklyTemplate[0].content" ref="markdownEditor" :configs="configs"></markdown-editor>	
-        <div v-for="item in weeklyTemplate">
-        	<div v-if="item.content">
-        		<markdown-editor v-model="item.content" ref="markdownEditor" :configs="configs"></markdown-editor>
-        	</div>
+        <a href="javascript:;" class="bd-back link" @click="back()">返回列表</a>
+        <h2>设置周报模版</h2>
+        <div v-if="isEdit">
+            <markdown-editor v-model="weeklyTemplate.template" ref="markdownEditor" :configs="configs"></markdown-editor>
+            <div class="btn" @click="save">保存</div>
         </div>
-        <span class="link" @click="add">添加个性化模板</span>
+        <div class="bd-content" v-else>
+            <hr>
+            <vue-markdown :source="weeklyTemplate.template" v-highlight></vue-markdown>
+            <div @click="edit()" class="btn">编辑</div>
+        </div>
     </div>
 </template>
 <script>
 import {
-    getWeeklyConfig
+    getWeeklyConfig,
+    saveWeeklyConfig
 } from '@/store/weekly'
+import VueMarkdown from 'vue-markdown'
 import markdownEditor from 'vue-simplemde/src/markdown-editor'
 export default {
     name: 'weekly',
@@ -23,12 +28,15 @@ export default {
                 status: false, // 禁用底部状态栏
                 spellChecker: false // 禁用拼写检查
             },
-            weeklyTemplate: [],
-            isEmpty: true
+            weeklyTemplate: {
+                template: ''
+            },
+            isEdit: true
         }
     },
     components: {
-        markdownEditor
+        markdownEditor,
+        VueMarkdown
     },
     mounted() {
         this.initData()
@@ -37,30 +45,23 @@ export default {
         initData() {
             getWeeklyConfig((res) => {
                 if (res.success) {
-                    this.weeklyTemplate = res.result.template
+                    this.weeklyTemplate = res.result
                 } else {
                     alert(res.resultDes)
                 }
             })
-        },
-        add() {
-        	let obj = {
-        		content: '',
-        		list: []
-        	}
-        	this.weeklyTemplate.push(obj)
         },
         save() {
-            let result = Object.assign({}, {
-            	weeklyTemplate: this.weeklyTemplate
-            })
-            saveWeekDetail(result, (res) => {
+            saveWeeklyConfig(this.weeklyTemplate, (res) => {
                 if (res.success) {
-                    this.isEmpty = false
+                    this.isEdit = false
                 } else {
                     alert(res.resultDes)
                 }
             })
+        },
+        edit() {
+            this.isEdit = true
         },
         back() {
             this.$router.go(-1)
@@ -71,45 +72,13 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import '~simplemde/dist/simplemde.min.css';
-.page-bd {
-    position: relative;
-    margin: 100px auto;
-    width: 80%;
-    height: 800px;
-    padding-top: 50px;
-    background-color: #fff;
-    box-shadow: 0 0 15px 0 #999;
+.btn {
+    margin-top: 20px;
 }
-
-.bd-date {
-    text-align: center;
-    font-size: 30px;
-    color: #333;
-}
-
 .bd-back {
     width: 80px;
     position: absolute;
-    left: 80px;
-    top: 50px;
-    color: #c18795;
+    left: 3%;
+    top: 3%;
 }
-
-.btn_save {
-    display: block;
-    margin: 45px auto 0;
-}
-
-.bd-date__sub {
-    margin-top: 25px;
-    font-size: 18px;
-}
-
-.bd-content {
-    margin-top: 50px;
-    .btn {
-        margin: 10px auto 0;
-    }
-}
-
 </style>

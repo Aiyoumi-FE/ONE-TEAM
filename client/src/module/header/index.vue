@@ -7,9 +7,6 @@
 import BaseNav from './BaseNav'
 export default {
     name: 'headerbar',
-    props: {
-        online: Boolean
-    },
     data() {
         return {}
     },
@@ -21,7 +18,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .headerbar {
-    position: absolute;
+    z-index: 8;
     width: 100%;
     z-index: 8;
     background-color: rgba(255, 255, 255, 0.7);

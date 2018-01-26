@@ -1,8 +1,12 @@
 <template>
     <div>
-        <page-header :online="online"></page-header>
+        <page-header></page-header>
         <transition name="fade">
-            <router-view></router-view>
+            <div class="page">
+                <div class="content">
+                    <router-view></router-view>
+                </div>
+            </div>
         </transition>
     </div>
 </template>
@@ -10,11 +14,6 @@
 import pageHeader from './header'
 export default {
     name: 'app',
-    data() {
-        return {
-            online: true
-        }
-    },
     components: {
         pageHeader
     }
