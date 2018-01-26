@@ -122,7 +122,6 @@ export default {
 
 </script>
 <style lang="scss" scoped>
-@import '../../var.scss';
 .bd-date {
     text-align: center;
     font-size: 24px;

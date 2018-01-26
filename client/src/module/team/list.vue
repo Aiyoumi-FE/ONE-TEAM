@@ -99,7 +99,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../var.scss';
+@import '../../assets/style/base.scss';
 .team-sub{
     display:flex;
     justify-content:space-between;

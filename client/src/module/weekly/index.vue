@@ -1,9 +1,7 @@
 <template>
-    <div class="page">
-        <div class="content">
-            <router-view></router-view>
-        </div>
-    </div>
+    <transition name="fade">
+        <router-view></router-view>
+    </transition>
 </template>
 <script>
 import weekList from './list'

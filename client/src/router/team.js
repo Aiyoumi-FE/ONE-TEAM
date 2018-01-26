@@ -20,7 +20,8 @@ export default [{
         name: 'teamTree',
         meta: {
             title: 'teamTree',
-            inDefault: true
+            inDefault: true,
+            throwContent: true
         }
     }, {
         path: 'teamJoin',
