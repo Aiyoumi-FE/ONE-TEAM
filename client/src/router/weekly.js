@@ -4,24 +4,24 @@ const weeklyList = resolve => require(['../module/weekly/list'], resolve)
 const weeklyDetail = resolve => require(['../module/weekly/add'], resolve)
 const weeklyConfig = resolve => require(['../module/weekly/config'], resolve)
 export default [{
-    path: '/weekly',
+    path: '/page',
     component: page,
     children: [{
-        path: 'list',
+        path: 'weeklyList',
         component: weeklyList,
         name: 'weeklyList',
         meta: {
             title: '周报'
         }
     }, {
-        path: 'detail',
+        path: 'weeklyDetail',
         component: weeklyDetail,
         name: 'weeklyDetail',
         meta: {
             title: '周报详情'
         }
     }, {
-        path: 'config',
+        path: 'weeklyConfig',
         component: weeklyConfig,
         name: 'weeklyConfig',
         meta: {
