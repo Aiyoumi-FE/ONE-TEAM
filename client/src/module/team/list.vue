@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!loading" class="content">
+    <div v-if="!loading">
         <h1>{{obj.teamName}}</h1>
         <div class="team-sub">
             <span class="invate">邀请码：{{obj._id}}</span>
