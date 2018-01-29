@@ -97,6 +97,7 @@ body {
 
 .hello {
     position: relative;
+    z-index: 1;
     overflow: hidden;
     width: 80%;
     min-height: 250px;
