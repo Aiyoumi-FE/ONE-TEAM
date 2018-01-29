@@ -19,6 +19,21 @@
     box-shadow: 0 0 15px 0 #999;
 }
 
+.ot-page {
+    padding-top: 100px;
+    background: #fff;
+    overflow: hidden;
+    .ot-content {
+        margin: 0 10%;
+        position: relative;
+        min-height: 800px;
+        padding: 50px 10%;
+        -webkit-box-shadow: 0 0 15px 0 #999;
+        box-shadow: 0 0 15px 0 #999;
+        background: #f9f9f9;
+    }
+}
+
 @media screen and (max-width: 1024px) {
     .content {
         margin: 20px 0;

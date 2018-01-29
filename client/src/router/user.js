@@ -3,7 +3,7 @@ const user = resolve => require(['../module/user/login/index'], resolve)
 const login = resolve => require(['../module/user/login/login'], resolve)
 const register = resolve => require(['../module/user/login/register'], resolve)
 const settings = resolve => require(['../module/user/settings/index'], resolve)
-const App = resolve => require(['../App'], resolve)
+const App = resolve => require(['../module/index'], resolve)
 
 export default [{
     path: '/page',
@@ -16,14 +16,18 @@ export default [{
             name: 'login',
             component: login,
             meta: {
-                title: '登录'
+                title: '登录',
+                throwContent: true,
+                throwHeader: true
             }
         }, {
             path: 'register',
             name: 'register',
             component: register,
             meta: {
-                title: '注册'
+                title: '注册',
+                throwContent: true,
+                throwHeader: true
             }
         }]
     }, {

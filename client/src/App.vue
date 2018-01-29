@@ -1,15 +1,10 @@
 <template>
-    <div>
-        <transition name="fade">
-            <router-view></router-view>
-        </transition>
-    </div>
+    <transition name="fade">
+        <router-view></router-view>
+    </transition>
 </template>
 <script>
 export default {
     name: 'app'
 }
 </script>
-<style lang="scss">
-@import './var.scss';
-</style>
