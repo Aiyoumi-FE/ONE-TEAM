@@ -1,15 +1,16 @@
 import koa from 'koa';
 import bodyParser from 'koa-bodyparser';
-// import session from 'koa-session';
 import serve from 'koa-static';
 import config from './configs';
+import { businessUtil, constStr } from './util'
+
 const app = new koa();
 const router = require('koa-router')();
-const fs = require('fs');
-const path = require('path');
+const jwt = require('koa-jwt')
 const controller = require('./controller');
+const userApi = require('./api/user')
 
-const { businessUtil } = require('./util')
+const { secret } = constStr
 
 app.use(bodyParser());
 // 静态文件的路径
@@ -34,45 +35,13 @@ app.use(async(ctx, next) => {
 })
 
 // 接口操作
-app.use(controller('api'));
+router.use(userApi.routes())
+router.use('/api', jwt({ secret }), controller('api').routes())
+app.use(router.routes())
 
 app.on('error', function(err, ctx) {
     console.log(err);
 });
-
-
-// var _ = require('koa-route');
-// const upload = multer({ dest: './' }).single('file');
-
-// var formidable = require('formidable');
-
-// app.use(_.post('/uploadFile111', function(req, res) {
-//     var form = new formidable.IncomingForm();
-//     form.parse(req.req, function(err, fields, files) {
-//         console.log('======');
-//         var oldpath = files.filetoupload.path;
-//         var newpath = './' + files.filetoupload.name;
-//         console.log(oldpath, newpath);
-//         //fs.copyFile(oldpath, newpath);
-//         console.log('-------');
-//         fs.rename(oldpath, newpath, function(err) {
-//             if (err) throw err;
-//             res.write('File uploaded and moved!');
-//             res.end();
-//         });
-
-//         res.write('File uploaded');
-//         res.end();
-//     });
-
-//     let result = {
-//         result: {
-//             filename: ''
-//         },
-//         success: true
-//     }
-//     req.body = result;
-// }));
 
 app.listen(config.dev.port, () => {
     console.log('The server is running at http://localhost:' + config.dev.port)

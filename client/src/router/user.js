@@ -5,33 +5,39 @@ const register = resolve => require(['../module/user/login/register'], resolve)
 const settings = resolve => require(['../module/user/settings/index'], resolve)
 const App = resolve => require(['../App'], resolve)
 
-export default [{
-    path: '/page',
-    component: App,
-    children: [{
-        path: 'user',
-        component: user,
+export default [
+    {
+        path: '/',
+        redirect: '/page/home'
+    },
+    {
+        path: '/page',
+        component: App,
         children: [{
-            path: 'login',
-            name: 'login',
-            component: login,
-            meta: {
-                title: '登录'
-            }
+            path: 'user',
+            component: user,
+            children: [{
+                path: 'login',
+                name: 'login',
+                component: login,
+                meta: {
+                    title: '登录'
+                }
+            }, {
+                path: 'register',
+                name: 'register',
+                component: register,
+                meta: {
+                    title: '注册'
+                }
+            }]
         }, {
-            path: 'register',
-            name: 'register',
-            component: register,
+            path: 'user/settings',
+            name: 'settings',
+            component: settings,
             meta: {
-                title: '注册'
+                title: '个人设置'
             }
         }]
-    }, {
-        path: 'user/settings',
-        name: 'settings',
-        component: settings,
-        meta: {
-            title: '个人设置'
-        }
-    }]
-}]
+    }
+]

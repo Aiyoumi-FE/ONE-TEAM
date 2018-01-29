@@ -6,7 +6,7 @@
 <script>
 import BaseNav from './BaseNav'
 export default {
-    name: 'header',
+    name: 'headerIndex',
     props: {
         online: Boolean
     },

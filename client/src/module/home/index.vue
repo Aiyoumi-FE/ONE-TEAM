@@ -1,5 +1,4 @@
 <template>
-    <!-- <div class="home" @mousemove='updateXY'> -->
     <div class="home">
         <div class="hello">
             <h1>Hello, {{nickName}} :）</h1>
@@ -8,7 +7,6 @@
         </div>
         <div class="ft">
             <div class="image">
-                <!-- <img src="./image/left-pop.png" alt="" ref="imgLeft" v-bind:style="styleObject"> -->
                 <img src="./image/left-pop.png" alt="" ref="imgLeft">
                 <img src="./image/bg.png" alt="">
                 <img src="./image/right-pop.png" alt="" ref="imgRight">
@@ -18,15 +16,12 @@
         </div>
     </div>
 </template>
+
 <script>
-import {
-    signout
-} from '@/store/home'
-import {
-    cookie
-} from '@/assets/js/cookie'
+import { cookie } from '@/assets/js/cookie'
 import base64 from '@/assets/js/base64'
 import util from '@/assets/js/util'
+
 export default {
     name: 'home',
     data() {
@@ -56,8 +51,12 @@ export default {
             }
         },
         submitSignout() {
-            signout((res) => {
+            this.$http.post('/user/signout')
+            .then((response) => {
+                const res = response.data
+
                 if (res.success) {
+                    cookie.clear('token', '/')
                     this.$router.replace({
                         name: 'login'
                     })
@@ -72,8 +71,8 @@ export default {
         }
     }
 }
-
 </script>
+
 <style lang='scss' scoped>
 body {
     background-color: #fff;
@@ -124,5 +123,4 @@ body {
         background-color: #56332f;
     }
 }
-
 </style>

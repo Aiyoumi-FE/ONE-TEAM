@@ -1,5 +1,5 @@
-var LOCAL_SERVICE = 'http://localhost:8081'
 module.exports = [
+    '/api/**',
     '/user/**',
     '/team/**',
     '/week/**',

@@ -26,12 +26,11 @@
         </ul>
     </div>
 </template>
+
 <script>
-import {
-    getTeamInfo,
-    changeTeamMemStatus
-} from '@/store/team'
+import { changeTeamMemStatus } from '@/store/team'
 import TeamJoin from './join'
+
 export default {
     name: 'home',
     data() {
@@ -59,7 +58,10 @@ export default {
     },
     methods: {
         initData() {
-            getTeamInfo((res) => {
+            this.$http.post('/api/team/teamInfo')
+            .then((response) => {
+                const res = response.data
+
                 if (res.success) {
                     this.obj = res.result
                 } else {
@@ -106,14 +108,14 @@ export default {
     padding: 5px 15px;
     border-radius: 20px;
     background-color: #eee;
-    display: inline-block; 
+    display: inline-block;
 }
 .admin{
     margin-left: 10px;
     padding: 2px 15px;
     border-radius: 20px;
     background-color: #fcf1a5;
-    display: inline-block; 
+    display: inline-block;
 }
 .cell-hd {
     width: 50px;
@@ -127,13 +129,13 @@ export default {
     line-height: 50px;
 }
 .cells {
-    margin-top: 30px; 
+    margin-top: 30px;
 }
 .cell {
     min-height: 60px;
 }
 .cell-bd {
-    margin-left: 15px; 
+    margin-left: 15px;
     flex-grow: 1;
     p {
         margin: 5px 0;
