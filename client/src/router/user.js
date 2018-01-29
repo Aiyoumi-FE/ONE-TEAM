@@ -7,10 +7,6 @@ const App = resolve => require(['../App'], resolve)
 
 export default [
     {
-        path: '/',
-        redirect: '/page/home'
-    },
-    {
         path: '/page',
         component: App,
         children: [{
