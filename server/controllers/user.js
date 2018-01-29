@@ -1,7 +1,9 @@
 const jwt = require('jsonwebtoken')
-const secret = 'jwt one'
+
 // 工具库
-const { validatorUtil, serviceUtil } = require('../util')
+const { validatorUtil, serviceUtil, constStr } = require('../util')
+const { secret } = constStr
+
 // 数据库
 const userModel = require('../models/user.js')
 const teamModel = require('../models/team.js')
@@ -63,9 +65,9 @@ class User {
                     let userToken = {
                         id: user._id
                     }
-                    let tocken = jwt.sign(userToken, secret, {expiresIn: '1h'})
+                    let token = jwt.sign(userToken, secret, {expiresIn: '1h'})
                     ctx.cookies.set('name', new Buffer(user.nickName).toString('base64'), { httpOnly: false })
-                    ctx.cookies.set('tocken', tocken)
+                    ctx.cookies.set('token', token, { httpOnly: false })
                     ctx.cookies.set('team', user.teamId)
                 } else {
                     result.resultDes = '用户密码错误'

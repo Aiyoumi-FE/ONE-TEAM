@@ -22,7 +22,7 @@
 </template>
 <script>
 export default {
-    name: 'header',
+    name: 'headerBaseNav',
     data() {
         return {
             navList: [{
