@@ -10,6 +10,11 @@
 import pageHeader from './header'
 export default {
     name: 'app',
+    data() {
+        return {
+            online: true // 这个是干啥的？
+        }
+    },
     components: {
         pageHeader
     }

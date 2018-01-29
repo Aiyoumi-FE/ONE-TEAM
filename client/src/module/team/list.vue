@@ -26,12 +26,11 @@
         </ul>
     </div>
 </template>
+
 <script>
-import {
-    getTeamInfo,
-    changeTeamMemStatus
-} from '@/store/team'
+import { changeTeamMemStatus } from '@/store/team'
 import TeamJoin from './join'
+
 export default {
     name: 'home',
     data() {
@@ -59,7 +58,10 @@ export default {
     },
     methods: {
         initData() {
-            getTeamInfo(null, (res) => {
+            this.$http.post('/api/team/teamInfo')
+            .then((response) => {
+                const res = response.data
+
                 if (res.success) {
                     this.obj = res.result
                 } else {
@@ -129,6 +131,7 @@ export default {
     border-radius: 25px;
     line-height: 50px;
 }
+
 .ot-cells {
     margin-top: 30px;
 }

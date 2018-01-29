@@ -1,4 +1,5 @@
-const fs = require('fs');
+// const fs = require('fs');
+import fs from 'fs'
 
 // add url-route in /controllers:
 
@@ -32,7 +33,9 @@ function addControllers(router, dir) {
     }).forEach((f) => {
         console.log(`process controller: ${f}...`);
         let mapping = require(__dirname + '/' + dir + '/' + f);
-        addMapping(router, mapping);
+        if (f !== 'user.js') {
+            addMapping(router, mapping);
+        }
     });
 }
 
@@ -80,5 +83,5 @@ module.exports = function(dir) {
 
     addControllers(router, controllers_dir);
     addUploadFile(router);
-    return router.routes();
+    return router;
 };
