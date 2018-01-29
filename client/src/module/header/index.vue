@@ -1,15 +1,13 @@
 <template>
-    <div class="header">
+    <div class="headerbar">
         <base-nav></base-nav>
     </div>
 </template>
+
 <script>
 import BaseNav from './BaseNav'
 export default {
-    name: 'headerIndex',
-    props: {
-        online: Boolean
-    },
+    name: 'headerbar',
     data() {
         return {}
     },
@@ -17,14 +15,15 @@ export default {
         BaseNav
     }
 }
-
 </script>
+
 <style lang="scss" scoped>
-.header {
-    z-index: 8;
+.headerbar {
     position: absolute;
+    left: 0;
+    top: 0;
     width: 100%;
+    z-index: 8;
     background-color: rgba(255, 255, 255, 0.7);
 }
-
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="nav">
-        <p class="logo">
+        <p class="logo" v-show="!isPop">
             <img src="./image/logo.png" alt="">
         </p>
         <ul class="nav-ul">
@@ -8,14 +8,16 @@
                 <router-link :to="{name: item.link, params: item.params}">{{item.name}}</router-link>
             </li>
         </ul>
-        <p class="nav-catalog" @click="isPop = !isPop">=</p>
-        <transition name="slide-up">
-            <ul class="nav-ul_min" v-show="isPop">
-                <li v-for="item in navList" class="nav-li">
-                    <router-link :to="{name: item.link, params: item.params}">{{item.name}}</router-link>
-                </li>
-            </ul>
-        </transition>
+        <div class="nav-catalog">
+            <span @click="isPop = !isPop">三</span>
+            <transition name="slide-up">
+                <ul class="nav-ul_min" v-show="isPop">
+                    <li v-for="item in navList" class="nav-li">
+                        <router-link :to="{name: item.link, params: item.params}">{{item.name}}</router-link>
+                    </li>
+                </ul>
+            </transition>
+        </div>
     </div>
 </template>
 <script>
@@ -24,16 +26,16 @@ export default {
     data() {
         return {
             navList: [{
-                name: 'Home',
+                name: '主页',
                 link: 'home'
             }, {
-                name: 'Weekly',
+                name: '周报',
                 link: 'weeklyList'
             }, {
-                name: 'Team',
+                name: '团队',
                 link: 'teamList'
             }, {
-                name: 'Settings',
+                name: '个人设置',
                 link: 'settings'
             }],
             isPop: false
@@ -46,7 +48,7 @@ export default {
 .nav-catalog {
     display: none;
 }
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 1024px) {
     .nav-catalog {
         display: block;
     }
@@ -55,7 +57,13 @@ export default {
     }
 }
 .nav-ul_min {
-
+    width: 100%;
+    display: inline-block;
+    justify-content: space-between;
+    .nav-li {
+        display: inline-block;
+        padding: 0 5px;
+    }
 }
 
 .logo {

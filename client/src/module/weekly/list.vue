@@ -7,12 +7,12 @@
             <p class="bd-date_detail">{{obj.begin}} - {{obj.end}}</p>
         </div>
         <div class="bd-config">
-            <span class="link" @click="goWeeklyConfig()">设置</span>
+            <span class="link" @click="goWeeklyConfig()" v-if="isAdmin">设置</span>
             <span class="btn" @click="creatWeekly()">写周报</span>
         </div>
         <div class="bd-content">
-            <ul class="cells">
-                <li v-for="item in list" class="cell">
+            <ul class="ot-cells">
+                <li v-for="item in list" class="ot-cell">
                     <div class="cell-hd">
                         <img class="cell-hd-pic" :src="item.phote | photoFilter" alt="">
                         <p class="cell-hd-name">{{item.userId.nickName}}</p>
@@ -35,6 +35,7 @@ export default {
     data() {
         return {
             list: [],
+            isAdmin: false,
             obj: {
                 year: '',
                 weekNum: '',
@@ -77,6 +78,7 @@ export default {
                 const res = response.data
 
                 if (res.success) {
+                    this.isAdmin = res.result.isAdmin
                     this.list = res.result.list
                 } else {
                     this.$router.replace({
@@ -122,7 +124,6 @@ export default {
 
 </script>
 <style lang="scss" scoped>
-@import '../../var.scss';
 .bd-date {
     text-align: center;
     font-size: 24px;
@@ -145,7 +146,7 @@ export default {
     color: #999;
 }
 
-.cell {
+.ot-cell{
     padding: 10px 10px 20px;
 }
 

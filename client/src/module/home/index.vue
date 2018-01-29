@@ -1,5 +1,6 @@
 <template>
     <div class="home">
+        <page-header></page-header>
         <div class="hello">
             <h1>Hello, {{nickName}} :）</h1>
             <p>Even if it's the end of the world, I'll be there for you</p>
@@ -21,6 +22,7 @@
 import { cookie } from '@/assets/js/cookie'
 import base64 from '@/assets/js/base64'
 import util from '@/assets/js/util'
+import pageHeader from '../header'
 
 export default {
     name: 'home',
@@ -43,6 +45,9 @@ export default {
     mounted() {
         this.initData()
     },
+    components: {
+        pageHeader
+    },
     methods: {
         initData() {
             this.nickName = base64.decode(cookie.get('name'))
@@ -57,6 +62,7 @@ export default {
 
                 if (res.success) {
                     cookie.clear('token', '/')
+                    cookie.clear('name', '/')
                     this.$router.replace({
                         name: 'login'
                     })
@@ -82,7 +88,7 @@ body {
     width: 100%;
     height: 100%;
     margin-bottom: 100px;
-    padding-top: 200px;
+    // padding-top: 200px;
 }
 
 .btn {
@@ -98,6 +104,7 @@ body {
     text-align: center; // margin: 120px auto;
     color: #56332f;
     font-size: 20px;
+    padding-top: 100px;
     h1 {
         color: #56332f;
         font-size: 30px;

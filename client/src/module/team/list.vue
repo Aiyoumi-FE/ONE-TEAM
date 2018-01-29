@@ -9,8 +9,8 @@
                 <button class="btn" @click="teamOpera('out')">退出团队</button>
             </div>
         </div>
-        <ul class="cells">
-            <li v-for="item in obj.memberList" class="cell">
+        <ul class="ot-cells">
+            <li v-for="item in obj.memberList" class="ot-cell">
                 <div class="cell-hd">
                     <img class="cell-hd-pic" :src="item.phote | photoFilter" alt="">
                 </div>
@@ -76,7 +76,10 @@ export default {
             this.$router.push('teamJoin')
         },
         manageAction() {
-            this.managing = !this.managing
+            // this.managing = !this.managing
+            this.$router.push({
+                path: 'teamManage'
+            })
         },
         teamOpera(str, id) {
             if (str === 'out' && this.obj.isAdmin) {
@@ -98,7 +101,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../var.scss';
+@import '../../assets/style/base.scss';
 .team-sub{
     display:flex;
     justify-content:space-between;
@@ -128,10 +131,11 @@ export default {
     border-radius: 25px;
     line-height: 50px;
 }
-.cells {
+
+.ot-cells {
     margin-top: 30px;
 }
-.cell {
+.ot-cell {
     min-height: 60px;
 }
 .cell-bd {

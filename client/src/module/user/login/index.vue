@@ -17,7 +17,7 @@ export default {
 
 </script>
 <style lang='scss'>
-@import '../../../var.scss';
+@import '../../../assets/style/base.scss';
 body {
     background-color: #fff;
 }
