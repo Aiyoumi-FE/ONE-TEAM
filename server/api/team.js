@@ -5,6 +5,7 @@ module.exports = {
     'POST /team/teamOpera': Team.teamOpera,
     'POST /team/joinUrl': Team.joinUrl,
     'POST /team/getTeamList': Team.getTeamList,
+    'POST /team/getTeamListSelf': Team.getTeamListSelf,
     'POST /team/createTeam': Team.createTeam,
     'POST /team/deleteTeam': Team.deleteTeam,
     'POST /team/updateTeam': Team.updateTeam,

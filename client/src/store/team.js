@@ -1,65 +1,49 @@
 import {
-    _post
+    _postPromise
 } from '../assets/js/ajax'
 
 /* ================登陆================= */
-export const getTeamInfo = (param, callback) => {
-    return _post('/team/teamInfo', param, (data) => {
-        callback(data)
-    })
+export const getTeamInfo = (param) => {
+    return _postPromise('/api/team/teamInfo', param)
 }
 
-export const changeTeamMemStatus = (param, callback) => {
-    return _post('/team/teamMemStatus', param, (data) => {
-        callback(data)
-    })
+export const changeTeamMemStatus = (param) => {
+    return _postPromise('/api/team/teamMemStatus', param)
 }
 
-export const teamOpera = (param, callback) => {
-    return _post('/team/teamOpera', param, (data) => {
-        callback(data)
-    })
+export const teamOpera = (param) => {
+    return _postPromise('/api/team/teamOpera', param)
 }
 
-export const joinUrl = (callback) => {
-    return _post('/team/joinUrl', null, (data) => {
-        callback(data)
-    })
+export const joinUrl = () => {
+    return _postPromise('/api/team/joinUrl')
 }
 
-export const sendEmail = (param, callback) => {
-    return _post('/common/sendEmail', param, (data) => {
-        callback(data)
-    })
+export const sendEmail = (param) => {
+    return _postPromise('/api/common/sendEmail', param)
 }
 
 /* new */
-export const getTeamList = (param, callback) => {
-    return _post('/team/getTeamList', param, (data) => {
-        callback(data)
-    })
+export const getTeamList = (param) => {
+    return _postPromise('/api/team/getTeamList', param)
 }
 
-export const createTeam = (param, callback) => {
-    return _post('/team/createTeam', param, (data) => {
-        callback(data)
-    })
+export const getTeamListSelf = (param) => {
+    return _postPromise('/api/team/getTeamListSelf', param)
 }
 
-export const deleteTeam = (param, callback) => {
-    return _post('/team/deleteTeam', param, (data) => {
-        callback(data)
-    })
+export const createTeam = (param) => {
+    return _postPromise('/api/team/createTeam', param)
 }
 
-export const updateTeam = (param, callback) => {
-    return _post('/team/updateTeam', param, (data) => {
-        callback(data)
-    })
+export const deleteTeam = (param) => {
+    return _postPromise('/api/team/deleteTeam', param)
 }
 
-export const addMem2Team = (param, callback) => {
-    return _post('/team/addMem2Team', param, (data) => {
-        callback(data)
-    })
+export const updateTeam = (param) => {
+    return _postPromise('/api/team/updateTeam', param)
+}
+
+export const addMem2Team = (param) => {
+    return _postPromise('/api/team/addMem2Team', param)
 }

@@ -163,15 +163,19 @@ import {
     Button
 } from 'element-ui'
 import {
-    getTeamList,
+    getTeamListSelf,
+    // getTeamList,
     getTeamInfo,
     createTeam,
     updateTeam,
     deleteTeam,
     addMem2Team,
-    sendEmail,
-    changeTeamMemStatus
+    sendEmail
+    // ,
+    // changeTeamMemStatus
 } from '@/store/team'
+// import otDialog from './dialog'
+// import otDialog from '../../components/dialog/index.vue'
 export default {
     name: 'teamManage',
     data() {
@@ -203,7 +207,8 @@ export default {
                 name: '',
                 pid: ''
             },
-            emailList: ['']
+            emailList: [''],
+            operatTeamId: ''
         }
     },
     computed: {
@@ -236,14 +241,16 @@ export default {
         'el-select': Select,
         'el-option': Option,
         'el-button': Button
+        // ,
+        // otDialog
     },
     created() {
         this.loadTeamList()
     },
     methods: {
         loadTeamList() {
-            let params = ''
-            getTeamList(params, (data) => {
+            getTeamListSelf().then((data) => {
+                // console.log(response)
                 this.teamListOrigin = data.result
             })
         },
@@ -282,7 +289,12 @@ export default {
         getInfo(team) {
             let teamId = team._id
             this.curAdminId = team.administrator
-            getTeamInfo({ teamId }, (data) => {
+            this.operatTeamId = team._id
+
+            getTeamInfo({
+                teamId
+            }).then((data) => {
+                console.log('data', data)
                 if (data.success && data.result) {
                     this.teamDetail = this.formateData(data.result.memberList)
                     this.currentTeam.name = data.result.teamName
@@ -299,11 +311,12 @@ export default {
         },
         memOperate(str, row) {
             console.log(str, row)
-            changeTeamMemStatus({
+            this.$http.post('/api/team/teamMemStatus', {
                 opera: str,
                 userId: row._id,
-                teamId: row.teamId
-            }, (data) => {
+                teamId: this.operatTeamId
+            }).then((response) => {
+                let data = response.data
                 if (data.success) {
                     window.location.reload()
                 } else {

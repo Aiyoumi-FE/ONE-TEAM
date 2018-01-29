@@ -85,11 +85,12 @@ class Team {
             let userUpdate = await userModel.update(oldUserValue, newUserValue)
         }
         if (formData.opera == 'admin') { // 任职
+            console.log('=====formData.userId:' + formData.userId + '&teamId:' + teamId)
             newTeamValue = { $set: { administrator: formData.userId } }
         }
 
         let teamUpdate = await teamModel.update(oldTeamValue, newTeamValue)
-
+        console.log('=====')
 
         let result = {
             success: true
@@ -158,6 +159,24 @@ class Team {
         }
 
         // if (teamId) {
+        let teamInfo = await teamModel
+            .find({})
+            .exec()
+
+        let res = Object.assign(JSON.parse(JSON.stringify(teamInfo)), {isAdmin: userId == teamInfo.administrator})
+        result.result = res
+
+        ctx.response.body = result
+    }
+
+    async getTeamListSelf(ctx, next) {
+        console.log('--------------getTeamListSelf-----------')
+        let teamId = serviceUtil.getCookie(ctx, 'team')
+        let userId = businessUtil.getStatus(ctx)
+        let result = {
+            success: true
+        }
+
         let teamInfo = await teamModel
             .find({})
             .exec()
