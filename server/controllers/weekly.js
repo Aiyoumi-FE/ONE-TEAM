@@ -34,7 +34,6 @@ class Weekly {
 
         let teamInfo = await teamModel
             .findOne({ '_id': teamId })
-        console.log(teamInfo)
         let isAdmin = userId == teamInfo.administrator
 
         // 返回数据
@@ -63,7 +62,7 @@ class Weekly {
 
         if (!weeklyDetail) {
             let res = await teamModel
-                .findOne({'_id': teamId }, 'template')
+                .findOne({ '_id': teamId }, 'template')
                 .populate('template')
             weeklyDetail = {
                 content: res.template.template

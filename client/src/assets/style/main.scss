@@ -1,43 +1,28 @@
 @import './base.scss';
 @import './reset.scss';
-.page {
-    overflow: hidden;
-    background-color: $colorBackground;
-}
-
-.page-content {
-    background-color: $colorBackground;
-}
-
-.content {
-    position: relative;
-    background-color: $colorBackground;
-    margin: 40px 10%;
-    min-height: 800px;
-    padding: 50px 10%;
-    background-color: #fff;
-    box-shadow: 0 0 15px 0 #999;
-}
+@import './rem.scss';
 
 .ot-page {
-    padding-top: 100px;
+    // padding-top: 100px;
     background: #fff;
     overflow: hidden;
-    .ot-content {
-        margin: 0 10%;
-        position: relative;
-        min-height: 800px;
-        padding: 50px 10%;
-        -webkit-box-shadow: 0 0 15px 0 #999;
-        box-shadow: 0 0 15px 0 #999;
-        background: #f9f9f9;
-    }
+}
+
+.ot-content {
+    margin: 0 10%;
+    position: relative;
+    min-height: 800px;
+    padding: 100px 10%;
+    -webkit-box-shadow: 0 0 15px 0 #999;
+    box-shadow: 0 0 15px 0 #999;
+    background: #f9f9f9;
 }
 
 @media screen and (max-width: 1024px) {
-    .content {
-        margin: 20px 0;
-        padding: 50px 5%;
+    .ot-content {
+        margin: 0;
+        padding: 10px 5%;
+        box-shadow: none;
     }
 }
 
@@ -137,8 +122,8 @@
     min-height: 100px;
     padding: 10px;
     display: flex;
-    -webkit-box-align: center; // -webkit-align-items: center;
-    // align-items: center;
+    -webkit-box-align: center;
+    word-wrap: break-word;
     justify-content: space-between;
 }
 
@@ -160,14 +145,17 @@
 // markdown 样式
 .markdown {
     width: 100%;
-    padding: 0 30px;
     ol li {
         list-style-position: inside;
+    }
+    img {
+        max-width: 80%;
+        height: auto;
     }
 }
 
 hr {
     height: 1px;
     border: none;
-    border-top:1px solid $colorLine;
+    border-top: 1px solid $colorLine;
 }

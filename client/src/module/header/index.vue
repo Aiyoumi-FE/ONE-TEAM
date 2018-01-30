@@ -19,9 +19,6 @@ export default {
 
 <style lang="scss" scoped>
 .headerbar {
-    position: absolute;
-    left: 0;
-    top: 0;
     width: 100%;
     z-index: 8;
     background-color: rgba(255, 255, 255, 0.7);

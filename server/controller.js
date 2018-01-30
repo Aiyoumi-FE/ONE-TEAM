@@ -39,49 +39,49 @@ function addControllers(router, dir) {
     });
 }
 
-function addUploadFile(router) {
-    //文件上传
-    const multer = require('koa-multer');
-    //配置
-    var storage = multer.diskStorage({
-        //文件保存路径
-        destination: function(req, file, cb) {
-            console.log('----=======');
-            cb(null, __dirname + '/static/')
-        },
-        filename: function(req, file, cb) {
-            console.log('32323');
-            // console.log(arguments);
-            var fileFormat = (file.originalname).split(".");
-            cb(null, Date.now() + "." + fileFormat[fileFormat.length - 1]);
-        }
-    })
+// function addUploadFile(router) {
+//     //文件上传
+//     const multer = require('koa-multer');
+//     //配置
+//     var storage = multer.diskStorage({
+//         //文件保存路径
+//         destination: function(req, file, cb) {
+//             console.log('----=======');
+//             cb(null, __dirname + '/static/')
+//         },
+//         filename: function(req, file, cb) {
+//             console.log('32323');
+//             // console.log(arguments);
+//             var fileFormat = (file.originalname).split(".");
+//             cb(null, Date.now() + "." + fileFormat[fileFormat.length - 1]);
+//         }
+//     })
 
-    var upload = multer({ storage: storage });
-    //upload.single('file')这里面的file是上传空间的name<input type="file" name="file"/>
-    router.post('/uploadFile', upload.single('file'), async(ctx, next) => {
-        console.log(ctx)
-        let result = {
-            result: {
-                filename: ctx
-            },
-            success: true
-        }
-        ctx.response.body = result;
-        /*ctx.body = {
-                filename: ctx.req.file.filename//返回文件名
-        }*/
-        // ctx.redirect('/index');
-    })
+//     var upload = multer({ storage: storage });
+//     //upload.single('file')这里面的file是上传空间的name<input type="file" name="file"/>
+//     router.post('/uploadFile', upload.single('file'), async(ctx, next) => {
+//         console.log(ctx)
+//         let result = {
+//             result: {
+//                 filename: ctx
+//             },
+//             success: true
+//         }
+//         ctx.response.body = result;
+//         /*ctx.body = {
+//                 filename: ctx.req.file.filename//返回文件名
+//         }*/
+//         // ctx.redirect('/index');
+//     })
 
-    console.log(`register URL mapping: POST /uploadFile`);
-}
+//     console.log(`register URL mapping: POST /uploadFile`);
+// }
 
 module.exports = function(dir) {
     let controllers_dir = dir || 'controllers',
         router = require('koa-router')();
 
     addControllers(router, controllers_dir);
-    addUploadFile(router);
+    // addUploadFile(router);
     return router;
 };
