@@ -28,8 +28,8 @@ export const getTeamList = (param) => {
     return _postPromise('/api/team/getTeamList', param)
 }
 
-export const getTeamListSelf = (param) => {
-    return _postPromise('/api/team/getTeamListSelf', param)
+export const getPermissionTeamList = (param) => {
+    return _postPromise('/api/team/getPermissionTeamList', param)
 }
 
 export const createTeam = (param) => {

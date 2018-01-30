@@ -43,7 +43,7 @@ export default {
     },
     methods: {
         initData() {
-            getWeeklyConfig((res) => {
+            getWeeklyConfig().then((res) => {
                 if (res.success) {
                     this.weeklyTemplate = res.result
                 } else {
@@ -52,7 +52,7 @@ export default {
             })
         },
         save() {
-            saveWeeklyConfig(this.weeklyTemplate, (res) => {
+            saveWeeklyConfig(this.weeklyTemplate).then((res) => {
                 if (res.success) {
                     this.isEdit = false
                 } else {

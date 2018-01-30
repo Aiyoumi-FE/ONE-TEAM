@@ -1,7 +1,7 @@
 <template>
     <div class="shadow">
         <div class="title">
-            <h1>团队管理</h1>
+            <h1>管理团队</h1>
         </div>
         <div class="page_TM">
             <!-- basic show part -->
@@ -163,19 +163,15 @@ import {
     Button
 } from 'element-ui'
 import {
-    getTeamListSelf,
-    // getTeamList,
+    getPermissionTeamList,
     getTeamInfo,
     createTeam,
     updateTeam,
     deleteTeam,
     addMem2Team,
-    sendEmail
-    // ,
-    // changeTeamMemStatus
+    sendEmail,
+    changeTeamMemStatus
 } from '@/store/team'
-// import otDialog from './dialog'
-// import otDialog from '../../components/dialog/index.vue'
 export default {
     name: 'teamManage',
     data() {
@@ -241,16 +237,13 @@ export default {
         'el-select': Select,
         'el-option': Option,
         'el-button': Button
-        // ,
-        // otDialog
     },
     created() {
         this.loadTeamList()
     },
     methods: {
         loadTeamList() {
-            getTeamListSelf().then((data) => {
-                // console.log(response)
+            getPermissionTeamList().then((data) => {
                 this.teamListOrigin = data.result
             })
         },
@@ -294,7 +287,6 @@ export default {
             getTeamInfo({
                 teamId
             }).then((data) => {
-                console.log('data', data)
                 if (data.success && data.result) {
                     this.teamDetail = this.formateData(data.result.memberList)
                     this.currentTeam.name = data.result.teamName
@@ -311,12 +303,11 @@ export default {
         },
         memOperate(str, row) {
             console.log(str, row)
-            this.$http.post('/api/team/teamMemStatus', {
+            changeTeamMemStatus({
                 opera: str,
                 userId: row._id,
                 teamId: this.operatTeamId
-            }).then((response) => {
-                let data = response.data
+            }).then((data) => {
                 if (data.success) {
                     window.location.reload()
                 } else {
@@ -345,9 +336,9 @@ export default {
                 return
             }
 
-            addMem2Team(this.memInfo, (data) => {
+            addMem2Team(this.memInfo).then((data) => {
                 if (data.success) {
-
+                    this.dgMMShow = false
                 } else {
                     alert(data.resultDesc || '系统异常，请稍后再试')
                 }
@@ -367,7 +358,7 @@ export default {
         sendInvite() {
             sendEmail({
                 email: this.emailList.join(',')
-            }, (res) => {
+            }).then((res) => {
                 if (res.success) {
                     alert('邀请已发出')
                 }
@@ -386,7 +377,7 @@ export default {
             if (type === 'add') {
                 this.teamInfo.pid = this.rootTeam._id
 
-                createTeam(this.teamInfo, (data) => {
+                createTeam(this.teamInfo).then((data) => {
                     this.dgTMShow = false
                     if (data.success) {
                         this.loadTeamList()
@@ -395,7 +386,7 @@ export default {
                     }
                 })
             } else {
-                updateTeam(this.teamInfo, (data) => {
+                updateTeam(this.teamInfo).then((data) => {
                     this.dgTMShow = false
                     if (data.success) {
                         this.loadTeamList()
@@ -414,7 +405,7 @@ export default {
             if (window.confirm('确定删除么？')) {
                 deleteTeam({
                     _id: this.teamInfo._id
-                }, (data) => {
+                }).then((data) => {
                     this.dgTMShow = false
                     if (data.success) {
                         this.loadTeamList()

@@ -28,7 +28,10 @@
 </template>
 
 <script>
-import { changeTeamMemStatus } from '@/store/team'
+import {
+    changeTeamMemStatus,
+    getTeamInfo
+} from '@/store/team'
 import TeamJoin from './join'
 
 export default {
@@ -58,9 +61,8 @@ export default {
     },
     methods: {
         initData() {
-            this.$http.post('/api/team/teamInfo')
-            .then((response) => {
-                const res = response.data
+            getTeamInfo().then((res) => {
+                // const res = response.data
 
                 if (res.success) {
                     this.obj = res.result
@@ -89,7 +91,7 @@ export default {
             changeTeamMemStatus({
                 opera: str,
                 userId: id
-            }, (res) => {
+            }).then((res) => {
                 if (str === 'admin') {
                     this.managing = !this.managing
                 }

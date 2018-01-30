@@ -58,9 +58,7 @@ export const _post = (url, data, callback, catchCallback) => {
 
 export const _postPromise = (url, data) => {
     return new Promise((resolve, reject) => {
-        Axios.post(url, {
-            params: data
-        }).then((response) => {
+        Axios.post(url, data).then((response) => {
             resolve(response.data)
         }, (response) => {
             resolve(response)
@@ -71,9 +69,7 @@ export const _postPromise = (url, data) => {
 }
 export const _getPromise = (url, data) => {
     return new Promise((resolve, reject) => {
-        Axios.get(url, {
-            params: data
-        }).then((response) => {
+        Axios.get(url, data).then((response) => {
             resolve(response.data)
         }, (response) => {
             resolve(response)
