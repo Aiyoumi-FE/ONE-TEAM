@@ -1,4 +1,5 @@
 import util from '@/assets/js/util'
+import Axios from 'axios'
 const _ajax = (obj) => {
     obj = obj || {}
     obj.type = (obj.type || 'GET').toUpperCase()
@@ -52,5 +53,28 @@ export const _post = (url, data, callback, catchCallback) => {
         type: 'POST',
         data: data,
         success: callback
+    })
+}
+
+export const _postPromise = (url, data) => {
+    return new Promise((resolve, reject) => {
+        Axios.post(url, data).then((response) => {
+            resolve(response.data)
+        }, (response) => {
+            resolve(response)
+        })
+    }).catch((err) => {
+        alert('sorry, sth\'s wrong:' + err.message)
+    })
+}
+export const _getPromise = (url, data) => {
+    return new Promise((resolve, reject) => {
+        Axios.get(url, data).then((response) => {
+            resolve(response.data)
+        }, (response) => {
+            resolve(response)
+        })
+    }).catch((err) => {
+        alert('sorry, sth\'s wrong:' + err.message)
     })
 }

@@ -26,6 +26,9 @@
 </template>
 
 <script>
+import {
+    getWeekList
+} from '@/store/weekly'
 import rHeader from '../header/index'
 import dateFormate from './common/index'
 import VueMarkdown from 'vue-markdown'
@@ -73,10 +76,8 @@ export default {
     methods: {
         initData() {
             this.setDate()
-            this.$http.post('/api/week/getWeekList', { beginDate: this.beginDate })
-            .then((response) => {
-                const res = response.data
-
+            getWeekList({ beginDate: this.beginDate })
+            .then((res) => {
                 if (res.success) {
                     this.isAdmin = res.result.isAdmin
                     this.list = res.result.list

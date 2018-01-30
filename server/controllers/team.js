@@ -85,11 +85,12 @@ class Team {
             let userUpdate = await userModel.update(oldUserValue, newUserValue)
         }
         if (formData.opera == 'admin') { // 任职
+            console.log('=====formData.userId:' + formData.userId + '&teamId:' + teamId)
             newTeamValue = { $set: { administrator: formData.userId } }
         }
 
         let teamUpdate = await teamModel.update(oldTeamValue, newTeamValue)
-
+        console.log('=====')
 
         let result = {
             success: true
@@ -162,7 +163,35 @@ class Team {
             .find({})
             .exec()
 
-        let res = Object.assign(JSON.parse(JSON.stringify(teamInfo)), {isAdmin: userId == teamInfo.administrator})
+        let res = Object.assign(JSON.parse(JSON.stringify(teamInfo)), { isAdmin: userId == teamInfo.administrator })
+        result.result = res
+
+        ctx.response.body = result
+    }
+
+    async getPermissionTeamList(ctx, next) {
+        let teamId = serviceUtil.getCookie(ctx, 'team')
+        let userId = businessUtil.getStatus(ctx)
+        let result = {
+            success: true
+        }
+
+        let teamRootInfo = await teamModel
+            .find({
+                administrator: userId
+            })
+            .sort({ _id: 1 })
+            .exec()
+
+        let childList = await teamModel
+            .find({
+                pid: teamRootInfo[0]._id
+            })
+            .exec()
+
+        let teamInfo = teamRootInfo.concat(childList)
+
+        let res = Object.assign(JSON.parse(JSON.stringify(teamInfo)), { isAdmin: userId == teamInfo.administrator })
         result.result = res
 
         ctx.response.body = result
@@ -192,18 +221,17 @@ class Team {
 
     async updateTeam(ctx, next) {
         let info = ctx.request.body
-        let {_id, teamName} = info
+        let { _id, teamName } = info
 
         try {
             teamModel.update({
-                _id: _id
-            },
-            {
-                $set: {
-                    teamName: teamName
-                }
-            })
-            .exec()
+                    _id: _id
+                }, {
+                    $set: {
+                        teamName: teamName
+                    }
+                })
+                .exec()
 
             ctx.response.body = {
                 success: true
@@ -221,10 +249,10 @@ class Team {
 
         try {
             teamModel
-            .remove({
-                _id: _id
-            })
-            .exec()
+                .remove({
+                    _id: _id
+                })
+                .exec()
 
             ctx.response.body = {
                 success: true
@@ -243,14 +271,14 @@ class Team {
             eMail,
             teamId
         } = ctx.request.body,
-        hasRecord = false,
-        user = new userModel({
-            nickName: name,
-            eMail,
-            teamId,
-            userPassword: serviceUtil.encrypt(eMail),
-            creatTime: new Date()
-        })
+            hasRecord = false,
+            user = new userModel({
+                nickName: name,
+                eMail,
+                teamId,
+                userPassword: serviceUtil.encrypt(eMail),
+                creatTime: new Date()
+            })
 
         let userPromise = userModel.findOne({
             eMail: eMail
@@ -277,6 +305,48 @@ class Team {
             ctx.response.body = {
                 success: true
             }
+        }
+    }
+
+    async getReportTo(ctx, next) {
+        let teamId = serviceUtil.getCookie(ctx, 'team')
+        let userId = businessUtil.getStatus(ctx)
+        let result = {
+            success: true
+        }
+
+        let teamInfo = await teamModel
+            .find({
+                _id: teamId
+            })
+            .exec()
+
+        let parentTeam = await teamModel
+            .find({
+                _id: teamInfo[0].pid
+            })
+            .populate('administrator')
+            .exec()
+
+        ctx.response.body = {
+            success: true,
+            result: parentTeam
+        }
+    }
+
+    async getReportFrom(ctx, next) {
+        let teamId = serviceUtil.getCookie(ctx, 'team')
+
+        let teamList = await teamModel
+            .find({
+                pid: teamId
+            })
+            .populate('administrator')
+            .exec()
+
+        ctx.response.body = {
+            result: teamList,
+            success: true
         }
     }
 }

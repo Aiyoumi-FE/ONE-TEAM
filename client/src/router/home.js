@@ -2,7 +2,7 @@
 
 const home = resolve => require(['../module/home/index'], resolve)
 const refuse = resolve => require(['../module/common/refuse'], resolve)
-const App = resolve => require(['../App'], resolve)
+const App = resolve => require(['../module/index'], resolve)
 
 export default [{
     path: '/page',
