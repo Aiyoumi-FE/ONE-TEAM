@@ -48,7 +48,7 @@ export default {
     },
     methods: {
         init() {
-            joinUrl((res) => {
+            joinUrl().then((res) => {
                 if (res.success) {
                     this.url = res.result.url
                     this.config.value = res.result.url
@@ -67,7 +67,7 @@ export default {
             }
             sendEmail({
                 email: toEmail.join(',')
-            }, (res) => {
+            }).then((res) => {
                 if (res.success) {
                     alert('邀请已发出')
                 }
