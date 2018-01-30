@@ -60,7 +60,7 @@ export default {
             this.setDate()
             getWeekDetail({
                 beginDate: this.beginDate
-            }, (res) => {
+            }).then((res) => {
                 if (res.success) {
                     this.obj = res.result
                     // this.initEdit()
@@ -79,7 +79,7 @@ export default {
             Object.assign(this.obj, {
                 beginDate: this.beginDate
             })
-            saveWeekDetail(this.obj, (res) => {
+            saveWeekDetail(this.obj).then((res) => {
                 if (res.success) {
                     this.isEdit = false
                 } else {

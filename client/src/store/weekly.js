@@ -1,34 +1,24 @@
 import {
-    _post
+    _postPromise
 } from '../assets/js/ajax'
 
-/* ================登陆================= */
-export const getWeekList = (param, callback) => {
-    return _post('/week/getWeekList', param, (data) => {
-        callback(data)
-    })
+/* ================WEEK================= */
+export const getWeekList = (param) => {
+    return _postPromise('/api/week/getWeekList', param)
 }
 
-export const getWeekDetail = (param, callback) => {
-    return _post('/week/getWeekDetail', param, (data) => {
-        callback(data)
-    })
+export const getWeekDetail = (param) => {
+    return _postPromise('/api/week/getWeekDetail', param)
 }
 
-export const saveWeekDetail = (param, callback) => {
-    return _post('/week/saveWeekDetail', param, (data) => {
-        callback(data)
-    })
+export const saveWeekDetail = (param) => {
+    return _postPromise('/api/week/saveWeekDetail', param)
 }
 
-export const getWeeklyConfig = (callback) => {
-    return _post('/week/getWeeklyConfig', null, (data) => {
-        callback(data)
-    })
+export const getWeeklyConfig = () => {
+    return _postPromise('/api/week/getWeeklyConfig')
 }
 
-export const saveWeeklyConfig = (param, callback) => {
-    return _post('/week/saveWeeklyConfig', param, (data) => {
-        callback(data)
-    })
+export const saveWeeklyConfig = (param) => {
+    return _postPromise('/api/week/saveWeeklyConfig', param)
 }

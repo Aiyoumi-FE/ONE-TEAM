@@ -3,6 +3,7 @@ const page = resolve => require(['../module/index'], resolve)
 const teamList = resolve => require(['../module/team/list'], resolve)
 const teamJoin = resolve => require(['../module/team/join'], resolve)
 const teamTree = resolve => require(['../module/team/tree'], resolve)
+const teamDashBoard = resolve => require(['../module/team/dashboard'], resolve)
 
 export default [{
     path: '/page',
@@ -29,6 +30,13 @@ export default [{
         name: 'teamJoin',
         meta: {
             title: '添加成员'
+        }
+    }, {
+        path: 'teamDashBoard',
+        component: teamDashBoard,
+        name: 'teamDashBoard',
+        meta: {
+            title: 'DashBoard'
         }
     }]
 }]
