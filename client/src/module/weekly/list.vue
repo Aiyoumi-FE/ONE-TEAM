@@ -1,9 +1,17 @@
 <template>
     <div v-if="!loading">
-        <div class="bd-date">
+        <!-- <div class="bd-date">
             <img src="./img/back.png" alt="" @click="changeList(-7)">
             <span>{{obj.year}}年  第{{obj.weekNum}}周</span>
             <img class="bd-date_next" v-if="notEnd" src="./img/back.png" alt="" @click="changeList(7)">
+            <p class="bd-date_detail">{{obj.begin}} - {{obj.end}}</p>
+        </div> -->
+        <div class="bd-date">
+            <p class="bd-date_week">
+                <img class="bd-date_back" src="./img/back.png" alt="" @click="changeList(-7)">
+                {{obj.year}}年  第{{obj.weekNum}}周
+                <img class="bd-date_next" v-if="notEnd" src="./img/back.png" alt="" @click="changeList(7)">
+            </p>
             <p class="bd-date_detail">{{obj.begin}} - {{obj.end}}</p>
         </div>
         <div class="bd-config">
@@ -136,8 +144,20 @@ export default {
         width: 24px;
     }
 }
-
+.bd-date_week {
+    position: relative;
+    display: inline-block;
+    margin: 0 auto;
+}
+.bd-date_back {
+    position: absolute;
+    left: -34px;
+    top: 4px;
+}
 .bd-date_next {
+    position: absolute;
+    right: -34px;
+    top: 4px;
     transform: rotate(180deg);
 }
 
