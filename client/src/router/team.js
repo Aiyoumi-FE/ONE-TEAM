@@ -36,7 +36,7 @@ export default [{
         component: teamDashBoard,
         name: 'teamDashBoard',
         meta: {
-            title: 'DashBoard'
+            title: '主管面板'
         }
     }]
 }]

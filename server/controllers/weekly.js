@@ -23,9 +23,15 @@ class Weekly {
             serviceUtil.sendErrMsg(ctx, '未加入团队')
             return
         }
+        let beginDate = null,
+            endDate = null
 
-        let beginDate = new Date(requestData.beginDate) || serviceUtil.getDayOfWeek(new Date(), 1),
-            endDate = serviceUtil.getDayOfWeek(beginDate, 7)
+        if (requestData.beginDate) {
+            beginDate = new Date(requestData.beginDate)
+        } else {
+            beginDate = serviceUtil.getDayOfWeek(new Date(), 1)
+        }
+        endDate = serviceUtil.getDayOfWeek(beginDate, 7)
 
         let weeklyList = await weeklyModel
             .find({ 'creatTime': { $gte: beginDate, $lte: endDate }, 'teamId': teamId }, 'content userId')

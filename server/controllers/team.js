@@ -3,6 +3,7 @@ const { serviceUtil, businessUtil } = require('../util')
 // 数据库
 const teamModel = require('../models/team.js')
 const userModel = require('../models/user.js')
+const weekModel = require('../models/weekly.js')
 
 class Team {
     constructor() {}
@@ -62,7 +63,7 @@ class Team {
     // 任免成员
     // 请求参数：opera（操作方式），userId（若为删除成员，此项为成员id）
     // 返回参数：list(周报列表)
-    async chengeMemberStatus(ctx, next) {
+    async changeMemberStatus(ctx, next) {
         let formData = ctx.request.body
         let userId = businessUtil.getStatus(ctx)
         let teamId = ctx.request.body.teamId || serviceUtil.getCookie(ctx, 'team')
@@ -161,6 +162,7 @@ class Team {
         // if (teamId) {
         let teamInfo = await teamModel
             .find({})
+            .populate('administrator')
             .exec()
 
         let res = Object.assign(JSON.parse(JSON.stringify(teamInfo)), { isAdmin: userId == teamInfo.administrator })
@@ -343,6 +345,27 @@ class Team {
             })
             .populate('administrator')
             .exec()
+
+        ctx.response.body = {
+            result: teamList,
+            success: true
+        }
+    }
+
+    async getChildTeamInfo(ctx, next) {
+        let teamId = serviceUtil.getCookie(ctx, 'team')
+        console.log('TeamId: ', teamId)
+
+        let teamList = await teamModel
+            .find({
+                pid: teamId
+            })
+            .populate('administrator')
+            .exec()
+
+        // let teamReport = await weekModel.find({
+
+        // })
 
         ctx.response.body = {
             result: teamList,

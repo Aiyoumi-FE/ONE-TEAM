@@ -1,7 +1,29 @@
 const Team = require('../controllers/team')
+// const urlList = [
+//     'getTeamInfo',
+//     'changeMemberStatus',
+//     'teamOpera',
+//     'joinUrl',
+//     'getTeamList',
+//     'getPermissionTeamList',
+//     'createTeam',
+//     'deleteTeam',
+//     'updateTeam',
+//     'addMem2Team',
+//     'getChildTeamInfo'
+// ]
+// let mapping = {}
+// console.log('testing')
+// urlList.forEach((item) => {
+//     mapping['POST ' + item] = Team[item]
+// })
+// console.log('---------', mapping)
+
+// module.exports = mapping
+
 module.exports = {
-    'POST /team/teamInfo': Team.getTeamInfo,
-    'POST /team/teamMemStatus': Team.chengeMemberStatus,
+    'POST /team/getTeamInfo': Team.getTeamInfo,
+    'POST /team/changeMemberStatus': Team.changeMemberStatus,
     'POST /team/teamOpera': Team.teamOpera,
     'POST /team/joinUrl': Team.joinUrl,
     'POST /team/getTeamList': Team.getTeamList,
@@ -9,5 +31,6 @@ module.exports = {
     'POST /team/createTeam': Team.createTeam,
     'POST /team/deleteTeam': Team.deleteTeam,
     'POST /team/updateTeam': Team.updateTeam,
-    'POST /team/addMem2Team': Team.addMem2Team
+    'POST /team/addMem2Team': Team.addMem2Team,
+    'POST /team/getChildTeamInfo': Team.getChildTeamInfo
 }
