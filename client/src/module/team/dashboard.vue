@@ -62,7 +62,7 @@
                 </section>
                 <section class="section_focus" v-show="showType == 'specialFocus'">
                     <div v-if="!focusList.length">
-                        <p class="btn_add__large"></p>
+                        <p class="btn_add__large" @click="goPage('mysub')"></p>
                         <p>还没有特别关注，快去添加吧</p>
                     </div>
                     <div v-else>
@@ -190,6 +190,11 @@ export default {
         },
         showTeamDetail(team) {
             this.curTeam = team
+        },
+        goPage(path) {
+            this.$router.push({
+                path
+            })
         }
     }
 }

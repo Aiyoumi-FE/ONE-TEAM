@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="page_mysub">
         <div class="section_sublist">
             <h3>我的关注</h3>
             <span class="btn btn_edit">编辑</span>
@@ -67,9 +67,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-* {
-    margin: 0;
-    padding: 0;
+.page_mysub {
+    * {
+        margin: 0;
+        padding: 0;
+    }
 }
 .section_sublist {
     position: relative;
@@ -83,7 +85,6 @@ export default {
         display: flex;
         flex-wrap: wrap;
         padding: 20px;
-        // justify-content: space-between;
         li {
             position: relative;
             width: 120px;
