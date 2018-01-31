@@ -9,7 +9,7 @@
             </li>
         </ul>
         <div class="nav-catalog">
-            <span @click="isPop = !isPop">三</span>
+            <span @click="isPop = !isPop" class="btn_list"></span>
             <transition name="slide-up">
                 <ul class="nav-ul_min" v-show="isPop">
                     <li v-for="item in navList" class="nav-li">
@@ -48,9 +48,21 @@ export default {
 .nav-catalog {
     display: none;
 }
-@media screen and (max-width: 1024px) {
+.btn_list {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    background: url('./image/list.png') 0 center no-repeat;
+    background-size: cover;
+}
+@media screen and (max-width: 660px) {
     .nav-catalog {
         display: block;
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        right: 15px;
+        top: 20px;
     }
     .nav-ul{
         display: none;

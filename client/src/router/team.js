@@ -4,6 +4,7 @@ const teamList = resolve => require(['../module/team/list'], resolve)
 const teamJoin = resolve => require(['../module/team/join'], resolve)
 const teamTree = resolve => require(['../module/team/tree'], resolve)
 const teamDashBoard = resolve => require(['../module/team/dashboard'], resolve)
+const mysub = resolve => require(['../module/team/subscription'], resolve)
 
 export default [{
     path: '/page',
@@ -37,6 +38,13 @@ export default [{
         name: 'teamDashBoard',
         meta: {
             title: '主管面板'
+        }
+    }, {
+        path: 'mysub',
+        component: mysub,
+        name: 'mysub',
+        meta: {
+            title: '我的关注'
         }
     }]
 }]

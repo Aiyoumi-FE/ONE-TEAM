@@ -19,7 +19,6 @@
                 <li @click="setType('teamReport')">部门总结</li>
                 <li @click="setType('memberList')">部门成员</li>
                 <li @click="setType('memberReport')">成员周报</li>
-                <li @click="setType('specialReport')">特别关注</li>
             </ul>
         </div>
         <div class="bd-content">
@@ -224,9 +223,9 @@ export default {
         display: inline-block;
         width: 30px;
         height: 30px;
-        background: url('./img/list.png') 0 center no-repeat;
+        background: url('./img/list_gray_deep.png') 0 center no-repeat;
         background-size: cover;
-        opacity: 0.25;
+        // opacity: 0.25;
     }
     ul {
         position: absolute;

@@ -12,13 +12,13 @@
                 <ul v-show="showTypeList">
                     <li @click="setType('childTeam')">下级部门</li>
                     <li @click="setType('allTeam')">所有部门</li>
-                    <li @click="setType('specialAttention')">特别关注</li>
+                    <li @click="setType('specialFocus')">特别关注</li>
                 </ul>
                 <!-- <span class="vision_list"></span> -->
             </div>
             <div>
                 <!-- 直属下级部门 -->
-                <section v-if="showType == 'childTeam'">
+                <section v-show="showType == 'childTeam'">
                     <ul class="ot-cells">
                         <li v-for="item in childTeamList" class="ot-cell" @click="goToTeam(item)">
                             <div class="cell-hd">
@@ -40,9 +40,9 @@
                     </ul>
                 </section>
                 <!-- 所有部门 -->
-                <section class="section_allteam" v-if="showType == 'allTeam'">
+                <section class="section_allteam" v-show="showType == 'allTeam'">
                     <el-tree ref="teamTree" :data="teamAllList" :props="defaultProps" @node-click="showTeamDetail"></el-tree>
-                    <div class="team_detail" v-if="curTeam.teamName" @click="goToTeam(curTeam)"> <!--  -->
+                    <div class="team_detail" v-if="curTeam.teamName" @click="goToTeam(curTeam)">
                         <p class="info_line">
                             <span class="info_icon team_name"></span>
                             <span>{{curTeam.teamName}}</span>
@@ -60,6 +60,33 @@
                         </p>
                     </div>
                 </section>
+                <section class="section_focus" v-show="showType == 'specialFocus'">
+                    <div v-if="!focusList.length">
+                        <p class="btn_add__large"></p>
+                        <p>还没有特别关注，快去添加吧</p>
+                    </div>
+                    <div v-else>
+                        <ul class="ot-cells">
+                            <li v-for="item in childTeamList" class="ot-cell" @click="goToTeam(item)">
+                                <div class="cell-hd">
+                                    <span class="circle_name">{{item.teamName | nameFilter}}</span>
+                                </div>
+                                <div class="cell-bd">
+                                    <p class="team_name">
+                                        {{item.teamName}}
+                                    </p>
+                                    <p>
+                                        Leader：<span class="team_admin">{{item.administrator.nickName}}</span>
+                                    </p>
+                                </div>
+                                <div class="cell-ft">
+                                    <p class="">more>>>
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
             </div>
         </div>
     </div>
@@ -73,9 +100,6 @@ import {
     getChildTeamInfo,
     getTeamList
 } from '@/store/team'
-// import {
-//     getWeekList
-// } deom '@/store/weekly'
 export default {
     name: 'dashboard',
     data() {
@@ -85,12 +109,14 @@ export default {
             },
             childTeamList: [],
             showTypeList: false,
-            showType: 'allTeam',
+            showType: 'childTeam',
             teamAllList: [],
             /* tree data */
             defaultProps: {
                 label: 'teamName'
-            }
+            },
+            /* focus */
+            focusList: []
         }
     },
     computed: {
@@ -98,7 +124,7 @@ export default {
             return {
                 childTeam: '直属下级部门',
                 allTeam: '所有部门',
-                specialAttention: '特别关注'
+                specialFocus: '特别关注'
             }[this.showType]
         }
     },
@@ -129,7 +155,6 @@ export default {
             })
         },
         reformate(dataList) {
-            console.log(dataList)
             let pidArr = []
             let childArr = []
             dataList.forEach((item) => {
@@ -148,10 +173,8 @@ export default {
                     }
                 })
             })
-            console.log(dataList)
             return pidArr
         },
-
         goToTeam(team) {
             this.$router.push({
                 path: '/page/teamInfo',
@@ -166,7 +189,6 @@ export default {
             this.showTypeList = false
         },
         showTeamDetail(team) {
-            console.log(team)
             this.curTeam = team
         }
     }
@@ -250,8 +272,8 @@ export default {
             display: inline-block;
             width: 25px;
             height: 25px;
-            opacity: 0.35;
-            background: url('./image/list.png') 0 center no-repeat;
+            /*opacity: 0.35;*/
+            background: url('./image/list_gray_deep.png') 0 center no-repeat;
                 background-size: cover;
         }
         ul {
@@ -318,5 +340,17 @@ export default {
         text-align: right;
     }
 }
-
+.section_focus {
+    .btn_add__large {
+        width: 120px;
+        height: 120px;
+        background: url('./image/add_focus.png') 0 center no-repeat;
+        background-size: cover;
+        margin: 140px auto 0;
+    }
+    p {
+        text-align: center;
+        margin: 0;
+    }
+}
 </style>
