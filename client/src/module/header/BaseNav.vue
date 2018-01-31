@@ -57,12 +57,8 @@ export default {
 }
 @media screen and (max-width: 660px) {
     .nav-catalog {
-        display: block;
-        position: absolute;
-        width: 40px;
-        height: 40px;
-        right: 15px;
-        top: 20px;
+        display: flex;
+        align-items: center;
     }
     .nav-ul{
         display: none;
@@ -70,7 +66,7 @@ export default {
 }
 .nav-ul_min {
     width: 100%;
-    display: inline-block;
+    display: flex;
     justify-content: space-between;
     .nav-li {
         display: inline-block;

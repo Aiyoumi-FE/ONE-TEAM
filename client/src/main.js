@@ -23,26 +23,19 @@ router.beforeEach((to, from, next) => {
     const token = cookie.get('token')
     document.title = to.meta.title || 'one team'
 
-    if (token) {
-        Vue.prototype.$http.defaults.headers.common['Authorization'] = 'Bearer ' + token
+    if (to.path === '/') {
+        if (token) {
+            next('/page/home')
+        } else {
+            next('/page/user/login')
+        }
+    } else {
+        if (token) {
+            Vue.prototype.$http.defaults.headers.common['Authorization'] = 'Bearer ' + token
+        }
+
+        next()
     }
-
-    next()
-
-    // if (to.path === '/') {
-    //     if (token) {
-    //         next('/page/home')
-    //     } else {
-    //         next()
-    //     }
-    // } else {
-    //     if (token) {
-    //         Vue.prototype.$http.defaults.headers.common['Authorization'] = 'Bearer ' + token
-    //         next()
-    //     } else {
-    //         next('/')
-    //     }
-    // }
 })
 
 Vue.directive('highlight', (el) => {

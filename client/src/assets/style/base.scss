@@ -1,3 +1,5 @@
+$designWidth: 750;
+@import './rem.scss';
 /*
 * 颜色定义
 */
@@ -29,10 +31,27 @@ $fontSizeLevel2: 36px;
 //用于标题栏副标题 32px
 $fontSizeLevel3: 32px;
 //用于次重要标题 30px
-$fontSizeLevel4: 30px;
+$fontSizeLevel4: 24px;
 //用于重要正文或小标题 28px
-$fontSizeLevel5: 14px;
+$fontSizeLevel5: 16px;
 //用于大部分正文 26px
-$fontSizeLevel6: 16px;
+$fontSizeLevel6: 14px;
 //用于辅助性文字 24px
 $fontSizeLevel7: 12px;
+
+@media screen and (max-width: 1024px) {
+    //用于重要标题和按钮 40px
+	$fontSizeLevel1: px2rem(40);
+	//用于标题栏主标及重要标题文字 36px
+	$fontSizeLevel2: px2rem(36);
+	//用于标题栏副标题 32px
+	$fontSizeLevel3: px2rem(32);
+	//用于次重要标题 30px
+	$fontSizeLevel4: px2rem(30);
+	//用于重要正文或小标题 28px
+	$fontSizeLevel5: px2rem(14);
+	//用于大部分正文 26px
+	$fontSizeLevel6: px2rem(16);
+	//用于辅助性文字 24px
+	$fontSizeLevel7: px2rem(12);
+}

@@ -3,7 +3,7 @@
         <h1>{{obj.teamName}}</h1>
         <div class="team-sub">
             <span class="invate">邀请码：{{obj._id}}</span>
-            <div>
+            <div class="team-sub_btn">
                 <button v-if="obj.isAdmin" class="btn" @click="manageAction">{{manageText}}</button>
                 <button v-if="obj.isAdmin" class="btn" @click="invate">邀请新成员</button>
                 <button class="btn" @click="teamOpera('out')">退出团队</button>
@@ -104,12 +104,20 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../assets/style/base.scss';
+h1 {
+    font-size: $fontSizeLevel4;
+}
 .team-sub{
     display:flex;
     justify-content:space-between;
+    .team-sub_btn {
+        display: flex;
+        .btn {
+            margin-right: 10px;
+        }
+    }
 }
 .invate{
-    margin-top: 10px;
     padding: 5px 15px;
     border-radius: 20px;
     background-color: #eee;
@@ -152,5 +160,16 @@ export default {
 }
 .team-pic_no{
     width: 80px;
+}
+@media screen and (max-width: 1024px) {
+    .team-sub {
+        flex-direction: column;
+        .btn {
+            padding: 0 10px;
+        }
+    }
+    .team-sub_btn {
+        margin-top: 10px;
+    }
 }
 </style>

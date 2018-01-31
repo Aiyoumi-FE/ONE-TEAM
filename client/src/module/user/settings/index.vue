@@ -1,41 +1,38 @@
 <template>
-    <div class="page">
-        <page-header></page-header>
-        <div class="content">
-            <h2>个人设置</h2>
-            <a href="javascript:;" class="link-delete" @click="submitSignout">退出团队</a>
-            <div class="setting-cells">
-                <div class="setting-item">
-                    <label class="label-img" for="file">
-                        <div class="setting-img"><img src="../image/cat.png" alt=""></div>
-                        <a href="javascript:;">选择新头像</a>
-                        <input class="input-file" type="file" name="file" id="file" @change="upImg($event)" enctype="multipart/form-data">
-                    </label>
+    <div>
+        <h2>个人设置</h2>
+        <a href="javascript:;" class="link-delete" @click="submitSignout">退出团队</a>
+        <div class="setting-cells">
+            <div class="setting-item">
+                <label class="label-img" for="file">
+                    <div class="setting-img"><img src="../image/cat.png" alt=""></div>
+                    <a href="javascript:;">选择新头像</a>
+                    <input class="input-file" type="file" name="file" id="file" @change="upImg($event)" enctype="multipart/form-data">
+                </label>
+            </div>
+            <div class="setting-item">
+                <label>名字</label>
+                <div class="setting-item__filed">
+                    <input class="input" type="text" v-model="nickName">
                 </div>
-                <div class="setting-item">
-                    <label>名字</label>
-                    <div class="setting-item__filed">
-                        <input class="input" type="text" v-model="nickName">
-                    </div>
+            </div>
+            <div class="setting-item">
+                <label>邮箱</label>
+                <div class="setting-item__filed">
+                    <input type="text" class="input">
+                    <a class="ml20" href="javascript:;">修改邮箱</a>
                 </div>
-                <div class="setting-item">
-                    <label>邮箱</label>
-                    <div class="setting-item__filed">
-                        <input type="text" class="input">
-                        <a class="ml20" href="javascript:;">修改邮箱</a>
-                    </div>
+            </div>
+            <div class="setting-item">
+                <label>密码</label>
+                <div class="setting-item__filed">
+                    <a class="ml20" href="javascript:;">修改密码</a>
+                    <a class="ml20" href="javascript:;">找回密码</a>
                 </div>
-                <div class="setting-item">
-                    <label>密码</label>
-                    <div class="setting-item__filed">
-                        <a class="ml20" href="javascript:;">修改密码</a>
-                        <a class="ml20" href="javascript:;">找回密码</a>
-                    </div>
-                </div>
-                <div class="setting-item">
-                    <label>&nbsp;</label>
-                    <div class="btn week-btn">提交</div>
-                </div>
+            </div>
+            <div class="setting-item">
+                <label>&nbsp;</label>
+                <div class="btn week-btn">提交</div>
             </div>
         </div>
     </div>
@@ -110,29 +107,22 @@ export default {
         }
     }
 }
+
 </script>
 <style lang='scss' scoped>
 @import '../../../var.scss';
-.content {
-    position: relative;
-    margin: 100px 10%;
-    min-height: 800px;
-    padding: 30px;
-    background-color: #fff;
-    -webkit-box-shadow: 0 0 15px 0 #999;
-    box-shadow: 0 0 15px 0 #999;
-    .link-delete {
-        display: block;
-        position: absolute;
-        right: 40px;
-        top: 30px;
-        font-size: 12px;
-        color: #cf372b;
-    }
-    h2 {
-        margin-bottom: 30px;
-        font-size: 18px;
-    }
+.link-delete {
+    display: block;
+    position: absolute;
+    right: 40px;
+    top: 30px;
+    font-size: 12px;
+    color: #cf372b;
+}
+
+h2 {
+    margin-bottom: 30px;
+    font-size: 18px;
 }
 
 .setting-item {
@@ -177,4 +167,5 @@ export default {
         font-size: 12px;
     }
 }
+
 </style>

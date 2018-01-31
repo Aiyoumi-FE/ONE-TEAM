@@ -128,15 +128,12 @@ export default {
 }
 
 .bd-date__sub {
-    margin-top: 25px;
+    // margin-top: 25px;
     font-size: 18px;
 }
 
-.bd-content {
-    margin-top: 50px;
-    .btn {
-        margin: 10px auto 0;
-    }
+.btn {
+    margin: 10px auto 0;
 }
 
 </style>

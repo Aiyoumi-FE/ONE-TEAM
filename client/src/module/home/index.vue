@@ -1,6 +1,5 @@
 <template>
     <div class="home">
-        <page-header></page-header>
         <div class="hello">
             <h1>Hello, {{nickName}} :）</h1>
             <p>Even if it's the end of the world, I'll be there for you</p>
@@ -22,7 +21,6 @@
 import { cookie } from '@/assets/js/cookie'
 import base64 from '@/assets/js/base64'
 import util from '@/assets/js/util'
-import pageHeader from '../header'
 
 export default {
     name: 'home',
@@ -44,9 +42,6 @@ export default {
     },
     mounted() {
         this.initData()
-    },
-    components: {
-        pageHeader
     },
     methods: {
         initData() {

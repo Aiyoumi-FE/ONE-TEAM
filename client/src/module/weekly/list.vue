@@ -32,7 +32,6 @@
         </div>
     </div>
 </template>
-
 <script>
 import {
     getWeekList
@@ -85,17 +84,17 @@ export default {
         initData() {
             this.setDate()
             getWeekList({ beginDate: this.beginDate })
-            .then((res) => {
-                if (res.success) {
-                    this.isAdmin = res.result.isAdmin
-                    this.list = res.result.list
-                } else {
-                    this.$router.replace({
-                        name: 'refuse'
-                    })
-                }
-                this.loading = false
-            })
+                .then((res) => {
+                    if (res.success) {
+                        this.isAdmin = res.result.isAdmin
+                        this.list = res.result.list
+                    } else {
+                        this.$router.replace({
+                            name: 'refuse'
+                        })
+                    }
+                    this.loading = false
+                })
         },
         setDate() {
             this.obj.year = dateFormate.getYear(this.beginDate)
@@ -133,9 +132,10 @@ export default {
 
 </script>
 <style lang="scss" scoped>
+@import '../../assets/style/base.scss';
 .bd-date {
     text-align: center;
-    font-size: 24px;
+    font-size: $fontSizeLevel4;
     color: #333;
     span {
         padding: 0 20px;
@@ -163,11 +163,11 @@ export default {
 
 .bd-date_detail {
     margin: 0;
-    font-size: 16px;
+    font-size: $fontSizeLevel6;
     color: #999;
 }
 
-.ot-cell{
+.ot-cell {
     padding: 10px 10px 20px;
 }
 
@@ -186,7 +186,6 @@ export default {
 }
 
 .cell-hd {
-    width: 50px;
     text-align: center;
     margin-top: 10px;
 }
@@ -205,6 +204,36 @@ export default {
 
 .cell-bd {
     flex-grow: 1;
+    padding: 0 30px;
+}
+
+@media screen and (max-width: 1024px) {
+    .cell-bd {
+        padding: 0;
+    }
+    .ot-cell {
+        flex-direction: column;
+        .cell-hd {
+            display: flex;
+            align-items: center;
+        }
+    }
+    .cell-hd-pic {
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+        padding: 0 8px 0 0;
+    }
+    .bd-content {
+        margin: 0;
+    }
+    .bd-config {
+        position: relative;
+        right: 0;
+        top: 0;
+        margin-top: 10px;
+        text-align: center;
+    }
 }
 
 </style>

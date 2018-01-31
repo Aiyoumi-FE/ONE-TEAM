@@ -1,16 +1,14 @@
 <template>
-    <div class="page">
-        <div class="content mid">
-            <img :src="nullPic" alt="" class="team-pic_no">
-            <h3>您还未加入任何团队</h3>
-            <p class="btn btn-choose">
-                <span class="btn-create" :class="{'on' : opera == 'create'}" @click="operation('create')">创建团队</span>
-                <span :class="{'on' : opera == 'join'}" @click="operation('join')">加入团队</span>
-            </p>
-            <div v-show="opera" class="team-opera">
-                <input type="text" class="input" ref="field" :placeholder="placeholder" v-model.trim="field">
-                <img :src="nextPic" alt="" class="team-pic_next" @click="submit">
-            </div>
+    <div class="mid">
+        <img :src="nullPic" alt="" class="team-pic_no">
+        <h3>您还未加入任何团队</h3>
+        <p class="btn btn-choose">
+            <span class="btn-create" :class="{'on' : opera == 'create'}" @click="operation('create')">创建团队</span>
+            <span :class="{'on' : opera == 'join'}" @click="operation('join')">加入团队</span>
+        </p>
+        <div v-show="opera" class="team-opera">
+            <input type="text" class="input" ref="field" :placeholder="placeholder" v-model.trim="field">
+            <img :src="nextPic" alt="" class="team-pic_next" @click="submit">
         </div>
     </div>
 </template>

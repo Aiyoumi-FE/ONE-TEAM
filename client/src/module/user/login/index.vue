@@ -1,5 +1,5 @@
 <template>
-    <div class="page-content">
+    <div class="page_login">
         <img :src="logo" alt="" class="logo">
         <h1>ONE TEAM</h1>
         <router-view></router-view>
@@ -22,11 +22,9 @@ body {
     background-color: #fff;
 }
 
-.page-content {
+.page_login {
     height: 100%;
-    background-color: #fff;
     text-align: center;
-    padding-top: 100px;
     h1 {
         margin: 10px auto;
     }
