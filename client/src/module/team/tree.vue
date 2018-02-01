@@ -19,7 +19,7 @@
             <div class="part_right">
                 <h3>{{currentTeam.name}}</h3>
                 <p class="btn_addmem" @click="dgMMShow = true" v-if="teamList.length">添加成员</p>
-                <el-table height="500" ref="multipleTable" :data="teamDetail" tooltip-effect="blue" style="width: 100%">
+                <el-table ref="multipleTable" :data="teamDetail" tooltip-effect="blue" style="width: 100%"> <!-- max-height="500" -->
                     <el-table-column type="selection" width="55">
                     </el-table-column>
                     <el-table-column prop="nickName" label="姓名">

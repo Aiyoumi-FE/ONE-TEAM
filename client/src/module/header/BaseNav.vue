@@ -35,6 +35,9 @@ export default {
                 name: '团队',
                 link: 'teamList'
             }, {
+                name: '面板',
+                link: 'teamDashBoard'
+            }, {
                 name: '个人设置',
                 link: 'settings'
             }],

@@ -100,6 +100,9 @@ import {
     getChildTeamInfo,
     getTeamList
 } from '@/store/team'
+import {
+    getMySubList
+} from '@/store/subscript'
 export default {
     name: 'dashboard',
     data() {
@@ -137,6 +140,7 @@ export default {
         // this.getMyTeam()
         this.getChildInfo()
         this.getTeamListInfo()
+        this.getFocusList()
     },
     components: {
         'el-tree': Tree
@@ -145,12 +149,20 @@ export default {
         getChildInfo() {
             getChildTeamInfo().then((res) => {
                 this.childTeamList = res.result
+
             })
         },
         getTeamListInfo() {
             getTeamList().then((res) => {
                 if (res.success && res.result) {
                     this.teamAllList = this.reformate(res.result)
+                }
+            })
+        },
+        getFocusList() {
+            getMySubList().then((res) => {
+                if (res.success && res.result.length) {
+                    this.focusList = res.result
                 }
             })
         },
