@@ -60,7 +60,7 @@ class Weekly {
     async getWeeklyDetail(ctx, next) {
         let requestData = ctx.request.body
         let userId = businessUtil.getStatus(ctx)
-        let teamId = serviceUtil.getCookie(ctx, 'team')
+        let teamId = requestData.teamId || serviceUtil.getCookie(ctx, 'team')
 
         let beginDate = new Date(requestData.beginDate) || serviceUtil.getDayOfWeek(new Date(), 1),
             endDate = serviceUtil.getDayOfWeek(beginDate, 7),
@@ -79,8 +79,15 @@ class Weekly {
             let res = await teamModel
                 .findOne({ '_id': teamId }, typeTemplate)
                 .populate(typeTemplate)
-            weeklyDetail = {
-                content: res[typeTemplate].template || ''
+
+            if (res[typeTemplate]) {
+                weeklyDetail = {
+                    content: res[typeTemplate].template || ''
+                }
+            } else {
+                weeklyDetail = {
+                    content: ''
+                }
             }
         }
 

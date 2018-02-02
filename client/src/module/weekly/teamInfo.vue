@@ -53,7 +53,8 @@
 
 <script>
 import {
-    getWeekList
+    getWeekList,
+    getWeekDetail
 } from '@/store/weekly'
 import {
     getTeamInfo
@@ -116,17 +117,15 @@ export default {
     methods: {
         loadData(type = this.showType, beginDate = this.beginDate) {
             if (type === 'teamReport') {
-                // getTeamReport({
-                //     beginDate
-                // }).then((res) => {
-                //     if (res.success) {
-                //         this.teamReportContent = res.result
-                //     } else {
-                //         this.isEmpty = true
-                //     }
-                // })
-                // mock data below
-                this.teamReportContent = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat, ut? Reprehenderit rem laborum nulla, est consectetur saepe tempore autem labore esse recusandae! Non sed odit voluptatibus, laboriosam quaerat molestiae repellendus.'
+                getWeekDetail({
+                    beginDate,
+                    teamId: this.teamId,
+                    type: 'summary'
+                }).then((res) => {
+                    if (res.success && res.result) {
+                        this.teamReportContent = res.result.content
+                    }
+                })
             } else if (type === 'memberReport') {
                 getWeekList({
                     beginDate,
@@ -225,7 +224,6 @@ export default {
         height: 30px;
         background: url('./img/list_gray_deep.png') 0 center no-repeat;
         background-size: cover;
-        // opacity: 0.25;
     }
     ul {
         position: absolute;
