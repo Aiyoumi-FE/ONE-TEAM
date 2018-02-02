@@ -6,7 +6,7 @@
             <!-- <input type="text" class="searchBox"> -->
         </div>
         <div class="part_middle">
-            <h2>{{titleTxt}}</h2> <span class="btn" v-if="showType == 'specialFocus'" @click="goPage('mysub')">Edit</span>
+            <h2>{{titleTxt}}</h2> <span class="btn" v-if="showType == 'specialFocus'" @click="goPage('user/mysub')">Edit</span>
             <div class="vision_type">
                 <span class="vision_nest"  @click="showTypeList = !showTypeList"></span>
                 <ul v-show="showTypeList">
