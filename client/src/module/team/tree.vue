@@ -19,10 +19,10 @@
             <div class="part_right">
                 <h3>{{currentTeam.name}}</h3>
                 <p class="btn_addmem" @click="dgMMShow = true" v-if="teamList.length">添加成员</p>
-                <el-table height="500" ref="multipleTable" :data="teamDetail" tooltip-effect="blue" style="width: 100%">
+                <el-table ref="multipleTable" :data="teamDetail" tooltip-effect="blue" style="width: 100%"> <!-- max-height="500" -->
                     <el-table-column type="selection" width="55">
                     </el-table-column>
-                    <el-table-column prop="nickName" label="姓名">
+                    <el-table-column prop="nickName" label="姓名" width="80">
                     </el-table-column>
                     <el-table-column prop="eMail" label="邮箱">
                     </el-table-column>
@@ -178,7 +178,10 @@ export default {
         return {
             teamListOrigin: [],
             childrenList: [],
-            rootTeam: {},
+            rootTeam: {
+                teamName: '',
+                _id: ''
+            },
             defaultProps: {
                 label: 'teamName'
             },
@@ -187,7 +190,7 @@ export default {
             dgTMShow: false, // dialogTeamManage
             dgMMShow: false, // dialogMemManage
             currentTeam: {
-                name: ''
+                name: '无'
             },
             invite_quick: true,
             curAdminId: '',
@@ -244,7 +247,9 @@ export default {
     methods: {
         loadTeamList() {
             getPermissionTeamList().then((data) => {
-                this.teamListOrigin = data.result
+                if (data.success && data.result.length) {
+                    this.teamListOrigin = data.result
+                }
             })
         },
         reformate(dataList) {
@@ -258,7 +263,7 @@ export default {
                     childArr.push(item)
                 }
             })
-            this.rootTeam = pidArr[0]
+            this.rootTeam = pidArr[0] || childArr[0]
             this.getInfo(pidArr[0] || childArr[0])
             this.childrenList = childArr
             childArr.forEach((citem) => {
@@ -268,8 +273,12 @@ export default {
                     }
                 })
             })
-
-            return pidArr
+            if (pidArr.length) {
+                return pidArr
+            } else {
+                return childArr
+            }
+            // return (pidArr || childArr)
         },
         /* tree node filter */
         search() {
@@ -281,6 +290,7 @@ export default {
         },
         getInfo(team) {
             let teamId = team._id
+
             this.curAdminId = team.administrator
             this.operatTeamId = team._id
 

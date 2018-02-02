@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import App from './App'
 import configRouter from './routes'
 import Axios from 'axios'
+import jwt from 'jsonwebtoken'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/googlecode.css'
 import { cookie } from '@/assets/js/cookie'
@@ -20,8 +21,28 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    const token = cookie.get('token')
     document.title = to.meta.title || 'one team'
+
+    let token = cookie.get('token')
+    const secret = 'jwt one'
+    let decoded = null
+
+    if (token) {
+        decoded = jwt.verify(token, secret, function(err, decoded) {
+            return err || decoded
+        })
+    }
+
+    if (decoded) {
+        if (decoded.exp - Date.now() < 0) { // 已过期
+            cookie.clear('token', '/')
+            cookie.clear('name', '/')
+        } else {
+            decoded.exp = Date.now() + 60 * 60 * 1000
+            token = jwt.sign(decoded, secret)
+            cookie.set('token', token, decoded.exp, '/')
+        }
+    }
 
     if (to.path === '/') {
         if (token) {

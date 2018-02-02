@@ -3,6 +3,7 @@ const user = resolve => require(['../module/user/login/index'], resolve)
 const login = resolve => require(['../module/user/login/login'], resolve)
 const register = resolve => require(['../module/user/login/register'], resolve)
 const settings = resolve => require(['../module/user/settings/index'], resolve)
+const mysub = resolve => require(['../module/user/subscript/index'], resolve)
 const App = resolve => require(['../module/index'], resolve)
 
 export default [{
@@ -36,6 +37,13 @@ export default [{
         component: settings,
         meta: {
             title: '个人设置'
+        }
+    }, {
+        path: 'user/mysub',
+        name: 'mysub',
+        component: mysub,
+        meta: {
+            title: '我的关注'
         }
     }]
 }]
