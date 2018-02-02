@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 
 // 工具库
-import { validatorUtil, serviceUtil, constStr } from '../util'
+import { validatorUtil, serviceUtil, constStr, businessUtil } from '../util'
 
 // 数据库
 import userModel from '../models/user.js'
@@ -173,20 +173,40 @@ class User {
 
     // 获得用户信息
     async getUserInfo(req, res, next) {
-
-
+        let userId = businessUtil.getStatus(ctx)
+        let user = await userModel.findOne({
+            '_id': userId
+        }).exec()
+        let result = {
+            result: user
+        }
+        ctx.response.body = result
     }
 
     // 保存用户信息
     async saveUserInfo(req, res, next) {
+        let userId = businessUtil.getStatus(ctx)
+        let formData = ctx.request.body
 
+        let userSave = await userModel.update({
+            _id: requestData._id
+        }, {
+            $set: {
+                nickName: requestData.nickName,
+                phoneNumber: requestData.nickName
+            }
+        })
+        let result = {
+            success: true
+        }
+        ctx.response.body = result
 
     }
 
-    // 删除用户
-    async delUserInfo(req, res, next) {
-
-
+    // 注销用户
+    async delUser(req, res, next) {
+        let userId = businessUtil.getStatus(ctx)
+        let userDel = await userModel.remove({'_id': userId})
     }
 }
 
