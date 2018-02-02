@@ -134,9 +134,9 @@ class User {
                     let userToken = {
                         id: res._id
                     }
-                    let tocken = jwt.sign(userToken, secret, {expiresIn: '1h'})
+                    let token = jwt.sign(userToken, secret, {expiresIn: '1h'})
                     ctx.cookies.set('name', new Buffer(res.nickName).toString('base64'), { httpOnly: false })
-                    ctx.cookies.set('tocken', tocken)
+                    ctx.cookies.set('token', token)
                     ctx.cookies.set('team', res.teamId)
                 }
             })
