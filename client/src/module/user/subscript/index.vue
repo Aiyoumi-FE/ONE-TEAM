@@ -82,7 +82,7 @@ export default {
         },
         deleteSub(item) {
             deleteRecord({
-                subUserId: item.subUserId._id
+                subUserId: item.subUserId
             }).then((res) => {
                 if (res.success) {
                     this.initData()
@@ -150,7 +150,7 @@ export default {
             li {
                 position: relative;
                 width: 120px;
-                height: 110px;
+                // height: 110px;
                 line-height: 30px;
                 background: #fff;
                 border-radius: 15px;
@@ -170,7 +170,7 @@ export default {
                     height: 50px;
                     border-radius: 50%;
                     background: #FFEBEE;
-                    background: url('./image/leader.png') 0 center no-repeat;
+                    background: url('../image/leader.png') 0 center no-repeat;
                     background-size: cover;
                     margin: 0 auto;
                 }
@@ -190,7 +190,7 @@ export default {
                     width: 70px;
                     height: 70px;
                     margin: 20px auto;
-                    background: url('./image/add2.png') 0 center no-repeat;
+                    background: url('../image/add2.png') 0 center no-repeat;
                     background-size: cover;
                     opacity: 0.15;
                 }

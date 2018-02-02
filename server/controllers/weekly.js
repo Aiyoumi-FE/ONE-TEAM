@@ -15,26 +15,31 @@ class Weekly {
     // 请求参数：beginDate（开始日期）
     // 返回参数：list(周报列表)
     async getWeeklyList(ctx, next) {
-        let requestData = ctx.request.body
+        // let requestData = ctx.request.body
+        let beginDate = ctx.request.body.beginDate || null
+        let tarUserId = ctx.request.body.tarUserId || ''
         let userId = businessUtil.getStatus(ctx)
         let teamId = serviceUtil.getCookie(ctx, 'team')
+        let fiterRule = {}
 
         if (!teamId) {
             serviceUtil.sendErrMsg(ctx, '未加入团队')
             return
         }
-        let beginDate = null,
-            endDate = null
 
-        if (requestData.beginDate) {
-            beginDate = new Date(requestData.beginDate)
+        if (beginDate) {
+            beginDate = new Date(beginDate)
         } else {
             beginDate = serviceUtil.getDayOfWeek(new Date(), 1)
         }
-        endDate = serviceUtil.getDayOfWeek(beginDate, 7)
-
+        let endDate = serviceUtil.getDayOfWeek(beginDate, 7)
+        if (tarUserId) {
+            fiterRule = { 'creatTime': { $gte: beginDate, $lte: endDate }, 'teamId': teamId , userId: tarUserId}
+        } else {
+            fiterRule = { 'creatTime': { $gte: beginDate, $lte: endDate }, 'teamId': teamId}
+        }
         let weeklyList = await weeklyModel
-            .find({ 'creatTime': { $gte: beginDate, $lte: endDate }, 'teamId': teamId }, 'content userId')
+            .find(fiterRule, 'content userId')
             .populate('userId', 'nickName')
             .exec()
 

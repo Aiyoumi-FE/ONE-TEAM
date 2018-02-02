@@ -76,8 +76,8 @@ class Subscript {
                 .find({
                     userId
                 })
-                .populate('subUserId')
                 .exec()
+                // .populate('subUserId')
 
             ctx.response.body = {
                 success: true,

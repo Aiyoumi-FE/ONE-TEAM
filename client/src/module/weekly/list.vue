@@ -70,6 +70,9 @@ export default {
         },
         notEnd() {
             return this.beginDate < dateFormate.getDayOfWeek(new Date(), 1)
+        },
+        tarUserId() {
+            return this.$route.query.id || ''
         }
     },
     watch: {
@@ -83,18 +86,20 @@ export default {
     methods: {
         initData() {
             this.setDate()
-            getWeekList({ beginDate: this.beginDate })
-                .then((res) => {
-                    if (res.success) {
-                        this.isAdmin = res.result.isAdmin
-                        this.list = res.result.list
-                    } else {
-                        this.$router.replace({
-                            name: 'refuse'
-                        })
-                    }
-                    this.loading = false
-                })
+            getWeekList({
+                tarUserId: this.tarUserId,
+                beginDate: this.beginDate
+            }).then((res) => {
+                if (res.success) {
+                    this.isAdmin = res.result.isAdmin
+                    this.list = res.result.list
+                } else {
+                    this.$router.replace({
+                        name: 'refuse'
+                    })
+                }
+                this.loading = false
+            })
         },
         setDate() {
             this.obj.year = dateFormate.getYear(this.beginDate)
@@ -118,7 +123,8 @@ export default {
             this.$router.push({
                 name: 'weeklyList',
                 query: {
-                    beginDate: Date.parse(this.beginDate) + 24 * 60 * 60 * 1000 * action
+                    beginDate: Date.parse(this.beginDate) + 24 * 60 * 60 * 1000 * action,
+                    id: this.tarUserId
                 }
             })
         },
