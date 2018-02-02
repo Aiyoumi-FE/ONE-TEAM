@@ -42,7 +42,7 @@ class weeklyConfig {
         let formData = ctx.request.body
         let teamId = serviceUtil.getCookie(ctx, 'team')
 
-        if (!formData.id) { // 新增模板
+        if (!formData._id) { // 新增模板
             let template = new weeklyTemplateModel({
                 template: formData.template
             })
@@ -50,7 +50,7 @@ class weeklyConfig {
             let templateId = templateSave._id
             let teamUpdate = await teamModel.update({ _id: teamId }, {$set: { weeklyTemplate: templateId }})
         } else {
-        	let templateUpdate = await weeklyTemplateModel.update({ _id: formData.id }, {$set: { template: formData.template }})
+        	let templateUpdate = await weeklyTemplateModel.update({ _id: formData._id }, {$set: { template: formData.template }})
         }
 
         // 返回数据
@@ -65,9 +65,10 @@ class weeklyConfig {
     // 返回参数：true/false
     async saveSummaryTemplate(ctx, next) {
         let formData = ctx.request.body
+        console.log(formData)
         let teamId = serviceUtil.getCookie(ctx, 'team')
 
-        if (!formData.id) { // 新增模板
+        if (!formData._id) { // 新增模板
             let template = new summaryTemplateModel({
                 template: formData.template
             })
@@ -75,7 +76,7 @@ class weeklyConfig {
             let templateId = templateSave._id
             let teamUpdate = await teamModel.update({ _id: teamId }, {$set: { summaryTemplate: templateId }})
         } else {
-            let templateUpdate = await summaryTemplateModel.update({ _id: formData.id }, {$set: { template: formData.template }})
+            let templateUpdate = await summaryTemplateModel.update({ _id: formData._id }, {$set: { template: formData.template }})
         }
 
         // 返回数据
