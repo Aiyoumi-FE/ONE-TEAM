@@ -1,15 +1,11 @@
 // 工具库
-const { serviceUtil, businessUtil } = require('../util')
+import { serviceUtil, businessUtil } from '../util'
 // 数据库
-const userModel = require('../models/user.js')
-const teamModel = require('../models/team.js')
-const weeklyModel = require('../models/weekly.js')
-// const markdown = require( "markdown" ).markdown;
+import userModel from '../models/user.js'
+import teamModel from '../models/team.js'
+import weeklyModel from '../models/weekly.js'
 
 class Weekly {
-    constructor() {
-        // super()
-    }
 
     // 获取周报列表，
     // 请求参数：beginDate（开始日期）

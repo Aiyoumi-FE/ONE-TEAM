@@ -1,5 +1,6 @@
-const mongoose = require('./db.js'),
-    Schema = mongoose.Schema
+import mongoose from './db.js'
+
+const Schema = mongoose.Schema
 
 const weeklySchema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'user' }, // 用户id

@@ -1,5 +1,6 @@
-const mongoose = require('./db.js'),
-    Schema = mongoose.Schema
+import mongoose from './db.js'
+
+const Schema = mongoose.Schema
 
 const summaryTemplateSchema = new Schema({
     template: { type: String } // 总结模版

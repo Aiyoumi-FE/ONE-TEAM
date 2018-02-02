@@ -1,5 +1,6 @@
-const mongoose = require('./db.js'),
-    Schema = mongoose.Schema
+import mongoose from './db.js'
+
+const Schema = mongoose.Schema
 
 const teamSchema = new Schema({
     teamName: { type: String }, // 团队名称

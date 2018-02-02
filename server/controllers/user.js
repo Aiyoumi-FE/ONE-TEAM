@@ -1,12 +1,13 @@
-const jwt = require('jsonwebtoken')
+import jwt from 'jsonwebtoken'
 
 // 工具库
-const { validatorUtil, serviceUtil, constStr } = require('../util')
-const { secret } = constStr
+import { validatorUtil, serviceUtil, constStr } from '../util'
 
 // 数据库
-const userModel = require('../models/user.js')
-const teamModel = require('../models/team.js')
+import userModel from '../models/user.js'
+import teamModel from '../models/team.js'
+
+const { secret } = constStr
 
 function checkFormData(formData) {
     if (!validatorUtil.checkEmail(formData.eMail)) {
@@ -30,9 +31,6 @@ function checkFormData(formData) {
 }
 
 class User {
-    constructor() {
-        // super()
-    }
 
     // 登录操作
     // 请求参数：邮箱，密码
@@ -65,7 +63,7 @@ class User {
                     let userToken = {
                         id: user._id
                     }
-                    let token = jwt.sign(userToken, secret, {expiresIn: '1h'})
+                    let token = jwt.sign(userToken, secret, {expiresIn: '5h'})
                     ctx.cookies.set('name', new Buffer(user.nickName).toString('base64'), { httpOnly: false })
                     ctx.cookies.set('token', token, { httpOnly: false })
                     ctx.cookies.set('team', user.teamId)

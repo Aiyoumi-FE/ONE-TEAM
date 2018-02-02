@@ -1,15 +1,12 @@
 // 工具库
-const { serviceUtil, businessUtil } = require('../util')
+import { serviceUtil, businessUtil } from '../util'
 // 数据库
-const userModel = require('../models/user.js')
-const teamModel = require('../models/team.js')
-const weeklyTemplateModel = require('../models/weeklyTemplate.js')
-const summaryTemplateModel = require('../models/summaryTemplate.js')
+import userModel from '../models/user.js'
+import teamModel from '../models/team.js'
+import weeklyTemplateModel from '../models/weeklyTemplate.js'
+import summaryTemplateModel from '../models/summaryTemplate.js'
 
 class weeklyConfig {
-    constructor() {
-        // super()
-    }
 
     // 获取设置周报模版
     // 返回参数：id(周报id), template(周报模板)

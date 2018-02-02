@@ -1,12 +1,11 @@
 // 工具库
-const { serviceUtil, businessUtil } = require('../util')
+import { serviceUtil, businessUtil } from '../util'
 // 数据库
-const teamModel = require('../models/team.js')
-const userModel = require('../models/user.js')
-const weekModel = require('../models/weekly.js')
+import teamModel from '../models/team.js'
+import userModel from '../models/user.js'
+import weekModel from '../models/weekly.js'
 
 class Team {
-    constructor() {}
     // 创建团队
     // 请求参数：teamName（团队名称）
     // 返回参数：操作后的数据库返回

@@ -1,25 +1,4 @@
-const Team = require('../controllers/team')
-// const urlList = [
-//     'getTeamInfo',
-//     'changeMemberStatus',
-//     'teamOpera',
-//     'joinUrl',
-//     'getTeamList',
-//     'getPermissionTeamList',
-//     'createTeam',
-//     'deleteTeam',
-//     'updateTeam',
-//     'addMem2Team',
-//     'getChildTeamInfo'
-// ]
-// let mapping = {}
-// console.log('testing')
-// urlList.forEach((item) => {
-//     mapping['POST ' + item] = Team[item]
-// })
-// console.log('---------', mapping)
-
-// module.exports = mapping
+import Team from '../controllers/team'
 
 module.exports = {
     'POST /team/getTeamInfo': Team.getTeamInfo,

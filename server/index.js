@@ -3,13 +3,13 @@ import bodyParser from 'koa-bodyparser'
 import serve from 'koa-static'
 import config from './configs'
 import { businessUtil, constStr } from './util'
+import koaRouter from 'koa-router'
+import jwt from 'koa-jwt'
+import route from './routes/route'
+import userRoutes from './routes/user'
 
 const app = new Koa()
-const router = require('koa-router')()
-const jwt = require('koa-jwt')
-const route = require('./routes/route')
-const userRoutes = require('./routes/user')
-
+const router = koaRouter()
 const { secret } = constStr
 
 app.use(bodyParser())
