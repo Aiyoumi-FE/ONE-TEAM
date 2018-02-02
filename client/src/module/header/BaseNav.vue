@@ -43,15 +43,7 @@ export default {
                 link: 'weeklyList'
             }, {
                 name: '团队',
-                link: '',
-                chidShow: false,
-                children: [{
-                    name: '个人信息',
-                    link: 'settings'
-                }, {
-                    name: '我的关注',
-                    link: 'mysub'
-                }]
+                link: 'teamList'
             }, {
                 name: '面板',
                 link: 'teamDashBoard'
@@ -84,7 +76,9 @@ export default {
                 this.curIndex = index
                 this.navList[this.curIndex]['chidShow'] = !this.navList[this.curIndex]['chidShow']
             } else {
-                this.navList[this.curIndex]['chidShow'] = false
+                if (this.curIndex !== -1) {
+                    this.navList[this.curIndex]['chidShow'] = false
+                }
             }
         }
     }

@@ -70,7 +70,6 @@ export default {
     },
     methods: {
         initData() {
-            this.setDate()
             getWeekList({
                 tarUserId: this.tarUserId,
                 beginDate: this.beginDate
