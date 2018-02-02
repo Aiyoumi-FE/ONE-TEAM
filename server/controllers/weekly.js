@@ -57,6 +57,7 @@ class Weekly {
     // 获取周报详情
     // 请求参数：beginDate（开始日期）
     // 返回参数: content(周报内容)
+    // 查看小组周报应该是开发的，有teamId和时间做过滤就够了
     async getWeeklyDetail(ctx, next) {
         let requestData = ctx.request.body
         let userId = businessUtil.getStatus(ctx)
@@ -66,12 +67,17 @@ class Weekly {
             endDate = serviceUtil.getDayOfWeek(beginDate, 7),
             type = requestData.type == 'summary' ? 'summary' : null
 
-        let weeklyDetail = await weeklyModel.findOne({
+        let filterRule = {
             'creatTime': { $gte: beginDate, $lte: endDate },
             'teamId': teamId,
-            'userId': userId,
             'type': type
-        }).exec()
+        }
+
+        if (type !== 'summary') {
+            filterRule.userId = userId
+        }
+
+        let weeklyDetail = await weeklyModel.findOne(filterRule).exec()
 
         if (!weeklyDetail) {
             type = type ? 'summary' : 'weekly'
