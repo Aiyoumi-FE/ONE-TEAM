@@ -1,4 +1,5 @@
-const crypto = require('crypto')
+import crypto from 'crypto'
+
 module.exports = {
     encrypt: function(data) { // 密码加密
         let key = 'oneteam'

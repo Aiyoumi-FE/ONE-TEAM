@@ -1,6 +1,7 @@
-const teamModel = require('../models/team.js')
-const mongoose = require('./db.js'),
-    Schema = mongoose.Schema
+import teamModel from '../models/team.js'
+import mongoose from './db.js'
+
+const Schema = mongoose.Schema
 
 const userSchema = new Schema({
     eMail: { type: String }, // 邮箱

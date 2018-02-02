@@ -1,7 +1,7 @@
 // 工具库
-const { serviceUtil, businessUtil } = require('../util')
+import { serviceUtil, businessUtil } from '../util'
 // 数据库
-const subscriptModel = require('../models/subscription.js')
+import subscriptModel from '../models/subscription.js'
 
 class Subscript {
     constructor() {}

@@ -1,5 +1,5 @@
-const fs = require('fs')
-const path = require('path')
+import fs from 'fs'
+import path from 'path'
 
 const index = async(ctx, next) => {
     ctx.response.type = 'html'

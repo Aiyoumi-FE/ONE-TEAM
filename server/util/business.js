@@ -1,5 +1,5 @@
-const serviceUtil = require('./service')
-const jwt = require('jsonwebtoken')
+import serviceUtil from './service'
+import jwt from 'jsonwebtoken'
 import { secret } from './const'
 
 module.exports = {

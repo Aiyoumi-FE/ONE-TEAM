@@ -1,5 +1,5 @@
-const config = require('../configs')
-const mongoose = require('mongoose')
+import config from '../configs'
+import mongoose from 'mongoose'
 
 const DB_URL = config.DB_URL
 /*

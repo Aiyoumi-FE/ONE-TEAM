@@ -1,22 +1,10 @@
 <template>
     <div v-if="!loading">
-        <!-- <div class="bd-date">
-            <img src="./img/back.png" alt="" @click="changeList(-7)">
-            <span>{{obj.year}}年  第{{obj.weekNum}}周</span>
-            <img class="bd-date_next" v-if="notEnd" src="./img/back.png" alt="" @click="changeList(7)">
-            <p class="bd-date_detail">{{obj.begin}} - {{obj.end}}</p>
-        </div> -->
-        <div class="bd-date">
-            <p class="bd-date_week">
-                <img class="bd-date_back" src="./img/back.png" alt="" @click="changeList(-7)">
-                {{obj.year}}年  第{{obj.weekNum}}周
-                <img class="bd-date_next" v-if="notEnd" src="./img/back.png" alt="" @click="changeList(7)">
-            </p>
-            <p class="bd-date_detail">{{obj.begin}} - {{obj.end}}</p>
-        </div>
+        <date-el v-on:dateBack="changeList"></date-el>
         <div class="bd-config">
             <span class="link" @click="goWeeklyConfig()" v-if="isAdmin">设置</span>
-            <span class="btn" @click="creatWeekly()">写周报</span>
+            <span class="btn" @click="creatWeekly('weekly')">写周报</span>
+            <span class="btn" @click="creatWeekly('summary')" v-if="isAdmin">小组总结</span>
         </div>
         <div class="bd-content">
             <ul class="ot-cells">
@@ -36,8 +24,8 @@
 import {
     getWeekList
 } from '@/store/weekly'
-import rHeader from '../header/index'
 import dateFormate from './common/index'
+import dateEl from './common/date'
 import VueMarkdown from 'vue-markdown'
 
 export default {
@@ -56,7 +44,7 @@ export default {
         }
     },
     components: {
-        rHeader,
+        dateEl,
         VueMarkdown
     },
     filters: {
@@ -64,17 +52,14 @@ export default {
             return val || require('../user/image/cat.png')
         }
     },
-    computed: {
-        beginDate() {
-            return this.$route.query.beginDate ? new Date(parseInt(this.$route.query.beginDate)) : dateFormate.getDayOfWeek(new Date(), 1)
-        },
-        notEnd() {
-            return this.beginDate < dateFormate.getDayOfWeek(new Date(), 1)
-        }
-    },
     watch: {
         '$route'(to, from) {
             this.initData()
+        }
+    },
+    computed: {
+        beginDate() {
+            return this.$route.query.beginDate ? new Date(parseInt(this.$route.query.beginDate)) : dateFormate.getDayOfWeek(new Date(), 1)
         }
     },
     mounted() {
@@ -82,7 +67,6 @@ export default {
     },
     methods: {
         initData() {
-            this.setDate()
             getWeekList({ beginDate: this.beginDate })
                 .then((res) => {
                     if (res.success) {
@@ -96,29 +80,20 @@ export default {
                     this.loading = false
                 })
         },
-        setDate() {
-            this.obj.year = dateFormate.getYear(this.beginDate)
-            this.obj.weekNum = dateFormate.getYearWeek(this.beginDate)
-
-            let begin = this.beginDate
-            let end = dateFormate.getDayOfWeek(this.beginDate, 5)
-
-            this.obj.begin = `${begin.getMonth() + 1}/${begin.getDate()}`
-            this.obj.end = `${end.getMonth() + 1}/${end.getDate()}`
-        },
-        creatWeekly(id) {
+        creatWeekly(type) {
             this.$router.push({
                 name: 'weeklyDetail',
                 query: {
-                    beginDate: Date.parse(this.beginDate)
+                    beginDate: Date.parse(this.beginDate),
+                    type: type
                 }
             })
         },
-        changeList(action) {
+        changeList(val) {
             this.$router.push({
                 name: 'weeklyList',
                 query: {
-                    beginDate: Date.parse(this.beginDate) + 24 * 60 * 60 * 1000 * action
+                    beginDate: val
                 }
             })
         },
@@ -144,20 +119,8 @@ export default {
         width: 24px;
     }
 }
-.bd-date_week {
-    position: relative;
-    display: inline-block;
-    margin: 0 auto;
-}
-.bd-date_back {
-    position: absolute;
-    left: -34px;
-    top: 4px;
-}
+
 .bd-date_next {
-    position: absolute;
-    right: -34px;
-    top: 4px;
     transform: rotate(180deg);
 }
 

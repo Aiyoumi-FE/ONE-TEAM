@@ -1,15 +1,11 @@
 // 工具库
-const { serviceUtil, businessUtil } = require('../util')
+import { serviceUtil, businessUtil } from '../util'
 // 数据库
-const userModel = require('../models/user.js')
-const teamModel = require('../models/team.js')
-const weeklyModel = require('../models/weekly.js')
-// const markdown = require( "markdown" ).markdown;
+import userModel from '../models/user.js'
+import teamModel from '../models/team.js'
+import weeklyModel from '../models/weekly.js'
 
 class Weekly {
-    constructor() {
-        // super()
-    }
 
     // 获取周报列表，
     // 请求参数：beginDate（开始日期）
@@ -34,7 +30,7 @@ class Weekly {
         endDate = serviceUtil.getDayOfWeek(beginDate, 7)
 
         let weeklyList = await weeklyModel
-            .find({ 'creatTime': { $gte: beginDate, $lte: endDate }, 'teamId': teamId }, 'content userId')
+            .find({ 'creatTime': { $gte: beginDate, $lte: endDate }, 'teamId': teamId, 'type': { '$ne': 'summary'} }, 'content userId')
             .populate('userId', 'nickName')
             .exec()
 
@@ -62,16 +58,24 @@ class Weekly {
         let teamId = serviceUtil.getCookie(ctx, 'team')
 
         let beginDate = new Date(requestData.beginDate) || serviceUtil.getDayOfWeek(new Date(), 1),
-            endDate = serviceUtil.getDayOfWeek(beginDate, 7)
+            endDate = serviceUtil.getDayOfWeek(beginDate, 7),
+            type = requestData.type == 'summary' ? 'summary' : null
 
-        let weeklyDetail = await weeklyModel.findOne({ 'creatTime': { $gte: beginDate, $lte: endDate }, 'teamId': teamId, 'userId': userId }).exec()
+        let weeklyDetail = await weeklyModel.findOne({
+            'creatTime': { $gte: beginDate, $lte: endDate },
+            'teamId': teamId,
+            'userId': userId,
+            'type': type
+        }).exec()
 
         if (!weeklyDetail) {
+            type = type ? 'summary' : 'weekly'
+            let typeTemplate = type + 'Template'
             let res = await teamModel
-                .findOne({ '_id': teamId }, 'template')
-                .populate('template')
+                .findOne({ '_id': teamId }, typeTemplate)
+                .populate(typeTemplate)
             weeklyDetail = {
-                content: res.template.template
+                content: res[typeTemplate].template || ''
             }
         }
 
@@ -109,7 +113,8 @@ class Weekly {
             userId: userId,
             teamId: teamId,
             content: requestData.content,
-            creatTime: requestData.beginDate // 创建时间
+            creatTime: requestData.beginDate, // 创建时间
+            type: requestData.type
         })
         let createWeeklyRes = await createWeekly.save((err, res) => {
             err ? serviceUtil.sendErrMsg(ctx, err) : result.success = true

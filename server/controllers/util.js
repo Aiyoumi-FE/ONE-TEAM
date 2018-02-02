@@ -1,10 +1,9 @@
 // 工具库
-const { serviceUtil } = require('../util')
-const nodemailer = require('nodemailer')
-const teamModel = require('../models/team.js')
+import { serviceUtil } from '../util'
+import nodemailer from 'nodemailer'
+import teamModel from '../models/team.js'
+
 class Util {
-    constructor() {
-    }
 
     async sendEmail(ctx, next) {
         let formData = ctx.request.body
