@@ -60,6 +60,9 @@ export default {
     computed: {
         beginDate() {
             return this.$route.query.beginDate ? new Date(parseInt(this.$route.query.beginDate)) : dateFormate.getDayOfWeek(new Date(), 1)
+        },
+        tarUserId() {
+            return this.$route.query.id || ''
         }
     },
     mounted() {
@@ -67,18 +70,21 @@ export default {
     },
     methods: {
         initData() {
-            getWeekList({ beginDate: this.beginDate })
-                .then((res) => {
-                    if (res.success) {
-                        this.isAdmin = res.result.isAdmin
-                        this.list = res.result.list
-                    } else {
-                        this.$router.replace({
-                            name: 'refuse'
-                        })
-                    }
-                    this.loading = false
-                })
+            this.setDate()
+            getWeekList({
+                tarUserId: this.tarUserId,
+                beginDate: this.beginDate
+            }).then((res) => {
+                if (res.success) {
+                    this.isAdmin = res.result.isAdmin
+                    this.list = res.result.list
+                } else {
+                    this.$router.replace({
+                        name: 'refuse'
+                    })
+                }
+                this.loading = false
+            })
         },
         creatWeekly(type) {
             this.$router.push({
@@ -93,7 +99,8 @@ export default {
             this.$router.push({
                 name: 'weeklyList',
                 query: {
-                    beginDate: val
+                    beginDate: val,
+                    id: this.tarUserId
                 }
             })
         },

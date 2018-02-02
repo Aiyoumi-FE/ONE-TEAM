@@ -6,7 +6,7 @@
             <!-- <input type="text" class="searchBox"> -->
         </div>
         <div class="part_middle">
-            <h2>{{titleTxt}}</h2>
+            <h2>{{titleTxt}}</h2> <span class="btn" v-if="showType == 'specialFocus'" @click="goPage('mysub')">Edit</span>
             <div class="vision_type">
                 <span class="vision_nest"  @click="showTypeList = !showTypeList"></span>
                 <ul v-show="showTypeList">
@@ -62,27 +62,15 @@
                 </section>
                 <section class="section_focus" v-show="showType == 'specialFocus'">
                     <div v-if="!focusList.length">
-                        <p class="btn_add__large" @click="goPage('mysub')"></p>
+                        <p class="btn_add__large" @click="goPage('user/mysub')"></p>
                         <p>还没有特别关注，快去添加吧</p>
                     </div>
                     <div v-else>
-                        <ul class="ot-cells">
-                            <li v-for="item in childTeamList" class="ot-cell" @click="goToTeam(item)">
-                                <div class="cell-hd">
-                                    <span class="circle_name">{{item.teamName | nameFilter}}</span>
-                                </div>
-                                <div class="cell-bd">
-                                    <p class="team_name">
-                                        {{item.teamName}}
-                                    </p>
-                                    <p>
-                                        Leader：<span class="team_admin">{{item.administrator.nickName}}</span>
-                                    </p>
-                                </div>
-                                <div class="cell-ft">
-                                    <p class="">more>>>
-                                    </p>
-                                </div>
+                        <ul class="list_sub">
+                            <li v-for="item in focusList" @click="goPage('weeklyList', item)">
+                                <span class="unit_photo"></span>
+                                <span>{{item.subUserName}}</span>
+                                <span>{{item.subUserTeam}}</span>
                             </li>
                         </ul>
                     </div>
@@ -100,6 +88,9 @@ import {
     getChildTeamInfo,
     getTeamList
 } from '@/store/team'
+import {
+    getRecordList
+} from '@/store/subscript'
 export default {
     name: 'dashboard',
     data() {
@@ -137,6 +128,7 @@ export default {
         // this.getMyTeam()
         this.getChildInfo()
         this.getTeamListInfo()
+        this.getFocusList()
     },
     components: {
         'el-tree': Tree
@@ -151,6 +143,13 @@ export default {
             getTeamList().then((res) => {
                 if (res.success && res.result) {
                     this.teamAllList = this.reformate(res.result)
+                }
+            })
+        },
+        getFocusList() {
+            getRecordList().then((res) => {
+                if (res.success && res.result.length) {
+                    this.focusList = res.result
                 }
             })
         },
@@ -191,9 +190,16 @@ export default {
         showTeamDetail(team) {
             this.curTeam = team
         },
-        goPage(path) {
+        goPage(path, params) {
+            let query = {}
+            if (path === 'weeklyList') {
+                query = {
+                    id: params.subUserId
+                }
+            }
             this.$router.push({
-                path
+                path,
+                query
             })
         }
     }
@@ -261,10 +267,11 @@ export default {
 
 .part_middle {
     position: relative;
-    /*h2 {
-        border-bottom: 1px solid #aaa8a8;
-        padding-bottom: 20px;
-    }*/
+    h2 {
+       /* border-bottom: 1px solid #aaa8a8;
+        padding-bottom: 20px;*/
+        display: inline-block;
+    }
     .vision_type {
         position: absolute;
         right: 0;
@@ -301,12 +308,6 @@ export default {
 /* 所有部门 */
 .section_allteam {
     display: flex;
-    .el-tree {
-        display: inline-block;
-        /*width: 48%;*/
-        background: #f9f9f9;
-        flex: 1;
-    }
     .team_detail {
         display: inline-block;
         /*width: 48%;*/
@@ -314,9 +315,6 @@ export default {
         border-radius: 10px;
         padding: 20px;
         flex: 1;
-    }
-    .el-tree-node__label {
-        font-size: 16px !important;
     }
     .info_line {
         display: flex;
@@ -345,6 +343,16 @@ export default {
         text-align: right;
     }
 }
+.el-tree {
+    display: inline-block;
+    /*width: 48%;*/
+    background: #f9f9f9;
+    flex: 1;
+    .el-tree-node__label {
+        font-size: 16px !important;
+    }
+}
+
 .section_focus {
     .btn_add__large {
         width: 120px;
@@ -356,6 +364,59 @@ export default {
     p {
         text-align: center;
         margin: 0;
+    }
+    .list_sub {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 20px;
+        li {
+            position: relative;
+            width: 120px;
+            /*height: 110px;*/
+            line-height: 30px;
+            background: #fff;
+            border-radius: 15px;
+            text-align: center;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            margin: 5px;
+            border: 2px solid #000;
+            span {
+                display: block;
+                text-align: center;
+                width: 100%;
+                overflow: hidden;
+            }
+            .unit_photo {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                background: #FFEBEE;
+                background: url('./image/leader.png') 0 center no-repeat;
+                background-size: cover;
+                margin: 0 auto;
+            }
+            .btn_del {
+                position: absolute;
+                right: -8px;
+                top: -8px;
+                width: 25px;
+                height: 25px;
+                text-align: center;
+                line-height: 25px;
+                background: #000;
+                color: #fff;
+                border-radius: 50%;
+            }
+            .btn_add {
+                width: 70px;
+                height: 70px;
+                margin: 20px auto;
+                background: url('./image/add2.png') 0 center no-repeat;
+                background-size: cover;
+                opacity: 0.15;
+            }
+        }
     }
 }
 </style>
