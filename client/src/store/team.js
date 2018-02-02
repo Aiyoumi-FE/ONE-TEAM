@@ -4,11 +4,11 @@ import {
 
 /* ================登陆================= */
 export const getTeamInfo = (param) => {
-    return _postPromise('/api/team/teamInfo', param)
+    return _postPromise('/api/team/getTeamInfo', param)
 }
 
 export const changeTeamMemStatus = (param) => {
-    return _postPromise('/api/team/teamMemStatus', param)
+    return _postPromise('/api/team/changeMemberStatus', param)
 }
 
 export const teamOpera = (param) => {
@@ -46,4 +46,8 @@ export const updateTeam = (param) => {
 
 export const addMem2Team = (param) => {
     return _postPromise('/api/team/addMem2Team', param)
+}
+
+export const getChildTeamInfo = (param) => {
+    return _postPromise('/api/team/getChildTeamInfo', param)
 }

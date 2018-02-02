@@ -65,7 +65,7 @@ class User {
                     let userToken = {
                         id: user._id
                     }
-                    let token = jwt.sign(userToken, secret, { expiresIn: '1h' })
+                    let token = jwt.sign(userToken, secret, {expiresIn: '1h'})
                     ctx.cookies.set('name', new Buffer(user.nickName).toString('base64'), { httpOnly: false })
                     ctx.cookies.set('token', token, { httpOnly: false })
                     ctx.cookies.set('team', user.teamId)
@@ -134,10 +134,10 @@ class User {
                     let userToken = {
                         id: res._id
                     }
-                    let token = jwt.sign(userToken, secret, { expiresIn: '1h' })
-                    ctx.cookies.set('name', new Buffer(user.nickName).toString('base64'), { httpOnly: false })
-                    ctx.cookies.set('token', token, { httpOnly: false })
-                    ctx.cookies.set('team', user.teamId)
+                    let token = jwt.sign(userToken, secret, {expiresIn: '1h'})
+                    ctx.cookies.set('name', new Buffer(res.nickName).toString('base64'), { httpOnly: false })
+                    ctx.cookies.set('token', token)
+                    ctx.cookies.set('team', res.teamId)
                 }
             })
             // 加入团队
