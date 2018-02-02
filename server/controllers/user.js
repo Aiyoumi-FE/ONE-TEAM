@@ -60,12 +60,13 @@ class User {
 
             if (user) {
                 let password = serviceUtil.encrypt(formData.userPassword)
-                if (user.userPassword == password) {
+                if (user.userPassword === password) {
                     result.success = true
                     let userToken = {
-                        id: user._id
+                        id: user._id,
+                        exp: Date.now() + 60 * 60 * 1000
                     }
-                    let token = jwt.sign(userToken, secret, {expiresIn: '1h'})
+                    let token = jwt.sign(userToken, secret)
                     ctx.cookies.set('name', new Buffer(user.nickName).toString('base64'), { httpOnly: false })
                     ctx.cookies.set('token', token, { httpOnly: false })
                     ctx.cookies.set('team', user.teamId)

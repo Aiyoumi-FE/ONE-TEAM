@@ -10,11 +10,10 @@ export const cookie = {
         })
         return res
     },
-    set(name, value, exdays, path) {
+    set(name, value, expires, path) {
         var d = new Date()
-        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000))
-        var expires = 'expires=' + d.toUTCString()
-        document.cookie = name + '=' + value + '; ' + expires + '; path=' + path
+        d.setTime(d.getTime() + expires)
+        document.cookie = name + '=' + value + '; expires=' + d.toUTCString() + '; path=' + path
     },
     clear(name, path) {
         this.set(name, '', -1, path)
