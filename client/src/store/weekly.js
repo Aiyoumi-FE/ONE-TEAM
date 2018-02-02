@@ -19,6 +19,10 @@ export const getWeeklyConfig = () => {
     return _postPromise('/api/week/getWeeklyConfig')
 }
 
-export const saveWeeklyConfig = (param) => {
-    return _postPromise('/api/week/saveWeeklyConfig', param)
+export const saveWeeklyTemplate = (param) => {
+    return _postPromise('/api/week/saveWeeklyTemplate', param)
+}
+
+export const saveSummaryTemplate = (param) => {
+    return _postPromise('/api/week/saveSummaryTemplate', param)
 }

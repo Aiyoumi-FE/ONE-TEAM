@@ -25,6 +25,7 @@ body {
 .page_login {
     height: 100%;
     text-align: center;
+    margin-top: 100px;
     h1 {
         margin: 10px auto;
     }

@@ -85,12 +85,10 @@ class Team {
             let userUpdate = await userModel.update(oldUserValue, newUserValue)
         }
         if (formData.opera == 'admin') { // 任职
-            console.log('=====formData.userId:' + formData.userId + '&teamId:' + teamId)
             newTeamValue = { $set: { administrator: formData.userId } }
         }
 
         let teamUpdate = await teamModel.update(oldTeamValue, newTeamValue)
-        console.log('=====')
 
         let result = {
             success: true
@@ -373,7 +371,6 @@ const create = async(teamName) => {
  * @return   {Object}           [操作后的数据库返回]
  */
 const join = async(teamId, userId, isAdmin) => {
-    console.log(userId)
     let oldTeamValue = { _id: teamId }
     let newTeamData = { $push: { memberList: userId } }
     if (isAdmin) {

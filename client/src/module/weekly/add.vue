@@ -1,9 +1,8 @@
 <template>
     <div>
-        <div class="bd-date">
-            {{dateForm.year}}年 第{{dateForm.weekNum}}周
-            <p class="bd-date__sub">本周周报</p>
-        </div>
+        <date-el v-on:dateBack="changeDetail">
+            <p class="bd-date__sub" slot="header">{{des}}</p>
+        </date-el>
         <a href="javascript:;" class="bd-back link" @click="back()">返回列表</a>
         <div class="bd-content" v-if="isEdit">
             <markdown-editor v-model="obj.content" ref="markdownEditor" :configs="configs"></markdown-editor>
@@ -17,6 +16,7 @@
 </template>
 <script>
 import dateFormate from './common/index'
+import dateEl from './common/date'
 import {
     getWeekDetail,
     saveWeekDetail
@@ -38,18 +38,29 @@ export default {
                 spellChecker: false // 禁用拼写检查
             },
             obj: {
-                content: ''
+                content: '',
+                type: this.$route.query.type
             },
-            isEdit: true
+            isEdit: true,
+            type: this.$route.query.type
         }
     },
     components: {
+        dateEl,
         VueMarkdown,
         markdownEditor
     },
     computed: {
         beginDate() {
             return this.$route.query.beginDate ? new Date(parseInt(this.$route.query.beginDate)) : dateFormate.getDayOfWeek(new Date(), 1)
+        },
+        des() {
+            return this.type === 'summary' ? '本周小组总结' : '本周周报'
+        }
+    },
+    watch: {
+        '$route'(to, from) {
+            this.initData()
         }
     },
     mounted() {
@@ -57,9 +68,9 @@ export default {
     },
     methods: {
         initData() {
-            this.setDate()
             getWeekDetail({
-                beginDate: this.beginDate
+                beginDate: this.beginDate,
+                type: this.type
             }).then((res) => {
                 if (res.success) {
                     this.obj = res.result
@@ -69,15 +80,10 @@ export default {
                 }
             })
         },
-        setDate() {
-            this.dateForm.year = dateFormate.getYear(this.beginDate)
-            this.dateForm.weekNum = dateFormate.getYearWeek(this.beginDate)
-            this.dateForm.begin = this.beginDate
-            this.dateForm.end = dateFormate.getDayOfWeek(this.beginDate, 5)
-        },
         saveWeekly() {
             Object.assign(this.obj, {
-                beginDate: this.beginDate
+                beginDate: this.beginDate,
+                type: this.type
             })
             saveWeekDetail(this.obj).then((res) => {
                 if (res.success) {
@@ -87,8 +93,22 @@ export default {
                 }
             })
         },
+        changeDetail(val) {
+            this.$router.push({
+                name: 'weeklyDetail',
+                query: {
+                    beginDate: val,
+                    type: this.type
+                }
+            })
+        },
         back() {
-            this.$router.go(-1)
+            this.$router.push({
+                name: 'weeklyList',
+                query: {
+                    beginDate: Date.parse(this.beginDate)
+                }
+            })
         },
         edit() {
             this.isEdit = true
@@ -107,12 +127,6 @@ export default {
     padding-top: 50px;
     background-color: #fff;
     box-shadow: 0 0 15px 0 #999;
-}
-
-.bd-date {
-    text-align: center;
-    font-size: 26px;
-    color: #333;
 }
 
 .bd-back {

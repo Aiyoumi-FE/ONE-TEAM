@@ -5,6 +5,7 @@ module.exports = {
     'POST /week/getWeekList': Weekly.getWeeklyList,
     'POST /week/getWeekDetail': Weekly.getWeeklyDetail,
     'POST /week/saveWeekDetail': Weekly.saveWeekly,
-    'POST /week/getWeeklyConfig': WeeklyConfig.getweeklyTemplate,
-    'POST /week/saveWeeklyConfig': WeeklyConfig.saveWeeklyTemplate
+    'POST /week/getWeeklyConfig': WeeklyConfig.getWeeklyConfig,
+    'POST /week/saveWeeklyTemplate': WeeklyConfig.saveWeeklyTemplate,
+    'POST /week/saveSummaryTemplate': WeeklyConfig.saveSummaryTemplate
 }
