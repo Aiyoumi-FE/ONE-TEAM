@@ -7,6 +7,35 @@ import jwt from 'jsonwebtoken'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/googlecode.css'
 import { cookie } from '@/assets/js/cookie'
+import {
+    Input,
+    Button,
+    Alert,
+    Row,
+    Col,
+    MessageBox,
+    Message,
+    Dialog,
+    Form,
+    FormItem,
+    Loading
+} from 'element-ui'
+
+Vue.use(Input)
+Vue.use(Button)
+Vue.use(Alert)
+Vue.use(Row)
+Vue.use(Col)
+Vue.use(Dialog)
+Vue.use(Form)
+Vue.use(FormItem)
+Vue.use(Loading)
+
+Vue.prototype.$msgbox = MessageBox
+Vue.prototype.$alert = MessageBox.alert
+Vue.prototype.$confirm = MessageBox.confirm
+Vue.prototype.$prompt = MessageBox.prompt
+Vue.prototype.$message = Message
 
 Vue.config.productionTip = false
 Axios.defaults.withCredentials = true
