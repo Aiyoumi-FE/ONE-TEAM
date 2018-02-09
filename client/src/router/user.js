@@ -4,6 +4,7 @@ const login = resolve => require(['../module/user/login/login'], resolve)
 const register = resolve => require(['../module/user/login/register'], resolve)
 const settings = resolve => require(['../module/user/settings/index'], resolve)
 const mysub = resolve => require(['../module/user/subscript/index'], resolve)
+const myhome = resolve => require(['../module/user/center/myhome'], resolve)
 const App = resolve => require(['../module/index'], resolve)
 
 export default [{
@@ -44,6 +45,14 @@ export default [{
         component: mysub,
         meta: {
             title: '我的关注'
+        }
+    }, {
+        path: 'user/center/:userId(\\d+)',
+        name: 'myhome',
+        component: myhome,
+        meta: {
+            title: '个人中心',
+            throwContent: false
         }
     }]
 }]
