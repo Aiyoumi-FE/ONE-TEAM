@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="component_report">
         <div class="bd-date">
             <p class="bd-date_week">
                 <img class="bd-date_back" src="./img/back.png" alt="" @click="changeList(-7)">
@@ -9,8 +9,9 @@
             <p class="bd-date_detail">{{dateInfo.begin}} - {{dateInfo.end}}</p>
         </div>
         <div class="bd-content">
-            <ul class="ot-cells">
-                <li v-for="item in memberReportLsit" class="ot-cell">
+            <vue-markdown v-if="isSingle && reportContent" v-highlight :source="reportContent" class="cell-bd markdown padlr140"></vue-markdown>
+            <ul v-if="!isSingle && memberReportList.length" class="ot-cells">
+                <li v-for="item in memberReportList" class="ot-cell">
                     <div class="cell-hd">
                         <img class="cell-hd-pic" :src="item.phote | photoFilter" alt="">
                         <p class="cell-hd-name">{{item.userId.nickName}}</p>
@@ -18,18 +19,17 @@
                     <vue-markdown v-highlight :source="item.content" class="cell-bd markdown"></vue-markdown>
                 </li>
             </ul>
+            <div class="bg_empty" v-if="!memberReportList.length && !reportContent">
+                <p>~~空空如也~~</p>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import {
-    // getWeekList,
     getWeekDetail
 } from '@/store/weekly'
-// import {
-//     getTeamInfo
-// } from '@/store/team'
 import dateFormate from '../../../weekly/common/index'
 import VueMarkdown from 'vue-markdown'
 
@@ -38,6 +38,10 @@ export default {
     props: {
         userId: {
             type: String
+        },
+        isSingle: {
+            type: Boolean,
+            default: true
         }
     },
     data() {
@@ -49,7 +53,8 @@ export default {
                 end: ''
             },
             beginDate: null,
-            memberReportLsit: []
+            memberReportList: [],
+            reportContent: ''
         }
     },
     components: {
@@ -76,13 +81,15 @@ export default {
     methods: {
         loadData() {
             getWeekDetail({
-                beginDate: this.getWeekDetail,
+                beginDate: this.beginDate,
                 userId: this.userId
             }).then((res) => {
                 if (res.success) {
-                    this.memberReportLsit = res.result.list
-                } else {
-                    this.isEmpty = true
+                    if (this.isSingle) {
+                        this.reportContent = res.result.content
+                    } else {
+                        this.memberReportList = res.result.list
+                    }
                 }
             })
         },
@@ -106,6 +113,12 @@ export default {
 
 </script>
 <style lang="scss" scoped>
+.component_report {
+    .markdown {
+        width: auto;
+    }
+}
+
 .bd-date {
     text-align: center;
     font-size: 24px;
@@ -148,7 +161,7 @@ export default {
 }
 
 .bd-content {
-    margin: 50px auto;
+    margin: 40px auto;
 }
 
 .cell-hd {
@@ -172,5 +185,21 @@ export default {
 .cell-bd {
     flex-grow: 1;
 }
-
+.padlr140 {
+    padding: 0 140px;
+}
+.bg_empty {
+    width: 170px;
+    height: 250px;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 150px;
+    background: url('./img/empty.png') 0 0 no-repeat;
+    background-size: contain;
+    p {
+        font-size: 20px;
+        /* font-weight: bold; */
+        color: #9a9a9a;
+    }
+}
 </style>
