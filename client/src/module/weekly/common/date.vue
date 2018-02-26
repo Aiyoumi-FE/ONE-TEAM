@@ -1,9 +1,11 @@
 <template>
-    <div class="bd-date">
-        <img src="../img/back.png" alt="" @click="changeDate(-7)">
-        <span>{{year}}年  第{{weekNum}}周</span>
-        <img class="bd-date_next" v-if="notEnd" src="../img/back.png" alt="" @click="changeDate(7)">
-        <p class="bd-date_detail">{{begin}} - {{end}}</p>
+    <div class="date">
+        <p class="date-week">
+            <i class="el-icon-arrow-left" @click="changeDate(-7)"></i>
+            <span>{{year}}年  第{{weekNum}}周</span>
+            <i class="el-icon-arrow-right" v-if="notEnd" @click="changeDate(7)"></i>
+        </p>
+        <p class="date-day">{{begin}} - {{end}}</p>
         <slot name="header"></slot>
     </div>
 </template>
@@ -47,26 +49,25 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import '../../../assets/style/base.scss';
-.bd-date {
+.date {
     text-align: center;
-    font-size: $fontSizeLevel4;
+}
+.date-week {
     color: #333;
+    margin-bottom: 5px;
+    font-size: $fontSizeLevel2;
     span {
         padding: 0 20px;
     }
-    img {
-        width: 24px;
-    }
+}
+.date-day {
+    margin: 0;
+    font-size: $fontSizeLevel4;
+    color: $colorTextGeneral;
 }
 
 .bd-date_next {
     transform: rotate(180deg);
-}
-
-.bd-date_detail {
-    margin: 0;
-    font-size: $fontSizeLevel6;
-    color: #999;
 }
 
 </style>

@@ -10,11 +10,6 @@
 import pageHeader from './header'
 export default {
     name: 'app',
-    data() {
-        return {
-            online: true // 这个是干啥的？
-        }
-    },
     components: {
         pageHeader
     }
@@ -23,5 +18,23 @@ export default {
 </script>
 <style lang="scss">
 @import '../var.scss';
-@import '../assets/style/main.scss';
+// @import '../assets/style/main.scss';
+body {
+    background-color: #f2f2f2;
+}
+
+.ot-page {
+    overflow: hidden;
+}
+
+.ot-content {
+    position: relative;
+    margin: 40px auto 0;
+    min-height: 800px;
+    max-width: 960px;
+    background: #fff;
+    padding: 10px;
+    // overflow: hidden;
+}
+
 </style>

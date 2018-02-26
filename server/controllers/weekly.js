@@ -11,9 +11,9 @@ class Weekly {
     // 请求参数：beginDate（开始日期）
     // 返回参数：list(周报列表)
     async getWeeklyList(ctx, next) {
-        // let requestData = ctx.request.body
-        let beginDate = ctx.request.body.beginDate || null
-        let tarUserId = ctx.request.body.tarUserId || ''
+        let requestData = ctx.request.body
+        let beginDate = requestData.beginDate || null
+        let tarUserId = requestData.tarUserId || ''
         let userId = businessUtil.getStatus(ctx)
         let teamId = serviceUtil.getCookie(ctx, 'team')
         let fiterRule = {}
@@ -33,6 +33,9 @@ class Weekly {
             fiterRule = { 'creatTime': { $gte: beginDate, $lte: endDate }, 'teamId': teamId , userId: tarUserId, 'type': { '$ne': 'summary'} }
         } else {
             fiterRule = { 'creatTime': { $gte: beginDate, $lte: endDate }, 'teamId': teamId, 'type': { '$ne': 'summary'} }
+        }
+        if (requestData.type == 'summary') {
+            fiterRule = { 'creatTime': { $gte: beginDate, $lte: endDate }, 'teamId': teamId, 'type': 'summary'}
         }
         let weeklyList = await weeklyModel
             .find(fiterRule, 'content userId')
@@ -73,9 +76,9 @@ class Weekly {
             'type': type
         }
 
-        if (type !== 'summary') {
-            filterRule.userId = userId
-        }
+        // if (type !== 'summary') {
+        //     filterRule.userId = userId
+        // }
 
         let weeklyDetail = await weeklyModel.findOne(filterRule).exec()
 

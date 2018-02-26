@@ -351,7 +351,6 @@ class Team {
 
     async getChildTeamInfo(ctx, next) {
         let teamId = serviceUtil.getCookie(ctx, 'team')
-        console.log('TeamId: ', teamId)
 
         let teamList = await teamModel
             .find({

@@ -1,20 +1,23 @@
 <template>
     <div>
+        <el-tabs v-model="activeName" @tab-click="handleClick">
+            <el-tab-pane label="个人周报" name="weekly"></el-tab-pane>
+            <el-tab-pane label="小组总结" name="summary"></el-tab-pane>
+        </el-tabs>
+        <a href="javascript:;" class="add-link" @click="back()">返回列表</a>
         <date-el v-on:dateBack="changeDetail">
-            <p class="bd-date__sub" slot="header">{{des}}</p>
+            <p slot="header" class="add-des">{{des}}</p>
         </date-el>
-        <a href="javascript:;" class="bd-back link" @click="back()">返回列表</a>
-        <div class="bd-content" v-if="isEdit">
-            <markdown-editor v-model="obj.content" ref="markdownEditor" :configs="configs"></markdown-editor>
-            <div @click="saveWeekly()" class="btn">保存</div>
-        </div>
-        <div class="bd-content" v-else>
-            <vue-markdown :source="obj.content" v-highlight></vue-markdown>
-            <div @click="edit()" class="btn">编辑</div>
-        </div>
+        <el-button class="add-btn" @click="btnActive(activeName)">{{isEdit? '保存' : '编辑'}}</el-button>
+        <markdown-editor v-if="isEdit" v-model="obj.content" ref="markdownEditor" :configs="configs"></markdown-editor>
+        <vue-markdown v-else :source="obj.content" v-highlight></vue-markdown>
     </div>
 </template>
 <script>
+import {
+    Tabs,
+    TabPane
+} from 'element-ui'
 import dateFormate from './common/index'
 import dateEl from './common/date'
 import {
@@ -27,12 +30,6 @@ export default {
     name: 'weekly',
     data() {
         return {
-            dateForm: {
-                year: '',
-                weekNum: '',
-                begin: '',
-                end: ''
-            },
             configs: {
                 status: false, // 禁用底部状态栏
                 spellChecker: false // 禁用拼写检查
@@ -42,20 +39,25 @@ export default {
                 type: this.$route.query.type
             },
             isEdit: true,
-            type: this.$route.query.type
+            activeName: this.$route.query.type
         }
     },
     components: {
         dateEl,
         VueMarkdown,
-        markdownEditor
+        markdownEditor,
+        'el-tabs': Tabs,
+        'el-tab-pane': TabPane
     },
     computed: {
         beginDate() {
             return this.$route.query.beginDate ? new Date(parseInt(this.$route.query.beginDate)) : dateFormate.getDayOfWeek(new Date(), 1)
         },
+        btnText() {
+            return this.isEdit ? '编辑' : '保存'
+        },
         des() {
-            return this.type === 'summary' ? '本周小组总结' : '本周周报'
+            return this.activeName === 'summary' ? '本周小组总结' : '本周周报'
         }
     },
     watch: {
@@ -70,20 +72,23 @@ export default {
         initData() {
             getWeekDetail({
                 beginDate: this.beginDate,
-                type: this.type
+                type: this.activeName
             }).then((res) => {
                 if (res.success) {
                     this.obj = res.result
-                    // this.initEdit()
                 } else {
                     alert(res.resultDes)
                 }
             })
         },
-        saveWeekly() {
+        btnActive() {
+            if (!this.isEdit) {
+                this.isEdit = !this.isEdit
+                return
+            }
             Object.assign(this.obj, {
                 beginDate: this.beginDate,
-                type: this.type
+                type: this.activeName
             })
             saveWeekDetail(this.obj).then((res) => {
                 if (res.success) {
@@ -98,7 +103,7 @@ export default {
                 name: 'weeklyDetail',
                 query: {
                     beginDate: val,
-                    type: this.type
+                    type: this.activeName
                 }
             })
         },
@@ -110,44 +115,30 @@ export default {
                 }
             })
         },
-        edit() {
-            this.isEdit = true
+        handleClick(tab, val) {
+            this.initData()
         }
     }
 }
 
 </script>
 <style lang="scss" scoped>
+@import '../../assets/style/base.scss';
 @import '~simplemde/dist/simplemde.min.css';
-.page-bd {
-    position: relative;
-    margin: 100px auto;
-    width: 80%;
-    height: 800px;
-    padding-top: 50px;
-    background-color: #fff;
-    box-shadow: 0 0 15px 0 #999;
-}
-
-.bd-back {
-    width: 80px;
+.add-link {
     position: absolute;
-    left: 3%;
-    top: 3%;
+    left: 10px;
+    top: 80px;
 }
 
-.btn_save {
-    display: block;
-    margin: 45px auto 0;
+.add-btn {
+    position: absolute;
+    right: 10px;
+    top: 80px;
 }
 
-.bd-date__sub {
-    // margin-top: 25px;
-    font-size: 18px;
-}
-
-.btn {
-    margin: 10px auto 0;
+.add-des {
+    font-size: $fontSizeLevel3;
 }
 
 </style>

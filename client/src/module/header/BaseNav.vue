@@ -1,3 +1,4 @@
+<!-- 待废弃 -->
 <template>
     <div class="nav">
         <p class="logo" v-show="!isPop">
@@ -32,7 +33,7 @@
 </template>
 <script>
 export default {
-    name: 'headerBaseNav',
+    name: 'headerWrapper',
     data() {
         return {
             navList: [{
@@ -89,6 +90,7 @@ export default {
 .nav-catalog {
     display: none;
 }
+
 .btn_list {
     display: inline-block;
     width: 36px;
@@ -96,15 +98,17 @@ export default {
     background: url('./image/list.png') 0 center no-repeat;
     background-size: cover;
 }
+
 @media screen and (max-width: 660px) {
     .nav-catalog {
         display: flex;
         align-items: center;
     }
-    .nav-ul{
+    .nav-ul {
         display: none;
     }
 }
+
 .nav-ul_min {
     width: 100%;
     display: flex;
@@ -152,4 +156,5 @@ ul {
         }
     }
 }
+
 </style>

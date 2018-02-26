@@ -30,7 +30,7 @@ class weeklyConfig {
             success: true
         }
         ctx.response.body = result
-    }
+    }   
 
     // 保存周报模板，
     // 请求参数：template(周报模板) id（模板id） 
@@ -62,7 +62,6 @@ class weeklyConfig {
     // 返回参数：true/false
     async saveSummaryTemplate(ctx, next) {
         let formData = ctx.request.body
-        console.log(formData)
         let teamId = serviceUtil.getCookie(ctx, 'team')
 
         if (!formData._id) { // 新增模板
